@@ -2,7 +2,7 @@
 
 > 22 款精心设计的简历模板，纯前端在线编辑，所有数据仅存储在你的浏览器中。
 
-🔗 **在线体验：[resume-ai.vercel.app](https://resume-ai.vercel.app)**（部署后生效）
+🔗 **在线体验：[resume-ai.site](https://resume-ai.site)**
 
 ---
 
