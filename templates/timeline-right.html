@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Timeline Right</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8f6f3;
+    --card: #fff;
+    --ink: #2c2c2c;
+    --muted: #8a8a8a;
+    --accent: #2d6a4f;
+    --accent-light: #d8f3dc;
+    --dot: #40916c;
+    --line: #d5d1cb;
+  }
+
+  body {
+    font-family: "Inter", "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 28px 20px;
+  }
+
+  .resume {
+    width: 760px;
+    background: var(--card);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .header {
+    padding: 46px 56px 20px;
+    text-align: center;
+  }
+
+  .header-avatar img {
+    width: 72px; height: 72px; border-radius: 4px;
+    border: 2px solid var(--accent);
+    object-fit: cover; display: block;
+    margin: 0 auto 16px;
+  }
+
+  .header h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+
+  .header .title {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .header-contact {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px 24px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .header-contact a { color: var(--ink); text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .content { padding: 0 56px 44px; }
+
+  .section { margin-bottom: 32px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .summary-text { font-size: 14px; line-height: 1.8; }
+
+  .timeline {
+    position: relative;
+    padding-right: 120px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 56px;
+    top: 0;
+    bottom: 4px;
+    width: 2px;
+    background: var(--line);
+  }
+
+  .experience-item {
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-item .tl-dot {
+    position: absolute;
+    right: 50px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid var(--dot);
+    background: var(--card);
+    z-index: 1;
+  }
+
+  .experience-item .tl-date {
+    position: absolute;
+    right: 0;
+    top: 4px;
+    width: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dot);
+    text-align: left;
+  }
+
+  .experience-body {
+    padding-right: 36px;
+  }
+
+  .experience-body .position {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .experience-body .company {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .experience-body .desc {
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-line;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 20px;
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Crect fill='%23d8f3dc' width='72' height='72'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%232d6a4f' font-size='28'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <h1 data-editable="name">张三</h1>
+    <div class="title"><span data-editable="title">项目管理专家 · PMP</span></div>
+    <div class="header-contact">
+      <span><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+      <span data-editable="phone">138-0000-0000</span>
+      <span data-editable="location">上海</span>
+      <span><a data-editable="website" data-editable-type="link" href="https://linkedin.com/in/zhangsan">linkedin.com/in/zhangsan</a></span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">职业简介</div>
+      <p class="summary-text"><span data-editable="summary">10 年项目管理经验，PMP 及 ACP 持证。擅长大型跨国项目的全生命周期管理，累计交付 30+ 项目，总预算超过 5 亿美元。注重干系人管理与风险预判，所管项目按期交付率 95%。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">项目时间轴</div>
+      <div class="timeline" data-editable-group="work-experience">
+
+        <div class="experience-item" data-editable-item>
+          <div class="tl-dot"></div>
+          <div class="tl-date"><span data-editable="duration">2021.01 - 至今</span></div>
+          <div class="experience-body">
+            <div class="position"><span data-editable="position">高级项目经理</span></div>
+            <div class="company"><span data-editable="company">某全球咨询公司</span></div>
+            <div class="desc"><span data-editable="description">管理亚太区数字化转型项目群，涵盖 8 个并行项目，团队规模 40+。\n通过敏捷转型将项目交付周期缩短 30%，客户满意度 NPS 提升至 72。\n建立 PMO 最佳实践库，被全球 15 个办公室采纳。</span></div>
+          </div>
+        </div>
+
+        <div class="experience-item" data-editable-item>
+          <div class="tl-dot"></div>
+          <div class="tl-date"><span data-editable="duration">2016.05 - 2020.12</span></div>
+          <div class="experience-body">
+            <div class="position"><span data-editable="position">项目经理</span></div>
+            <div class="company"><span data-editable="company">某跨国制造企业</span></div>
+            <div class="desc"><span data-editable="description">负责 SAP S/4HANA 全球上线项目，覆盖 12 个国家、5000+ 用户。\n管理项目预算 800 万美元，实际支出控制在预算的 97%。\n协调中欧两地开发团队，克服时区差异，里程碑达成率 100%。</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">核心能力</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">PMP</span>
+        <span data-editable-item data-editable="skill">敏捷管理</span>
+        <span data-editable-item data-editable="skill">风险管理</span>
+        <span data-editable-item data-editable="skill">干系人管理</span>
+        <span data-editable-item data-editable="skill">Jira/Confluence</span>
+        <span data-editable-item data-editable="skill">Power BI</span>
+        <span data-editable-item data-editable="skill">跨文化团队</span>
+        <span data-editable-item data-editable="skill">中英双语</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">教育</div>
+      <div data-editable-group="education">
+        <div class="experience-item" data-editable-item style="margin-bottom:0;">
+          <div class="tl-dot"></div>
+          <div class="tl-date"><span data-editable="duration">2014.09 - 2016.05</span></div>
+          <div class="experience-body">
+            <div class="position"><span data-editable="degree">工商管理 · MBA</span></div>
+            <div class="company"><span data-editable="school">复旦大学管理学院</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

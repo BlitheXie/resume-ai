@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | 创作者</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #faf8f5;
+    --card: #fffefb;
+    --ink: #2c2c2c;
+    --accent: #e07a5f;
+    --accent2: #3d405b;
+    --warm: #f4a261;
+    --muted: #8b8b8b;
+    --divider: #e8e4df;
+    --tag-bg: #fdf2ed;
+    --radius: 8px;
+  }
+
+  body {
+    font-family: "Georgia", "Noto Serif SC", "STSong", "SimSun", serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.7;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+  }
+
+  .resume {
+    width: 760px;
+    background: var(--card);
+    border-radius: 4px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+
+  .header {
+    padding: 44px 48px 20px;
+    border-bottom: 3px solid var(--ink);
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .header-avatar img {
+    width: 68px; height: 68px; border-radius: 4px;
+    border: 3px solid var(--accent);
+    object-fit: cover; display: block;
+  }
+  .header-text { flex: 1; }
+
+  .header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .header .title {
+    font-size: 16px;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .header-contact a { color: var(--accent2); text-decoration: none; border-bottom: 1px dotted var(--accent2); }
+  .header-contact a:hover { border-bottom-style: solid; }
+
+  .main { display: flex; }
+
+  .sidebar {
+    width: 220px;
+    background: #fefaf7;
+    padding: 28px 24px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--divider);
+  }
+
+  .content { flex: 1; padding: 28px 32px; }
+
+  .section { margin-bottom: 24px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 12px;
+    border-radius: 20px;
+    background: var(--tag-bg);
+    color: var(--accent);
+  }
+
+  .summary-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+
+  .experience-item {
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .experience-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+  }
+
+  .experience-header .position {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .experience-header .duration {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .experience-sub {
+    font-size: 13px;
+    color: var(--accent2);
+    margin-bottom: 6px;
+  }
+
+  .experience-desc {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; border: none; border-radius: 0; }
+    .header { border-bottom-color: #000; }
+    .sidebar { border-right-color: #ddd; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='68'%3E%3Crect fill='%23fdf2ed' width='68' height='68'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23e07a5f' font-size='28'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-text">
+    <h1 data-editable="name">张三</h1>
+    <div class="title"><span data-editable="title">独立创作者 & 内容策略师</span></div>
+    <div class="header-contact">
+      <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+      <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+      <span>📍 <span data-editable="location">成都</span></span>
+      <span>🔗 <a data-editable="website" data-editable-type="link" href="https://zhangsan.cc">zhangsan.cc</a></span>
+    </div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="sidebar">
+      <div class="section">
+        <div class="section-title">创作工具</div>
+        <div class="skill-tags" data-editable-group="skills">
+          <span data-editable-item data-editable="skill">写作</span>
+          <span data-editable-item data-editable="skill">摄影</span>
+          <span data-editable-item data-editable="skill">Figma</span>
+          <span data-editable-item data-editable="skill">Notion</span>
+          <span data-editable-item data-editable="skill">剪映</span>
+          <span data-editable-item data-editable="skill">播客</span>
+          <span data-editable-item data-editable="skill">SEO</span>
+          <span data-editable-item data-editable="skill">社群运营</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">语言</div>
+        <p style="font-size:13px;color:var(--ink);line-height:2;">
+          <span data-editable="language">中文 · English · 日本語 (N2)</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="section">
+        <div class="section-title">关于我</div>
+        <p class="summary-text"><span data-editable="summary">跨领域创作者，相信好内容自有力量。全网粉丝 50 万+，累计产出 200+ 篇深度文章、80+ 期播客。擅长将复杂话题转化为通俗叙事，作品多次被主流媒体转载。致力于探索「创作即生活方式」的可能。</span></p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">代表作品</div>
+        <div data-editable-group="work-experience">
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">独立创作者</span>
+              <span class="duration" data-editable="duration">2021.03 - 至今</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">自媒体 · 全网 50 万粉</span></div>
+            <div class="experience-desc"><span data-editable="description">微信公众号深度长文专栏，平均阅读量 3 万+，付费专栏订阅 8000+。\n播客节目累计播放 500 万次，入选 Apple Podcast 年度推荐。\nB 站视频教程系列，单期最高播放 80 万，累计获赞 15 万+。</span></div>
+          </div>
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">内容策略师</span>
+              <span class="duration" data-editable="duration">2018.06 - 2021.02</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某内容平台 · 内容运营部</span></div>
+            <div class="experience-desc"><span data-editable="description">负责平台内容生态策略，创作者留存率提升 40%。\n策划「创作者成长计划」，孵化 100+ 优质创作者。\n撰写平台官方内容指南，被内部作为培训教材使用。</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">出版与合作</div>
+        <div data-editable-group="education">
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="degree">独立出版 · 随笔集</span>
+              <span class="duration" data-editable="duration">2023.05</span>
+            </div>
+            <div class="experience-sub"><span data-editable="school">《生活与创造的间隙》· 销量 2 万册</span></div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

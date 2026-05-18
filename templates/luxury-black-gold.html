@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | 高级黑金</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0d0d0d;
+    --card: #111111;
+    --gold: #d4a853;
+    --gold-light: #f0d68a;
+    --gold-dark: #a67c2e;
+    --text: #e8e8e8;
+    --muted: #999;
+    --border: #2a2a2a;
+    --surface: #1a1a1a;
+  }
+
+  body {
+    font-family: "Georgia", "Noto Serif SC", "STSong", "SimSun", serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 780px;
+    background: var(--card);
+    border: 1px solid var(--gold-dark);
+    box-shadow: 0 0 40px rgba(212,168,83,0.08);
+  }
+
+  .header {
+    padding: 44px 48px 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--gold-dark);
+    background: linear-gradient(180deg, rgba(212,168,83,0.06) 0%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .header-avatar img {
+    width: 80px; height: 80px; border-radius: 4px;
+    border: 2px solid var(--gold-dark);
+    object-fit: cover; display: block;
+  }
+  .header-text { text-align: center; }
+
+  .header h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 4px;
+    margin-bottom: 6px;
+  }
+
+  .header .title {
+    font-size: 14px;
+    color: var(--gold-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .header-contact {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .header-contact a { color: var(--gold-light); text-decoration: none; }
+  .header-contact a:hover { color: var(--gold); }
+
+  .content { padding: 36px 48px 40px; }
+
+  .section { margin-bottom: 30px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gold-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-dark);
+    opacity: 0.3;
+  }
+
+  .summary-text {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+  }
+
+  .experience-item {
+    margin-bottom: 24px;
+    padding-left: 16px;
+    border-left: 2px solid var(--gold-dark);
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .experience-header .position {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+  }
+
+  .experience-header .duration {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 1px;
+  }
+
+  .experience-sub {
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .experience-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+    white-space: pre-line;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tags span {
+    display: inline-block;
+    padding: 5px 14px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border: 1px solid var(--gold-dark);
+    color: var(--gold-light);
+    background: rgba(212,168,83,0.04);
+    border-radius: 2px;
+    font-family: "Georgia", "Noto Serif SC", serif;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; }
+    .section-title::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%231a1a10' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23d4a853' font-size='32'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-text">
+    <h1 data-editable="name">张 三</h1>
+    <div class="title"><span data-editable="title">投资总监</span></div>
+    <div class="header-contact">
+      <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+      <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+      <span>📍 <span data-editable="location">上海·陆家嘴</span></span>
+      <span>🔗 <a data-editable="website" data-editable-type="link" href="https://linkedin.com/in/zhangsan">linkedin.com/in/zhangsan</a></span>
+    </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">专业概述</div>
+      <p class="summary-text"><span data-editable="summary">拥有 10 年一级市场投资经验，管理基金规模超过 50 亿人民币。专注消费与科技赛道，主导投资了 20+ 项目，其中 5 个已实现 IPO。擅长行业研究和估值建模，具备优秀的交易结构设计和投后管理能力。CFA 持证人。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">工作经历</div>
+      <div data-editable-group="work-experience">
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">投资总监</span>
+            <span class="duration" data-editable="duration">2020.03 - 至今</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某头部双币基金</span></div>
+          <div class="experience-desc"><span data-editable="description">主导消费科技赛道投资，管理 15 亿人民币资金池。\n领投 8 个项目，累计投资额超 8 亿，IRR 达 35%。\n推动 2 个项目成功 IPO，3 个项目完成并购退出。\n搭建基金内部研究体系，覆盖 200+ 细分赛道。</span></div>
+        </div>
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">投资经理</span>
+            <span class="duration" data-editable="duration">2016.07 - 2020.02</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某知名 PE 机构</span></div>
+          <div class="experience-desc"><span data-editable="description">完成 12 个项目的尽职调查和投资执行。\n参与 3 个项目的投后管理，协助被投企业收入增长 200%。\n撰写行业深度报告 30+ 篇，被多家媒体转载。</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">核心能力</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">行业研究</span>
+        <span data-editable-item data-editable="skill">估值建模</span>
+        <span data-editable-item data-editable="skill">交易结构</span>
+        <span data-editable-item data-editable="skill">投后管理</span>
+        <span data-editable-item data-editable="skill">财务分析</span>
+        <span data-editable-item data-editable="skill">谈判</span>
+        <span data-editable-item data-editable="skill">CFA</span>
+        <span data-editable-item data-editable="skill">英语流利</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">教育背景</div>
+      <div data-editable-group="education">
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="degree">金融学 · 硕士</span>
+            <span class="duration" data-editable="duration">2014.09 - 2016.06</span>
+          </div>
+          <div class="experience-sub"><span data-editable="school">清华大学五道口金融学院</span></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Stripe x Notion</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f7f6f3;
+    --card: #ffffff;
+    --text: #37352f;
+    --muted: #9b9a97;
+    --accent: #635bff;
+    --accent-light: #f0efff;
+    --border: #e9e9e7;
+    --tag-bg: #f0f0ed;
+    --radius: 6px;
+  }
+
+  body {
+    font-family: "Inter", "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+    font-size: 14px;
+  }
+
+  .resume {
+    width: 760px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  /* 头部 */
+  .header { padding: 40px 48px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 20px; }
+  .header-avatar img {
+    width: 64px; height: 64px; border-radius: 4px;
+    object-fit: cover; display: block;
+  }
+  .header-text { flex: 1; }
+  .header-name {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .header-role {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .header-meta a { color: var(--accent); text-decoration: none; }
+  .header-meta a:hover { text-decoration: underline; }
+  .header-meta .meta-icon { margin-right: 2px; }
+
+  /* 主体 */
+  .content { padding: 32px 48px 40px; }
+
+  .section { margin-bottom: 28px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* 简介卡片 */
+  .summary-card {
+    background: #fafaf8;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* 经历 - Notion 风格 */
+  .exp-item {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-dot {
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .exp-body { flex: 1; }
+  .exp-body .row1 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .exp-body .position { font-size: 15px; font-weight: 600; }
+  .exp-body .duration { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .exp-body .company { font-size: 13px; color: var(--accent); margin-bottom: 6px; }
+  .exp-body .desc { font-size: 13px; line-height: 1.7; white-space: pre-line; }
+
+  /* 技能 */
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tags span {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius);
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--tag-bg);
+    color: var(--text);
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; border: none; border-radius: 0; width: 100%; }
+    @page { size: A4; margin: 15mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect fill='%23f0efff' width='64' height='64'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23635bff' font-size='28'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-text">
+    <div class="header-name"><span data-editable="name">张三</span></div>
+    <div class="header-role"><span data-editable="title">产品经理 · 增长方向</span></div>
+    <div class="header-meta">
+      <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+      <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+      <span>📍 <span data-editable="location">杭州</span></span>
+      <span>🔗 <a data-editable="website" data-editable-type="link" href="https://zhangsan.notion.site">zhangsan.notion.site</a></span>
+    </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">💡 关于我</div>
+      <div class="summary-card">
+        <span data-editable="summary">5 年产品经验，专注 SaaS 产品的 0-1 和规模化增长。擅长数据驱动的产品决策，曾主导产品月活从 10 万增长至 200 万。热爱用户研究，坚持「做减法」的产品理念。Notion 重度用户，使用 Notion 管理整个产品团队的知识库。</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">💼 工作经历</div>
+      <div data-editable-group="work-experience">
+
+        <div class="exp-item" data-editable-item>
+          <div class="exp-dot">📊</div>
+          <div class="exp-body">
+            <div class="row1">
+              <span class="position" data-editable="position">增长产品经理</span>
+              <span class="duration" data-editable="duration">2022.04 - 至今</span>
+            </div>
+            <div class="company"><span data-editable="company">某 SaaS 独角兽</span></div>
+            <div class="desc"><span data-editable="description">负责核心产品线的增长策略，通过 A/B 实验和用户分层，12 个月内付费转化率提升 120%。\n主导新用户引导流程重构，次日留存率从 35% 提升至 58%。\n搭建产品数据看板，定义北极星指标，推动数据驱动文化落地。</span></div>
+          </div>
+        </div>
+
+        <div class="exp-item" data-editable-item>
+          <div class="exp-dot">🚀</div>
+          <div class="exp-body">
+            <div class="row1">
+              <span class="position" data-editable="position">产品经理</span>
+              <span class="duration" data-editable="duration">2020.01 - 2022.03</span>
+            </div>
+            <div class="company"><span data-editable="company">某互联网大厂</span></div>
+            <div class="desc"><span data-editable="description">负责 B 端后台管理系统的产品设计，服务 3000+ 企业客户。\n推动产品从项目制转向 SaaS 化，年度经常性收入（ARR）突破 5000 万。\n撰写 15 篇产品方法论文章，多次登上平台热搜。</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">🛠 技能</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">产品策略</span>
+        <span data-editable-item data-editable="skill">增长黑客</span>
+        <span data-editable-item data-editable="skill">数据分析</span>
+        <span data-editable-item data-editable="skill">SQL</span>
+        <span data-editable-item data-editable="skill">A/B 实验</span>
+        <span data-editable-item data-editable="skill">用户研究</span>
+        <span data-editable-item data-editable="skill">Figma</span>
+        <span data-editable-item data-editable="skill">Notion</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">🎓 教育</div>
+      <div data-editable-group="education">
+        <div class="exp-item" data-editable-item>
+          <div class="exp-dot">📖</div>
+          <div class="exp-body">
+            <div class="row1">
+              <span class="position" data-editable="degree">信息管理与信息系统 · 本科</span>
+              <span class="duration" data-editable="duration">2016.09 - 2020.06</span>
+            </div>
+            <div class="company"><span data-editable="school">浙江大学</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

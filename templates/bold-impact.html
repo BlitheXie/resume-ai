@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Bold Impact</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #e8e9eb;
+    --card: #fff;
+    --text: #1e1e1e;
+    --muted: #6b6b6b;
+    --accent: #e63946;
+    --dark: #1d3557;
+    --border: #dcdcdc;
+  }
+
+  body {
+    font-family: "Inter", -apple-system, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+  }
+
+  .resume {
+    width: 760px;
+    background: var(--card);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .header {
+    background: var(--dark);
+    color: #fff;
+    padding: 36px 44px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .header-avatar img {
+    width: 80px; height: 80px; border-radius: 4px;
+    border: 3px solid rgba(255,255,255,0.3);
+    object-fit: cover; display: block;
+  }
+  .header-text { flex: 1; }
+  .header-text h1 {
+    font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 2px;
+  }
+  .header-text .title {
+    font-size: 14px; color: var(--accent); font-weight: 600; margin-bottom: 12px;
+  }
+  .header-contact {
+    display: flex; flex-wrap: wrap; gap: 6px 20px;
+    font-size: 12px; color: rgba(255,255,255,0.75);
+  }
+  .header-contact a { color: #fff; text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .main { display: flex; }
+
+  .sidebar {
+    width: 230px; background: #f8f8f8; padding: 28px 22px; flex-shrink: 0;
+  }
+
+  .content { flex: 1; padding: 28px 32px; }
+
+  .section { margin-bottom: 24px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 12px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--dark);
+    margin-bottom: 10px; padding-bottom: 6px;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .skill-tags span {
+    display: inline-block; padding: 4px 10px; font-size: 11px; font-weight: 600;
+    background: #fff; color: var(--dark); border: 1px solid var(--border);
+  }
+
+  .summary-text { font-size: 14px; line-height: 1.7; }
+
+  .exp-item { margin-bottom: 20px; }
+  .exp-item:last-child { margin-bottom: 0; }
+
+  .exp-header {
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;
+  }
+  .exp-header .position { font-size: 15px; font-weight: 700; }
+  .exp-header .duration { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .exp-sub { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+  .exp-desc { font-size: 13px; line-height: 1.7; white-space: pre-line; }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; }
+    .header { background: var(--dark); }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img data-editable="avatar" data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%231d3557' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23fff' font-size='30'%3E张%3C/text%3E%3C/svg%3E" alt="头像"/>
+    </div>
+    <div class="header-text">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">增长产品经理</span></div>
+      <div class="header-contact">
+        <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+        <span>📍 <span data-editable="location">深圳</span></span>
+        <span>🔗 <a data-editable="website" data-editable-type="link" href="https://zhangsan.cc">zhangsan.cc</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="sidebar">
+      <div class="section">
+        <div class="section-title">核心技能</div>
+        <div class="skill-tags" data-editable-group="skills">
+          <span data-editable-item data-editable="skill">增长策略</span>
+          <span data-editable-item data-editable="skill">A/B 测试</span>
+          <span data-editable-item data-editable="skill">数据分析</span>
+          <span data-editable-item data-editable="skill">SQL</span>
+          <span data-editable-item data-editable="skill">用户增长</span>
+          <span data-editable-item data-editable="skill">产品设计</span>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">语言</div>
+        <p style="font-size:12px;color:var(--muted);">
+          <span data-editable="language">中文（母语） / 英语（流利）</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="section">
+        <div class="section-title">关于我</div>
+        <p class="summary-text"><span data-editable="summary">6 年增长产品经验，专注 SaaS 和电商赛道。擅长数据驱动的增长策略制定与落地，曾主导产品月活从 5 万增长至 80 万。熟练运用 SQL 和 A/B 实验框架，具备从策略到执行的全链路能力。</span></p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">工作经历</div>
+        <div data-editable-group="work-experience">
+
+          <div class="exp-item" data-editable-item>
+            <div class="exp-header">
+              <span class="position" data-editable="position">高级增长产品经理</span>
+              <span class="duration" data-editable="duration">2022.04 - 至今</span>
+            </div>
+            <div class="exp-sub"><span data-editable="company">某头部电商平台</span></div>
+            <div class="exp-desc"><span data-editable="description">负责平台新用户增长，通过裂变策略和投放优化，季度新增用户 200 万+。\n设计并迭代推荐算法实验，点击率提升 35%。\n搭建增长数据看板，实现从策略到 ROI 的全链路追踪。</span></div>
+          </div>
+
+          <div class="exp-item" data-editable-item>
+            <div class="exp-header">
+              <span class="position" data-editable="position">增长产品经理</span>
+              <span class="duration" data-editable="duration">2019.06 - 2022.03</span>
+            </div>
+            <div class="exp-sub"><span data-editable="company">某 SaaS 创业公司</span></div>
+            <div class="exp-desc"><span data-editable="description">从 0 搭建增长体系，推动产品从 PMF 验证到规模化增长。\n主导 50+ A/B 实验，付费转化率累计提升 180%。\n负责 Google Ads 和 Meta Ads 投放优化，ROAS 从 1.2 提升至 3.8。</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">教育</div>
+        <div data-editable-group="education">
+          <div class="exp-item" data-editable-item>
+            <div class="exp-header">
+              <span class="position" data-editable="degree">工商管理 · 本科</span>
+              <span class="duration" data-editable="duration">2015.09 - 2019.06</span>
+            </div>
+            <div class="exp-sub"><span data-editable="school">复旦大学</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

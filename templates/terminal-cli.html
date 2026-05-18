@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Terminal CLI</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0c0c0c;
+    --green: #00ff41;
+    --green-dim: #0a5c1a;
+    --cyan: #00e5ff;
+    --yellow: #ffe600;
+    --red: #ff3333;
+    --text: #d0d0d0;
+    --muted: #5a5a5a;
+    --prompt: #00ff41;
+  }
+
+  body {
+    font-family: "Courier New", "SF Mono", "Fira Code", "Source Code Pro", monospace;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    display: flex;
+    justify-content: center;
+    padding: 28px 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 780px;
+    background: #0e0e0e;
+    border: 1px solid #1a1a1a;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 0 60px rgba(0,255,65,0.02);
+  }
+
+  .titlebar {
+    background: #151515;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  .titlebar-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .titlebar-dot.red { background: #ff5f57; }
+  .titlebar-dot.yellow { background: #ffbd2e; }
+  .titlebar-dot.green { background: #28c840; }
+
+  .titlebar-title {
+    margin-left: 8px;
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 1px;
+  }
+
+  .terminal { padding: 28px 36px 36px; }
+
+  .line { margin-bottom: 4px; display: flex; gap: 8px; align-items: flex-start; }
+  .line .prompt { color: var(--prompt); white-space: nowrap; flex-shrink: 0; font-weight: 700; font-size: 13px; }
+  .line .cmd { color: var(--text); font-size: 13px; }
+
+  .output { margin-bottom: 20px; padding-left: 20px; }
+
+  .kv { display: flex; gap: 8px; font-size: 13px; margin-bottom: 2px; }
+  .kv .key { color: var(--cyan); white-space: nowrap; }
+  .kv .key::after { content: ':'; color: var(--muted); }
+  .kv .val { color: var(--text); }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--yellow);
+    margin: 24px 0 12px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--green-dim);
+  }
+
+  .summary-text { font-size: 13px; color: var(--text); line-height: 1.8; }
+
+  .experience-item {
+    margin-bottom: 16px;
+    padding-left: 16px;
+    border-left: 2px solid var(--green-dim);
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .cmd-line { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .cmd-line .ts { color: var(--green); }
+
+  .experience-header .position {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+
+  .experience-sub {
+    font-size: 12px;
+    color: var(--yellow);
+    margin-bottom: 6px;
+  }
+
+  .experience-desc {
+    font-size: 12px;
+    line-height: 1.8;
+    white-space: pre-line;
+    color: var(--text);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 11px;
+    border: 1px solid var(--green-dim);
+    color: var(--green);
+    background: rgba(0,255,65,0.04);
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      background: #fff;
+    }
+    .resume { box-shadow: none; border: 1px solid #333; color: #000; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="titlebar">
+    <span class="titlebar-dot red"></span>
+    <span class="titlebar-dot yellow"></span>
+    <span class="titlebar-dot green"></span>
+    <span class="titlebar-title">resume.sh — bash — 80×24</span>
+  </div>
+
+  <div class="terminal">
+
+    <div class="line"><span class="prompt">❯</span><span class="cmd">whoami</span></div>
+    <div class="output">
+      <div class="kv"><span class="key">name</span><span class="val"><span data-editable="name">张三</span></span></div>
+      <div class="kv"><span class="key">title</span><span class="val"><span data-editable="title">DevOps / SRE 工程师</span></span></div>
+      <div class="kv"><span class="key">email</span><span class="val"><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com" style="color:var(--cyan);text-decoration:none">zhangsan@example.com</a></span></div>
+      <div class="kv"><span class="key">phone</span><span class="val"><span data-editable="phone">138-0000-0000</span></span></div>
+      <div class="kv"><span class="key">location</span><span class="val"><span data-editable="location">东京</span></span></div>
+      <div class="kv"><span class="key">github</span><span class="val"><a data-editable="website" data-editable-type="link" href="https://github.com/zhangsan" style="color:var(--cyan);text-decoration:none">github.com/zhangsan</a></span></div>
+    </div>
+
+    <div class="line"><span class="prompt">❯</span><span class="cmd">cat summary.md</span></div>
+    <p class="summary-text"><span data-editable="summary">8 年运维开发经验，专注于云原生基础设施与自动化体系搭建。管理过 5000+ 节点 Kubernetes 集群，从零构建过可观测性平台。信奉「一切皆代码」，擅长将重复性工作转化为自动化流水线。</span></p>
+
+    <div class="section-title">❯ cat work_experience.log</div>
+
+    <div data-editable-group="work-experience">
+
+      <div class="experience-item" data-editable-item>
+        <div class="cmd-line"><span class="ts" data-editable="duration">[2021.04 - now]</span> $ tail -f /var/log/career.log</div>
+        <div class="experience-header"><span class="position" data-editable="position">Staff SRE</span></div>
+        <div class="experience-sub"><span data-editable="company">某跨国云平台</span></div>
+        <div class="experience-desc"><span data-editable="description">管理 8000+ 节点的多区域 K8s 集群，全年可用性 99.995%。\n自研混沌工程平台，季度故障演练覆盖率 100%。\n设计 GitOps 工作流，所有基础设施通过 Terraform + ArgoCD 管理。</span></div>
+      </div>
+
+      <div class="experience-item" data-editable-item>
+        <div class="cmd-line"><span class="ts" data-editable="duration">[2018.06 - 2021.03]</span> $ grep "sre" /var/log/career.log</div>
+        <div class="experience-header"><span class="position" data-editable="position">Senior DevOps Engineer</span></div>
+        <div class="experience-sub"><span data-editable="company">某金融科技公司</span></div>
+        <div class="experience-desc"><span data-editable="description">容器化迁移项目，将 200+ 服务从 VM 迁移至 K8s，资源利用率提升 60%。\n搭建 Prometheus + Grafana + Loki 可观测性三件套，告警噪音降低 80%。\n编写 50+ Terraform 模块，基础设施部署时间从 3 天缩短至 20 分钟。</span></div>
+      </div>
+
+    </div>
+
+    <div class="section-title">❯ ls -la /usr/local/bin/</div>
+    <div class="skill-tags" data-editable-group="skills">
+      <span data-editable-item data-editable="skill">Kubernetes</span>
+      <span data-editable-item data-editable="skill">Terraform</span>
+      <span data-editable-item data-editable="skill">Prometheus</span>
+      <span data-editable-item data-editable="skill">ArgoCD</span>
+      <span data-editable-item data-editable="skill">Go</span>
+      <span data-editable-item data-editable="skill">Python</span>
+      <span data-editable-item data-editable="skill">AWS/GCP</span>
+      <span data-editable-item data-editable="skill">Linux</span>
+    </div>
+
+    <div class="section-title">❯ cat /etc/education</div>
+    <div data-editable-group="education">
+      <div class="experience-item" data-editable-item>
+        <div class="experience-header"><span class="position" data-editable="degree">计算机科学 · 本科</span></div>
+        <div class="experience-sub"><span data-editable="school">东京工业大学</span></div>
+        <div class="cmd-line"><span class="ts" data-editable="duration">[2014.04 - 2018.03]</span></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

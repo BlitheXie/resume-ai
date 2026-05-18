@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Mono Chrome</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fafafa;
+    --card: #fff;
+    --ink: #111;
+    --muted: #666;
+    --border: #e5e5e5;
+  }
+
+  body {
+    font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 24px 20px;
+  }
+
+  .resume {
+    width: 760px;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+
+  .header {
+    padding: 48px 56px 36px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .header .title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .header-line {
+    width: 40px;
+    height: 2px;
+    background: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .header-contact a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border); }
+  .header-contact a:hover { border-bottom-color: var(--ink); }
+
+  .content { padding: 36px 56px 48px; }
+
+  .section { margin-bottom: 32px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .summary-text { font-size: 14px; line-height: 1.8; }
+
+  .experience-item {
+    margin-bottom: 24px;
+    display: flex;
+    gap: 20px;
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-meta {
+    width: 120px;
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 2px;
+  }
+
+  .experience-body { flex: 1; }
+
+  .experience-body .position {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .experience-body .company {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .experience-body .desc {
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-line;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 5px 14px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    background: #fafafa;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { border: none; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <h1 data-editable="name">张三</h1>
+    <div class="title"><span data-editable="title">后端开发工程师</span></div>
+    <div class="header-line"></div>
+    <div class="header-contact">
+      <span><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+      <span data-editable="phone">138-0000-0000</span>
+      <span data-editable="location">北京</span>
+      <span><a data-editable="website" data-editable-type="link" href="https://github.com/zhangsan">github.com/zhangsan</a></span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">个人简介</div>
+      <p class="summary-text"><span data-editable="summary">6 年后端开发经验，专注高并发系统设计与微服务架构。擅长大规模分布式系统的性能优化，主导过日均 10 亿级请求的网关系统重构。崇尚简洁代码，相信好的架构是"自然生长"出来的。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">工作经历</div>
+      <div data-editable-group="work-experience">
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-meta"><span data-editable="duration">2021.06 - 至今</span></div>
+          <div class="experience-body">
+            <div class="position"><span data-editable="position">高级后端工程师</span></div>
+            <div class="company"><span data-editable="company">某头部互联网公司</span></div>
+            <div class="desc"><span data-editable="description">主导 API 网关系统重构，日均请求量从 3 亿提升至 10 亿，P99 延迟降低 60%。\n设计统一配置中心，管理 500+ 微服务的动态配置，变更效率提升 80%。\n推动团队代码规范落地，单元测试覆盖率从 15% 提升至 75%。</span></div>
+          </div>
+        </div>
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-meta"><span data-editable="duration">2019.03 - 2021.05</span></div>
+          <div class="experience-body">
+            <div class="position"><span data-editable="position">后端开发工程师</span></div>
+            <div class="company"><span data-editable="company">某金融科技公司</span></div>
+            <div class="desc"><span data-editable="description">负责支付核心系统的开发与维护，日处理交易订单 200 万笔。\n设计分布式事务方案，保证资金流转的最终一致性，零差错运行 2 年。\n参与数据库分库分表改造，单表数据量从 5 亿降低至 5000 万。</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">技能</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">Go</span>
+        <span data-editable-item data-editable="skill">Java</span>
+        <span data-editable-item data-editable="skill">Rust</span>
+        <span data-editable-item data-editable="skill">MySQL</span>
+        <span data-editable-item data-editable="skill">Redis</span>
+        <span data-editable-item data-editable="skill">Kafka</span>
+        <span data-editable-item data-editable="skill">Kubernetes</span>
+        <span data-editable-item data-editable="skill">分布式系统</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">教育</div>
+      <div data-editable-group="education">
+        <div class="experience-item" data-editable-item>
+          <div class="experience-meta"><span data-editable="duration">2015.09 - 2019.06</span></div>
+          <div class="experience-body">
+            <div class="position"><span data-editable="degree">软件工程 · 本科</span></div>
+            <div class="company"><span data-editable="school">华中科技大学</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

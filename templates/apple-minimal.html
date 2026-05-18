@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Apple 极简</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fbfbfd;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --muted: #86868b;
+    --accent: #0071e3;
+    --divider: #d2d2d7;
+  }
+
+  body {
+    font-family: -apple-system, "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif;
+    color: var(--text);
+    background: #f0f0f2;
+    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .resume {
+    width: 720px;
+    background: var(--card);
+    border-radius: 18px;
+    padding: 56px 64px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .header { margin-bottom: 40px; display: flex; align-items: center; gap: 24px; }
+  .header-avatar img {
+    width: 72px; height: 72px; border-radius: 4px;
+    object-fit: cover; display: block;
+  }
+  .header-text { flex: 1; }
+  .header h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .header .title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .header-contact {
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    font-size: 14px; color: var(--muted);
+  }
+  .header-contact a { color: var(--accent); text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .section { margin-bottom: 32px; }
+  .section:last-child { margin-bottom: 0; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .summary-text { font-size: 16px; line-height: 1.7; }
+
+  .exp-item { margin-bottom: 24px; }
+  .exp-item:last-child { margin-bottom: 0; }
+  .exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .exp-header .position { font-size: 16px; font-weight: 600; }
+  .exp-header .duration { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .exp-sub { font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+  .exp-desc { font-size: 14px; line-height: 1.7; white-space: pre-line; }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tags span {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: #f5f5f7;
+    color: var(--text);
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; border-radius: 0; width: 100%; padding: 0; }
+    @page { size: A4; margin: 18mm 20mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Crect fill='%23e8e8ed' width='72' height='72'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%2386868b' font-size='28'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-text">
+    <h1 data-editable="name">张三</h1>
+    <div class="title"><span data-editable="title">产品设计师</span></div>
+    <div class="header-contact">
+      <span><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+      <span data-editable="phone">138-0000-0000</span>
+      <span data-editable="location">北京</span>
+      <span><a data-editable="website" data-editable-type="link" href="https://zhangsan.design">zhangsan.design</a></span>
+    </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">关于我</div>
+    <p class="summary-text"><span data-editable="summary">8 年产品设计经验，曾在 Apple、Figma 等团队主导核心产品设计。擅长从用户研究到交互设计的全链路设计流程，对设计系统和可访问性有深入理解。相信简洁就是终极的复杂。</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">工作经历</div>
+    <div data-editable-group="work-experience">
+
+      <div class="exp-item" data-editable-item>
+        <div class="exp-header">
+          <span class="position" data-editable="position">高级产品设计师</span>
+          <span class="duration" data-editable="duration">2021.03 - 至今</span>
+        </div>
+        <div class="exp-sub"><span data-editable="company">某消费科技公司</span></div>
+        <div class="exp-desc"><span data-editable="description">主导核心 App 的改版设计，DAU 提升 35%。\n建立了完整的设计系统（Design System），包含 200+ 组件和设计规范文档。\n推动无障碍设计标准落地，产品 WCAG 2.1 AA 合规率达到 100%。</span></div>
+      </div>
+
+      <div class="exp-item" data-editable-item>
+        <div class="exp-header">
+          <span class="position" data-editable="position">UI/UX 设计师</span>
+          <span class="duration" data-editable="duration">2018.06 - 2021.02</span>
+        </div>
+        <div class="exp-sub"><span data-editable="company">某互联网平台</span></div>
+        <div class="exp-desc"><span data-editable="description">负责 B 端 SaaS 产品的用户体验设计，服务客户包括 500 强企业。\n主导用户研究工作坊，产出 30+ 用户旅程地图和体验改进方案。\n设计的产品交互原型获得 Red Dot 设计奖。</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">技能</div>
+    <div class="skill-tags" data-editable-group="skills">
+      <span data-editable-item data-editable="skill">Figma</span>
+      <span data-editable-item data-editable="skill">Design Systems</span>
+      <span data-editable-item data-editable="skill">Prototyping</span>
+      <span data-editable-item data-editable="skill">User Research</span>
+      <span data-editable-item data-editable="skill">UI Design</span>
+      <span data-editable-item data-editable="skill">Framer</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">教育</div>
+    <div data-editable-group="education">
+      <div class="exp-item" data-editable-item>
+        <div class="exp-header">
+          <span class="position" data-editable="degree">设计学 · 硕士</span>
+          <span class="duration" data-editable="duration">2016.09 - 2018.06</span>
+        </div>
+        <div class="exp-sub"><span data-editable="school">清华大学美术学院</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

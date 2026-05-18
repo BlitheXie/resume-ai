@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Blueprint</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue: #1a4a7a;
+    --blue-light: #d0e2f5;
+    --white: #f2f7fc;
+    --card: #eaf2fa;
+    --ink: #0a2640;
+    --line: #5a8fc7;
+    --muted: #3a6a9a;
+  }
+
+  body {
+    font-family: "Courier New", "SF Mono", "Fira Code", "Source Code Pro", "PingFang SC", monospace;
+    color: var(--ink);
+    background: var(--blue);
+    background-image:
+      linear-gradient(rgba(90,143,199,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(90,143,199,0.15) 1px, transparent 1px);
+    background-size: 20px 20px;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 28px 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 780px;
+    background: var(--card);
+    border: 2px solid var(--line);
+    box-shadow: 0 0 0 4px rgba(26,74,122,0.3), 0 4px 20px rgba(0,0,0,0.15);
+    position: relative;
+  }
+
+  .header {
+    padding: 40px 44px 28px;
+    border-bottom: 2px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: linear-gradient(180deg, rgba(26,74,122,0.06) 0%, transparent 100%);
+  }
+
+  .header-avatar img {
+    width: 76px; height: 76px; border-radius: 4px;
+    border: 2px solid var(--line);
+    object-fit: cover; display: block;
+  }
+
+  .header-text { flex: 1; }
+
+  .header-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .header-text .title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .header-contact a { color: var(--blue); text-decoration: none; border-bottom: 1px dashed var(--line); }
+  .header-contact a:hover { border-bottom-style: solid; }
+
+  .content { padding: 28px 44px 40px; }
+
+  .section { margin-bottom: 28px; position: relative; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--blue);
+    display: inline-block;
+    padding: 5px 16px;
+    margin-bottom: 16px;
+  }
+
+  .summary-text { font-size: 13px; line-height: 1.8; color: var(--ink); }
+
+  .experience-item {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+    background: rgba(208,226,245,0.2);
+    position: relative;
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+  }
+
+  .experience-header .position {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .experience-header .duration {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .experience-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .experience-sub::before {
+    content: '└─ ';
+    color: var(--line);
+  }
+
+  .experience-desc {
+    font-size: 12px;
+    line-height: 1.8;
+    white-space: pre-line;
+    color: var(--ink);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: 1px solid var(--line);
+    color: var(--blue);
+    background: var(--blue-light);
+    text-transform: uppercase;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      background: #fff;
+      background-image: none;
+    }
+    .resume { box-shadow: none; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='76'%3E%3Crect fill='%231a4a7a' width='76' height='76'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23d0e2f5' font-size='28'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-text">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">系统架构师</span></div>
+      <div class="header-contact">
+        <span><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span data-editable="phone">138-0000-0000</span>
+        <span data-editable="location">深圳</span>
+        <span><a data-editable="website" data-editable-type="link" href="https://github.com/zhangsan">github.com/zhangsan</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">系统概述</div>
+      <p class="summary-text"><span data-editable="summary">9 年系统架构经验，专注高可用分布式系统设计。主导过日均 50 亿次请求的网关架构演进，具备从硬件选型到应用层的全栈视野。坚信「简单即可靠」，推崇可观测性驱动的架构决策。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">架构日志</div>
+      <div data-editable-group="work-experience">
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">首席架构师</span>
+            <span class="duration" data-editable="duration">2020.06 - 至今</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某云服务商</span></div>
+          <div class="experience-desc"><span data-editable="description">主导 API 网关 3.0 架构设计，日均处理 50 亿请求，P99 延迟 8ms。\n推动全链路可观测体系落地，MTTR 从 45 分钟降至 8 分钟。\n设计多活容灾方案，全年服务可用性 99.997%。</span></div>
+        </div>
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">高级架构师</span>
+            <span class="duration" data-editable="duration">2016.03 - 2020.05</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某电商平台</span></div>
+          <div class="experience-desc"><span data-editable="description">负责核心交易系统架构演进，支撑双11峰值 QPS 80 万。\n主导数据库分库分表方案，数据容量从 500TB 扩展至 2PB。\n推行混沌工程实践，系统韧性提升至 99.99%。</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">技术栈</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">Go</span>
+        <span data-editable-item data-editable="skill">Rust</span>
+        <span data-editable-item data-editable="skill">Kubernetes</span>
+        <span data-editable-item data-editable="skill">分布式系统</span>
+        <span data-editable-item data-editable="skill">高可用设计</span>
+        <span data-editable-item data-editable="skill">混沌工程</span>
+        <span data-editable-item data-editable="skill">Terraform</span>
+        <span data-editable-item data-editable="skill">PostgreSQL</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">教育</div>
+      <div data-editable-group="education">
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="degree">计算机科学 · 硕士</span>
+            <span class="duration" data-editable="duration">2013.09 - 2016.03</span>
+          </div>
+          <div class="experience-sub"><span data-editable="school">上海交通大学</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

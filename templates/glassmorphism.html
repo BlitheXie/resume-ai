@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Glassmorphism</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --accent: #7c5ce0;
+    --accent2: #3ecf8e;
+    --text: #e8e8f0;
+    --muted: #a0a0b8;
+    --glass: rgba(255,255,255,0.06);
+    --glass-hi: rgba(255,255,255,0.1);
+    --border: rgba(255,255,255,0.08);
+  }
+
+  body {
+    font-family: "Inter", "SF Pro Text", "PingFang SC", sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, #0f0c29, #1a1440, #24243e);
+    background-attachment: fixed;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(124,92,224,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(62,207,142,0.08) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .resume {
+    width: 800px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+
+  .header-avatar img {
+    width: 80px; height: 80px; border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.15);
+    object-fit: cover; display: block;
+  }
+
+  .header-info { flex: 1; }
+  .header-info h1 {
+    font-size: 30px; font-weight: 700; color: #fff;
+    letter-spacing: -0.5px; margin-bottom: 4px;
+  }
+
+  .header-info .title {
+    font-size: 14px; font-weight: 500;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .header-contact {
+    display: flex; flex-wrap: wrap; gap: 6px 20px;
+    font-size: 13px; color: var(--muted);
+  }
+  .header-contact a { color: var(--accent2); text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .main { display: flex; gap: 16px; }
+  .sidebar { width: 240px; flex-shrink: 0; }
+  .content { flex: 1; }
+
+  .box {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .section { margin-bottom: 24px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tags span {
+    display: inline-block; padding: 4px 12px;
+    font-size: 11px; border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    color: var(--text); border: 1px solid var(--border);
+  }
+
+  .summary-text { font-size: 14px; line-height: 1.7; }
+
+  .experience-item { margin-bottom: 20px; }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .experience-header .position { font-size: 15px; font-weight: 600; color: #fff; }
+  .experience-header .duration { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+  .experience-sub { font-size: 13px; color: var(--accent2); margin-bottom: 6px; }
+  .experience-desc { font-size: 13px; line-height: 1.7; white-space: pre-line; color: var(--muted); }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    body::before { display: none; }
+    .box, .header { backdrop-filter: none; -webkit-backdrop-filter: none; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img data-editable="avatar" data-editable-type="image"
+           src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%231f1b3a' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%237c5ce0' font-size='30'%3E张%3C/text%3E%3C/svg%3E"
+           alt="头像" />
+    </div>
+    <div class="header-info">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">全栈产品工程师</span></div>
+      <div class="header-contact">
+        <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+        <span>📍 <span data-editable="location">杭州</span></span>
+        <span>🔗 <a data-editable="website" data-editable-type="link" href="https://zhangsan.dev">zhangsan.dev</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <div class="box">
+        <div class="section">
+          <div class="section-title">技能</div>
+          <div class="skill-tags" data-editable-group="skills">
+            <span data-editable-item data-editable="skill">TypeScript</span>
+            <span data-editable-item data-editable="skill">Next.js</span>
+            <span data-editable-item data-editable="skill">Python</span>
+            <span data-editable-item data-editable="skill">PostgreSQL</span>
+            <span data-editable-item data-editable="skill">AWS</span>
+            <span data-editable-item data-editable="skill">GraphQL</span>
+            <span data-editable-item data-editable="skill">Figma</span>
+            <span data-editable-item data-editable="skill">AI/LLM</span>
+          </div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="section">
+          <div class="section-title">语言</div>
+          <p style="font-size:13px;line-height:2;">
+            <span data-editable="language">中文 · English · 日本語</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="box">
+        <div class="section">
+          <div class="section-title">个人简介</div>
+          <p class="summary-text"><span data-editable="summary">全栈产品工程师，从写代码到做产品，追求极致的用户体验。独立开发 3 款 SaaS 产品，累计用户 20 万+。擅长用 AI 工具加速开发流程，将想法到 MVP 的周期从月压缩至周。相信好的产品是技术、设计与商业的完美平衡。</span></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="section">
+          <div class="section-title">工作经历</div>
+          <div data-editable-group="work-experience">
+            <div class="experience-item" data-editable-item>
+              <div class="experience-header">
+                <span class="position" data-editable="position">独立开发者 & 创始人</span>
+                <span class="duration" data-editable="duration">2022.01 - 至今</span>
+              </div>
+              <div class="experience-sub"><span data-editable="company">自建 SaaS 产品矩阵</span></div>
+              <div class="experience-desc"><span data-editable="description">开发 3 款 SaaS 产品，覆盖 API 工具、笔记应用、数据分析领域，累计 MRR $15K。\n利用 AI（GPT-4 + Claude）辅助开发，单人完成全栈工作，开发效率提升 3 倍。\n产品被 Product Hunt 推荐 2 次，获得 1500+ 用户好评。</span></div>
+            </div>
+            <div class="experience-item" data-editable-item>
+              <div class="experience-header">
+                <span class="position" data-editable="position">全栈工程师</span>
+                <span class="duration" data-editable="duration">2019.06 - 2021.12</span>
+              </div>
+              <div class="experience-sub"><span data-editable="company">某知名独角兽</span></div>
+              <div class="experience-desc"><span data-editable="description">负责核心支付系统前端架构，日均交易额过亿，系统稳定性 99.99%。\n推动前端组件库建设，复用率提升 60%，新项目启动时间从 1 周降至 1 天。\n参与后端 API 设计，推动 GraphQL 迁移，客户端请求数减少 70%。</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="section">
+          <div class="section-title">教育</div>
+          <div data-editable-group="education">
+            <div class="experience-item" data-editable-item>
+              <div class="experience-header">
+                <span class="position" data-editable="degree">软件工程 · 本科</span>
+                <span class="duration" data-editable="duration">2015.09 - 2019.06</span>
+              </div>
+              <div class="experience-sub"><span data-editable="school">上海交通大学</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

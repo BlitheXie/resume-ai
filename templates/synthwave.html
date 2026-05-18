@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Synthwave</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #120a1e;
+    --card: #1a0f2e;
+    --sun: #ff6b35;
+    --pink: #ff2d95;
+    --cyan: #0ff;
+    --purple: #b347ea;
+    --text: #f0e6ff;
+    --muted: #a89bc4;
+    --border: #2d1f45;
+  }
+
+  body {
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 780px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 0 60px rgba(179,71,234,0.1), 0 0 120px rgba(255,45,149,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .resume::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(179,71,234,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header {
+    padding: 44px 48px 20px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255,45,149,0.04) 0%, transparent 100%);
+  }
+
+  .header h1 {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--pink), var(--sun));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .header .title {
+    font-size: 15px;
+    color: var(--cyan);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .header-contact a { color: var(--purple); text-decoration: none; }
+  .header-contact a:hover { color: var(--pink); }
+
+  .content { padding: 32px 48px 40px; position: relative; }
+
+  .section { margin-bottom: 28px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-text { font-size: 14px; line-height: 1.9; color: var(--text); }
+
+  .experience-item {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 2px solid var(--purple);
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .experience-header .position {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+
+  .experience-header .duration {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .experience-sub {
+    font-size: 13px;
+    color: var(--pink);
+    margin-bottom: 8px;
+  }
+
+  .experience-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-line;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 5px 14px;
+    font-size: 12px;
+    border: 1px solid rgba(179,71,234,0.5);
+    color: var(--purple);
+    background: rgba(179,71,234,0.05);
+    border-radius: 2px;
+    letter-spacing: 1px;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; border: 1px solid #333; }
+    .resume::before { display: none; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <h1 data-editable="name">张三</h1>
+    <div class="title"><span data-editable="title">创意总监 & 视觉设计</span></div>
+    <div class="header-contact">
+      <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+      <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+      <span>📍 <span data-editable="location">上海</span></span>
+      <span>🔗 <a data-editable="website" data-editable-type="link" href="https://zhangsan.design">zhangsan.design</a></span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">About</div>
+      <p class="summary-text"><span data-editable="summary">8 年创意设计经验，横跨品牌视觉、交互设计和数字艺术。服务过 30+ 知名品牌，作品获 Behance 多次推荐。擅长将前卫视觉语言与商业目标结合，带来既惊艳又有效的设计解决方案。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Experience</div>
+      <div data-editable-group="work-experience">
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">创意总监</span>
+            <span class="duration" data-editable="duration">2022.05 - 至今</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某创意热店</span></div>
+          <div class="experience-desc"><span data-editable="description">带领 12 人创意团队，主导品牌视觉策略，年营业额突破 3000 万。\n为 Nike、BMW 等客户打造数字营销战役，最高单品曝光 2 亿+。\n建立内部 AI 设计工作流，项目交付效率提升 50%。</span></div>
+        </div>
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">资深视觉设计师</span>
+            <span class="duration" data-editable="duration">2019.01 - 2022.04</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某互联网大厂</span></div>
+          <div class="experience-desc"><span data-editable="description">负责双十一主视觉设计，活动期间 DAU 峰值 2 亿。\n主导设计系统 2.0 升级，覆盖 200+ 组件，复用率提升至 85%。\n作品入选 Tokyo TDC 年鉴，获得 Red Dot 品牌传达奖。</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Skills</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">Figma</span>
+        <span data-editable-item data-editable="skill">C4D</span>
+        <span data-editable-item data-editable="skill">Blender</span>
+        <span data-editable-item data-editable="skill">After Effects</span>
+        <span data-editable-item data-editable="skill">Midjourney</span>
+        <span data-editable-item data-editable="skill">Webflow</span>
+        <span data-editable-item data-editable="skill">Creative Direction</span>
+        <span data-editable-item data-editable="skill">Typography</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Education</div>
+      <div data-editable-group="education">
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="degree">视觉传达 · 硕士</span>
+            <span class="duration" data-editable="duration">2016.09 - 2019.06</span>
+          </div>
+          <div class="experience-sub"><span data-editable="school">中央美术学院</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

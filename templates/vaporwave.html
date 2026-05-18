@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Vaporwave</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0f0c29;
+    --card: #1a1035;
+    --pink: #ff71ce;
+    --cyan: #01cdfe;
+    --purple: #b967ff;
+    --yellow: #fffb96;
+    --text: #e8d5f5;
+    --muted: #a09ab5;
+    --border: #2d1060;
+  }
+
+  body {
+    font-family: "Comic Sans MS", "Chalkboard SE", "Marker Felt", "PingFang SC", cursive, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    background-image:
+      linear-gradient(180deg, rgba(1,205,254,0.04) 0%, transparent 50%, rgba(255,113,206,0.04) 100%);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 28px 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 760px;
+    background: var(--card);
+    border: 2px solid var(--pink);
+    box-shadow: 0 0 30px rgba(255,113,206,0.15), 0 0 60px rgba(1,205,254,0.08), inset 0 0 30px rgba(185,103,255,0.04);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .sun {
+    height: 4px;
+    background: linear-gradient(90deg, var(--pink), var(--cyan), var(--purple), var(--yellow));
+  }
+
+  .header {
+    padding: 40px 44px 28px;
+    text-align: center;
+    position: relative;
+  }
+
+  .header-avatar img {
+    width: 80px; height: 80px; border-radius: 4px;
+    border: 2px solid var(--pink);
+    box-shadow: 0 0 15px rgba(255,113,206,0.3);
+    object-fit: cover; display: block;
+    margin: 0 auto 18px;
+  }
+
+  .header-text h1 {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--pink), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  .header-text .title {
+    font-size: 13px;
+    color: var(--purple);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .header-contact {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px 24px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .header-contact a { color: var(--cyan); text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .content { padding: 8px 44px 40px; }
+
+  .section { margin-bottom: 28px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--purple);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::before {
+    content: '▸';
+    color: var(--pink);
+    font-size: 12px;
+  }
+
+  .summary-text { font-size: 13px; line-height: 1.8; color: var(--text); }
+
+  .experience-item {
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    background: rgba(185,103,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    position: relative;
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .experience-header .position {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 1px;
+  }
+
+  .experience-header .duration {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .experience-sub {
+    font-size: 12px;
+    color: var(--pink);
+    margin-bottom: 8px;
+  }
+
+  .experience-desc {
+    font-size: 12px;
+    line-height: 1.8;
+    white-space: pre-line;
+    color: var(--text);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: 1px solid var(--purple);
+    color: var(--purple);
+    background: rgba(185,103,255,0.08);
+    border-radius: 4px;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      background: #fff;
+    }
+    .resume { box-shadow: none; background: #fff; color: #000; }
+    .header-text h1 { -webkit-text-fill-color: #b967ff; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="sun"></div>
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%231a1035' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23ff71ce' font-size='32'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-text">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">数字艺术家 & 创意总监</span></div>
+      <div class="header-contact">
+        <span><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span data-editable="phone">138-0000-0000</span>
+        <span data-editable="location">洛杉矶</span>
+        <span><a data-editable="website" data-editable-type="link" href="https://zhangsan.art">zhangsan.art</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">ＡＥＳＴＨＥＴＩＣ</div>
+      <p class="summary-text"><span data-editable="summary">跨媒介数字艺术家，作品横跨生成艺术、动态视觉和沉浸式体验。曾为 20+ 国际品牌提供视觉指导，作品在东京、柏林、纽约展出。深信技术与美学的交汇点孕育着下一个时代的表达方式。不追随潮流，制造潮流。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">经历</div>
+      <div data-editable-group="work-experience">
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">创意总监</span>
+            <span class="duration" data-editable="duration">2021.01 - 至今</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某先锋设计工作室</span></div>
+          <div class="experience-desc"><span data-editable="description">主导 Nike、Sony 等品牌的视觉艺术合作项目，作品获 D&AD 奖项。\n策划「数据美学」个展，在上海当代艺术博物馆展出 3 个月。\n探索 AI 辅助创作工作流，团队产出效率提升 200%。</span></div>
+        </div>
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">视觉设计师</span>
+            <span class="duration" data-editable="duration">2017.06 - 2020.12</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某独立音乐厂牌</span></div>
+          <div class="experience-desc"><span data-editable="description">为 50+ 音乐人设计专辑视觉，多张作品入选 Spotify 推荐封面。\n打造品牌视觉识别系统，社媒关注量从 5 万增长至 80 万。\n开创性使用生成式 AI 参与音乐可视化项目。</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">工具矩阵</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">TouchDesigner</span>
+        <span data-editable-item data-editable="skill">Cinema 4D</span>
+        <span data-editable-item data-editable="skill">Midjourney</span>
+        <span data-editable-item data-editable="skill">Processing</span>
+        <span data-editable-item data-editable="skill">After Effects</span>
+        <span data-editable-item data-editable="skill">Blender</span>
+        <span data-editable-item data-editable="skill">Stable Diffusion</span>
+        <span data-editable-item data-editable="skill">创意方向</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">教育</div>
+      <div data-editable-group="education">
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="degree">数字媒体艺术 · MFA</span>
+            <span class="duration" data-editable="duration">2015.09 - 2017.06</span>
+          </div>
+          <div class="experience-sub"><span data-editable="school">加州艺术学院 (CalArts)</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

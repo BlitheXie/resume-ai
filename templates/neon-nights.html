@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Neon Nights</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --card: #0f0f0f;
+    --neon-pink: #ff2d95;
+    --neon-blue: #00cfff;
+    --neon-green: #39ff14;
+    --neon-yellow: #ffe600;
+    --text: #e0e0e0;
+    --muted: #666;
+  }
+
+  body {
+    font-family: "Helvetica Neue", "PingFang SC", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 780px;
+    background: var(--card);
+    border: 1px solid #1a1a1a;
+    position: relative;
+  }
+
+  .header {
+    padding: 44px 48px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid #1a1a1a;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute; bottom: -1px; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-green));
+  }
+
+  .header-avatar img {
+    width: 80px; height: 80px; border-radius: 4px;
+    border: 2px solid var(--neon-pink);
+    box-shadow: 0 0 15px rgba(255,45,149,0.25), 0 0 30px rgba(255,45,149,0.08);
+    object-fit: cover; display: block;
+  }
+
+  .header-info { flex: 1; }
+  .header-info h1 {
+    font-size: 30px; font-weight: 800; color: #fff;
+    letter-spacing: 1px; margin-bottom: 4px;
+  }
+
+  .header-info .title {
+    font-size: 14px; font-weight: 500;
+    background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
+  }
+
+  .header-contact {
+    display: flex; flex-wrap: wrap; gap: 6px 20px;
+    font-size: 12px; color: var(--muted);
+  }
+  .header-contact a { color: var(--neon-blue); text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .main { display: flex; }
+  .sidebar {
+    width: 220px; background: #0d0d0d;
+    padding: 28px 24px; flex-shrink: 0;
+    border-right: 1px solid #1a1a1a;
+  }
+  .content { flex: 1; padding: 28px 32px; }
+
+  .section { margin-bottom: 24px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 1px solid #1a1a1a;
+    position: relative;
+    color: var(--neon-green);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tags span {
+    display: inline-block; padding: 4px 12px;
+    font-size: 11px; letter-spacing: 1px;
+    color: var(--neon-green);
+    background: rgba(57,255,20,0.04);
+    border: 1px solid rgba(57,255,20,0.2);
+  }
+
+  .summary-text { font-size: 13px; line-height: 1.8; }
+
+  .experience-item {
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    background: #0d0d0d;
+    border-left: 3px solid var(--neon-blue);
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .experience-header .position { font-size: 14px; font-weight: 700; color: #fff; }
+  .experience-header .duration { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+  .experience-sub { font-size: 12px; color: var(--neon-pink); margin-bottom: 8px; }
+  .experience-desc { font-size: 12px; line-height: 1.7; white-space: pre-line; color: var(--muted); }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .header::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .header-avatar img { box-shadow: none; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img data-editable="avatar" data-editable-type="image"
+           src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%230f0f0f' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23ff2d95' font-size='30'%3E张%3C/text%3E%3C/svg%3E"
+           alt="头像" />
+    </div>
+    <div class="header-info">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">区块链 & Web3 开发</span></div>
+      <div class="header-contact">
+        <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+        <span>📍 <span data-editable="location">远程</span></span>
+        <span>🔗 <a data-editable="website" data-editable-type="link" href="https://github.com/zhangsan">github.com/zhangsan</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <div class="section">
+        <div class="section-title">技术栈</div>
+        <div class="skill-tags" data-editable-group="skills">
+          <span data-editable-item data-editable="skill">Solidity</span>
+          <span data-editable-item data-editable="skill">Rust</span>
+          <span data-editable-item data-editable="skill">TypeScript</span>
+          <span data-editable-item data-editable="skill">ZK Proofs</span>
+          <span data-editable-item data-editable="skill">MEV</span>
+          <span data-editable-item data-editable="skill">EVM</span>
+          <span data-editable-item data-editable="skill">The Graph</span>
+          <span data-editable-item data-editable="skill">IPFS</span>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">链上信息</div>
+        <p style="font-size:12px;color:var(--muted);line-height:2;">
+          <span data-editable="language">DeFi · NFT · DAO · L2</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="section">
+        <div class="section-title">个人简介</div>
+        <p class="summary-text"><span data-editable="summary">深耕 Web3 领域 5 年，专注智能合约安全与 DeFi 协议开发。审计过 50+ 智能合约，发现并修复 12 个高危漏洞。开源贡献者，多个 Web3 项目核心开发者。相信去中心化技术将重塑金融体系。</span></p>
+      </div>
+      <div class="section">
+        <div class="section-title">工作经历</div>
+        <div data-editable-group="work-experience">
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">智能合约工程师</span>
+              <span class="duration" data-editable="duration">2021.03 - 至今</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某 DeFi 协议 · TVL $500M+</span></div>
+            <div class="experience-desc"><span data-editable="description">设计并实现核心借贷协议，管理 $200M+ 用户资产，零安全事故运行 2 年。\n优化 Gas 消耗，通过汇编级优化将核心交易 Gas 降低 30%。\n引入形式化验证工具链，合约代码覆盖率 100%。</span></div>
+          </div>
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">区块链安全研究员</span>
+              <span class="duration" data-editable="duration">2019.06 - 2021.02</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某安全审计公司</span></div>
+            <div class="experience-desc"><span data-editable="description">审计 50+ 智能合约，发现重入、预言机操纵、闪电贷攻击等高危漏洞。\n开发自动化审计工具，将常见漏洞检测时间从 4h 降至 10min。\n撰写 Web3 安全科普文章 30+ 篇，阅读量累计百万。</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">教育</div>
+        <div data-editable-group="education">
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="degree">密码学 · 硕士</span>
+              <span class="duration" data-editable="duration">2017.09 - 2019.06</span>
+            </div>
+            <div class="experience-sub"><span data-editable="school">中国科学院大学</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

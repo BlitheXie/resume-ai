@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三</title>
+<style>
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --primary: #2c3e50;
+    --accent: #3498db;
+    --light: #ecf0f1;
+    --text: #333;
+    --muted: #777;
+    --border: #ddd;
+    --radius: 4px;
+  }
+
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    color: var(--text);
+    background: #f5f5f5;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .resume {
+    width: 800px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  /* ====== 头部 ====== */
+  .header {
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 32px 40px;
+  }
+
+  .header-avatar img {
+    width: 88px;
+    height: 88px;
+    border-radius: 4px;
+    border: 3px solid rgba(255,255,255,0.6);
+    object-fit: cover;
+    display: block;
+  }
+
+  .header-info {
+    flex: 1;
+  }
+
+  .header-info h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .header-info .title {
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 12px;
+  }
+
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-size: 13px;
+  }
+
+  .header-contact span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .header-contact a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+  }
+
+  .header-contact a:hover {
+    text-decoration: underline;
+  }
+
+  /* ====== 主体两栏布局 ====== */
+  .main {
+    display: flex;
+  }
+
+  .sidebar {
+    width: 240px;
+    background: var(--light);
+    padding: 28px 24px;
+    flex-shrink: 0;
+  }
+
+  .content {
+    flex: 1;
+    padding: 28px 32px;
+  }
+
+  /* ====== 区块样式 ====== */
+  .section {
+    margin-bottom: 24px;
+  }
+  .section:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .sidebar .section-title {
+    font-size: 14px;
+  }
+
+  /* ====== 技能标签 ====== */
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-tags span {
+    display: inline-block;
+    background: #fff;
+    color: var(--primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+  }
+
+  /* ====== 经历条目 ====== */
+  .experience-item {
+    margin-bottom: 20px;
+  }
+  .experience-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .experience-header .position {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .experience-header .duration {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .experience-sub {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .experience-desc {
+    font-size: 13px;
+    color: var(--text);
+    white-space: pre-line;
+  }
+
+  /* ====== 个人简介 ====== */
+  .summary-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  /* ====== 打印样式 ====== */
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .resume {
+      box-shadow: none;
+      border-radius: 0;
+      width: 100%;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <!-- ==================== 头部 ==================== -->
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88'%3E%3Crect fill='%23bdc3c7' width='88' height='88'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23fff' font-size='36'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-info">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">高级前端工程师</span></div>
+      <div class="header-contact">
+        <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+        <span>📍 <span data-editable="location">北京·朝阳</span></span>
+        <span>🔗 <a data-editable="website" data-editable-type="link" href="https://github.com/zhangsan">github.com/zhangsan</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 主体 ==================== -->
+  <div class="main">
+
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+
+      <div class="section">
+        <div class="section-title">技能</div>
+        <div class="skill-tags" data-editable-group="skills">
+          <span data-editable-item data-editable="skill">React</span>
+          <span data-editable-item data-editable="skill">TypeScript</span>
+          <span data-editable-item data-editable="skill">Vue.js</span>
+          <span data-editable-item data-editable="skill">Node.js</span>
+          <span data-editable-item data-editable="skill">CSS/Sass</span>
+          <span data-editable-item data-editable="skill">Webpack</span>
+          <span data-editable-item data-editable="skill">Git</span>
+          <span data-editable-item data-editable="skill">Docker</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">语言能力</div>
+        <p style="font-size:13px;">
+          <span data-editable="language">中文（母语） / 英文（流利）</span>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="content">
+
+      <div class="section">
+        <div class="section-title">个人简介</div>
+        <p class="summary-text"><span data-editable="summary">拥有 6 年前端开发经验，擅长 React 生态和前端工程化。主导过多个大型 B 端产品的前端架构设计，对性能优化和用户体验有深入理解。善于跨团队协作，具备良好的技术方案设计和落地能力。</span></p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">工作经历</div>
+        <div data-editable-group="work-experience">
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">前端技术负责人</span>
+              <span class="duration" data-editable="duration">2022.03 - 至今</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某科技有限公司</span></div>
+            <div class="experience-desc"><span data-editable="description">带领 6 人前端团队，负责核心产品的前端架构设计与迭代。\n推动微前端架构落地，将单体应用拆分为 4 个独立子应用，开发效率提升 40%。\n搭建前端监控体系（Sentry + 自研埋点），线上问题平均修复时间从 2 小时降至 20 分钟。</span></div>
+          </div>
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">高级前端开发工程师</span>
+              <span class="duration" data-editable="duration">2019.07 - 2022.02</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某互联网公司</span></div>
+            <div class="experience-desc"><span data-editable="description">负责电商平台商家端的前端开发，使用 React + TypeScript 技术栈。\n设计并实现了可复用的组件库（30+ 组件），覆盖 80% 的业务场景。\n优化首屏加载性能，LCP 从 4.2s 降至 1.8s。</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">教育经历</div>
+        <div data-editable-group="education">
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="degree">计算机科学与技术 · 本科</span>
+              <span class="duration" data-editable="duration">2015.09 - 2019.06</span>
+            </div>
+            <div class="experience-sub"><span data-editable="school">北京大学</span></div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

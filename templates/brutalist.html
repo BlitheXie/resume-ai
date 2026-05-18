@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Brutalist</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f0f000;
+    --card: #fff;
+    --ink: #111;
+    --accent: #ff3b00;
+    --border: #111;
+  }
+
+  body {
+    font-family: "Helvetica Neue", "Arial Black", "PingFang SC", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    padding: 24px 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 760px;
+    background: var(--card);
+    border: 4px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+
+  .header {
+    padding: 40px 48px 28px;
+    border-bottom: 4px solid var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .header-avatar img {
+    width: 80px; height: 80px; border-radius: 4px;
+    border: 3px solid var(--ink);
+    object-fit: cover; display: block;
+  }
+
+  .header-text { flex: 1; }
+
+  .header-text h1 {
+    font-size: 36px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .header-text .title {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    display: inline-block;
+    background: var(--ink);
+    color: #fff;
+    padding: 4px 12px;
+  }
+
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .header-contact a { color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--accent); }
+  .header-contact a:hover { background: var(--accent); color: #fff; }
+
+  .content { padding: 32px 48px 40px; }
+
+  .section { margin-bottom: 28px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    padding: 8px 14px;
+    background: var(--ink);
+    color: #fff;
+    display: inline-block;
+  }
+
+  .summary-text { font-size: 14px; line-height: 1.7; font-weight: 600; }
+
+  .experience-item {
+    margin-bottom: 24px;
+    border-left: 4px solid var(--ink);
+    padding-left: 16px;
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+  }
+
+  .experience-header .position {
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .experience-header .duration {
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--ink);
+    color: #fff;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+
+  .experience-sub {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .experience-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 2px solid var(--ink);
+    background: #fff;
+    letter-spacing: 1px;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23f0f000' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23111' font-size='32' font-weight='900'%3E张%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-text">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">创意技术总监</span></div>
+      <div class="header-contact">
+        <span><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span data-editable="phone">138-0000-0000</span>
+        <span data-editable="location">上海</span>
+        <span><a data-editable="website" data-editable-type="link" href="https://zhangsan.cc">zhangsan.cc</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">宣言</div>
+      <p class="summary-text"><span data-editable="summary">10 年跨界经验，从代码到视觉，从策略到执行。不迷信方法论，只相信结果。带领团队完成 30+ 从零到一的产品发布，覆盖 Web3、AI、消费硬件领域。追求极致效率，讨厌无意义会议。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">战绩</div>
+      <div data-editable-group="work-experience">
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">创意技术总监</span>
+            <span class="duration" data-editable="duration">2021.03 - 至今</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某 Web3 创业公司</span></div>
+          <div class="experience-desc"><span data-editable="description">从零组建 20 人产品+技术团队，18 个月内完成 3 条产品线发布。\n主导品牌视觉体系搭建，社交媒体曝光增长 500%。\n推动 AI 辅助设计流程，素材产出效率提升 300%。</span></div>
+        </div>
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">全栈创意工程师</span>
+            <span class="duration" data-editable="duration">2017.06 - 2021.02</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">某消费硬件独角兽</span></div>
+          <div class="experience-desc"><span data-editable="description">负责 App 产品设计与前端开发，用户量从 0 到 200 万。\n设计系统搭建，组件复用率 90%，开发周期缩短 50%。\n主导品牌重塑项目，NPS 从 32 提升至 68。</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">武器库</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">React</span>
+        <span data-editable-item data-editable="skill">Figma</span>
+        <span data-editable-item data-editable="skill">TypeScript</span>
+        <span data-editable-item data-editable="skill">Blender</span>
+        <span data-editable-item data-editable="skill">Three.js</span>
+        <span data-editable-item data-editable="skill">Solidity</span>
+        <span data-editable-item data-editable="skill">团队管理</span>
+        <span data-editable-item data-editable="skill">品牌策略</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">背景</div>
+      <div data-editable-group="education">
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="degree">数字媒体艺术 · 本科</span>
+            <span class="duration" data-editable="duration">2013.09 - 2017.06</span>
+          </div>
+          <div class="experience-sub"><span data-editable="school">中国美术学院</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

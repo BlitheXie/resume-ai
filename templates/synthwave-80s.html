@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Synthwave 80s</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #12062b;
+    --card: #1a0a3e;
+    --sun: #ff6b9d;
+    --cyan: #00e5ff;
+    --purple: #b44dff;
+    --text: #e8d5f5;
+    --muted: #8b6baa;
+    --border: #2d1060;
+  }
+
+  body {
+    font-family: "SF Mono", "Fira Code", "Courier New", monospace;
+    color: var(--text);
+    background: var(--bg);
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px),
+      linear-gradient(180deg, rgba(255,107,157,0.06) 0%, transparent 40%, rgba(0,229,255,0.06) 100%);
+    background-size: 100% 4px, 100% 100%;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 800px;
+    background: var(--card);
+    border: 2px solid var(--border);
+    box-shadow:
+      0 0 40px rgba(180,77,255,0.15),
+      0 0 80px rgba(0,229,255,0.08),
+      inset 0 0 30px rgba(180,77,255,0.03);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .resume::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--sun), var(--purple), var(--cyan), var(--sun));
+    z-index: 2;
+  }
+
+  .header {
+    padding: 44px 48px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-avatar img {
+    width: 84px; height: 84px; border-radius: 4px;
+    border: 2px solid var(--sun);
+    box-shadow: 0 0 20px rgba(255,107,157,0.3);
+    object-fit: cover; display: block;
+  }
+
+  .header-info { flex: 1; }
+  .header-info h1 {
+    font-size: 32px; font-weight: 700;
+    color: var(--sun);
+    text-shadow: 0 0 20px rgba(255,107,157,0.4);
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+  }
+
+  .header-info .title {
+    font-size: 14px; color: var(--cyan);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  .header-contact {
+    display: flex; flex-wrap: wrap; gap: 6px 20px;
+    font-size: 12px; color: var(--muted);
+  }
+  .header-contact a { color: var(--purple); text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .main { display: flex; }
+  .sidebar {
+    width: 220px; background: rgba(0,0,0,0.2);
+    padding: 28px 24px; flex-shrink: 0;
+    border-right: 1px solid var(--border);
+  }
+  .content { flex: 1; padding: 28px 32px; }
+
+  .section { margin-bottom: 24px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,229,255,0.2);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::before { content: '▸'; color: var(--sun); }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tags span {
+    display: inline-block; padding: 4px 12px;
+    font-size: 11px; letter-spacing: 1px;
+    border: 1px solid var(--purple);
+    color: var(--purple); background: rgba(180,77,255,0.06);
+  }
+
+  .summary-text { font-size: 13px; line-height: 1.8; }
+
+  .experience-item { margin-bottom: 20px; padding-left: 16px; border-left: 2px solid rgba(180,77,255,0.3); }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .experience-header .position { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+  .experience-header .duration { font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .experience-sub { font-size: 12px; color: var(--sun); margin-bottom: 6px; }
+  .experience-desc { font-size: 12px; line-height: 1.7; white-space: pre-line; }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; }
+    .resume::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .header-info h1 { text-shadow: none; }
+    .header-avatar img { box-shadow: none; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img data-editable="avatar" data-editable-type="image"
+           src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84'%3E%3Crect fill='%231a0a3e' width='84' height='84'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23ff6b9d' font-size='30'%3E张%3C/text%3E%3C/svg%3E"
+           alt="头像" />
+    </div>
+    <div class="header-info">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">游戏引擎开发工程师</span></div>
+      <div class="header-contact">
+        <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+        <span>📍 <span data-editable="location">深圳·南山</span></span>
+        <span>🔗 <a data-editable="website" data-editable-type="link" href="https://github.com/zhangsan">github.com/zhangsan</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <div class="section">
+        <div class="section-title">技能堆栈</div>
+        <div class="skill-tags" data-editable-group="skills">
+          <span data-editable-item data-editable="skill">C++</span>
+          <span data-editable-item data-editable="skill">Unreal Engine</span>
+          <span data-editable-item data-editable="skill">Vulkan</span>
+          <span data-editable-item data-editable="skill">OpenGL</span>
+          <span data-editable-item data-editable="skill">Shader</span>
+          <span data-editable-item data-editable="skill">Multithreading</span>
+          <span data-editable-item data-editable="skill">Rust</span>
+          <span data-editable-item data-editable="skill">Physics</span>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">平台</div>
+        <p style="font-size:12px;color:var(--muted);line-height:2;">
+          <span data-editable="language">Windows · macOS · PS5 · Switch</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="section">
+        <div class="section-title">个人档案</div>
+        <p class="summary-text"><span data-editable="summary">8 年游戏引擎开发经验，专注于渲染管线优化与性能调优。主导过 3A 级开放世界游戏的引擎底层重构，帧率从 30fps 提升至 60fps。活跃于 SIGGRAPH、GDC 等技术社区，持续推动前沿图形技术落地。</span></p>
+      </div>
+      <div class="section">
+        <div class="section-title">工作经历</div>
+        <div data-editable-group="work-experience">
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">引擎架构师</span>
+              <span class="duration" data-editable="duration">2021.06 - 至今</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某 3A 游戏工作室</span></div>
+            <div class="experience-desc"><span data-editable="description">主导自研引擎渲染管线重构，引入 GPU-Driven 架构，Draw Call 降低 70%。\n实现基于物理的全局光照（VXGI），画面质量达到电影级水准。\n带领 5 人引擎团队，制定技术路线图与代码规范。</span></div>
+          </div>
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">高级渲染工程师</span>
+              <span class="duration" data-editable="duration">2018.03 - 2021.05</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某游戏大厂</span></div>
+            <div class="experience-desc"><span data-editable="description">开发 Vulkan 渲染后端，多平台适配（PC/PS5/Xbox），帧率稳定性提升 40%。\n优化粒子系统 GPU 计算，同屏粒子数从 5K 提升至 50K。\n撰写引擎性能分析工具，定位并修复 20+ 关键瓶颈。</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">教育经历</div>
+        <div data-editable-group="education">
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="degree">计算机图形学 · 硕士</span>
+              <span class="duration" data-editable="duration">2015.09 - 2018.03</span>
+            </div>
+            <div class="experience-sub"><span data-editable="school">浙江大学</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

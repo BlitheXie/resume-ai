@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Precision Finance</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #e8e9eb;
+    --card: #fff;
+    --navy: #1b2a4a;
+    --ink: #1e1e1e;
+    --muted: #5c5c5c;
+    --accent: #8b6f3f;
+    --line: #d4cfc4;
+    --tag-bg: #f5f2ed;
+  }
+
+  body {
+    font-family: "Georgia", "Noto Serif SC", "STSong", "SimSun", serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 28px 20px;
+  }
+
+  .resume {
+    width: 760px;
+    background: var(--card);
+    border-top: 5px solid var(--navy);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .header {
+    padding: 44px 56px 32px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .header-avatar img {
+    width: 80px; height: 80px; border-radius: 4px;
+    border: 2px solid var(--line);
+    object-fit: cover; display: block;
+  }
+
+  .header-text { flex: 1; }
+
+  .header-text h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 2px;
+    margin-bottom: 2px;
+  }
+
+  .header-text .title {
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 28px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .header-contact a { color: var(--navy); text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .content { padding: 32px 56px 44px; }
+
+  .section { margin-bottom: 30px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .summary-text { font-size: 14px; line-height: 1.8; color: var(--ink); }
+
+  .experience-item {
+    margin-bottom: 22px;
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+  }
+
+  .experience-header .position {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .experience-header .duration {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    font-family: "Helvetica Neue", "PingFang SC", sans-serif;
+  }
+
+  .experience-sub {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .experience-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-line;
+    color: var(--ink);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .skill-tags span {
+    display: inline-block;
+    padding: 5px 14px;
+    font-size: 12px;
+    border: 1px solid var(--line);
+    color: var(--navy);
+    background: var(--tag-bg);
+  }
+
+  .highlight {
+    background: #f5f3ee;
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; border-top-color: #000; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-row">
+      <div class="header-avatar">
+        <img
+          data-editable="avatar"
+          data-editable-type="image"
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%231b2a4a' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%238b6f3f' font-size='32'%3E张%3C/text%3E%3C/svg%3E"
+          alt="头像"
+        />
+      </div>
+      <div class="header-text">
+        <h1 data-editable="name">张三</h1>
+        <div class="title"><span data-editable="title">副总裁 · 投资银行部</span></div>
+        <div class="header-contact">
+          <span><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+          <span data-editable="phone">138-0000-0000</span>
+          <span data-editable="location">北京 · 金融街</span>
+          <span><a data-editable="website" data-editable-type="link" href="https://linkedin.com/in/zhangsan">linkedin.com/in/zhangsan</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">专业概述</div>
+      <p class="summary-text"><span data-editable="summary">12 年投资银行从业经验，专注于 TMT 及消费领域。累计完成并购及融资交易超过 40 笔，总交易规模逾 800 亿元人民币。具备中国证监会保荐代表人资格及 CFA 持证。擅长交易结构设计、估值建模及监管沟通，深度服务过 15 家 A 股及港股上市公司。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">从业经历</div>
+      <div data-editable-group="work-experience">
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">副总裁 · 投资银行部</span>
+            <span class="duration" data-editable="duration">2019.07 - 至今</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">中金公司</span></div>
+          <div class="experience-desc"><span data-editable="description">作为项目负责人完成 8 笔 A 股 IPO，合计募资规模超过 200 亿元。\n主导 3 笔跨境并购交易，交易金额合计约 15 亿美元，深度参与交易谈判与尽职调查。\n担任 5 家上市公司常年财务顾问，提供资本市场策略及公司治理建议。</span></div>
+        </div>
+
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="position">高级经理 · 投资银行部</span>
+            <span class="duration" data-editable="duration">2014.09 - 2019.06</span>
+          </div>
+          <div class="experience-sub"><span data-editable="company">中信证券</span></div>
+          <div class="experience-desc"><span data-editable="description">参与完成 12 笔股权融资项目，包括 IPO、定向增发及可转债发行。\n负责行业研究及估值建模，撰写行业深度报告 30 余篇。\n参与某头部互联网企业港股二次上市项目，募资规模 80 亿美元。</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">代表交易</div>
+      <div class="highlight">
+        <span data-editable="deal-highlight">• 某 AI 芯片企业科创板 IPO — 融资金额 52 亿元，市场首单\n• 某消费电子企业跨境收购德国同业 — 交易金额 8 亿欧元\n• 某新能源企业 A 股定增 — 募资 68 亿元，超募 30%</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">专业能力</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">估值建模</span>
+        <span data-editable-item data-editable="skill">交易结构设计</span>
+        <span data-editable-item data-editable="skill">尽职调查</span>
+        <span data-editable-item data-editable="skill">监管沟通</span>
+        <span data-editable-item data-editable="skill">财务分析</span>
+        <span data-editable-item data-editable="skill">CFA</span>
+        <span data-editable-item data-editable="skill">保荐代表人</span>
+        <span data-editable-item data-editable="skill">中英双语</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">教育背景</div>
+      <div data-editable-group="education">
+        <div class="experience-item" data-editable-item>
+          <div class="experience-header">
+            <span class="position" data-editable="degree">金融学 · 硕士</span>
+            <span class="duration" data-editable="duration">2012.09 - 2014.06</span>
+          </div>
+          <div class="experience-sub"><span data-editable="school">北京大学光华管理学院</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

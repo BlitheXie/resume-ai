@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Editorial</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f9f8f6;
+    --card: #fffefc;
+    --ink: #1a1a1a;
+    --muted: #5c5c5c;
+    --light: #a0a0a0;
+    --accent: #c0503d;
+    --border: #d4d0c8;
+  }
+
+  body {
+    font-family: "Georgia", "Noto Serif SC", "STSong", "SimSun", serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.75;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+  }
+
+  .resume {
+    width: 740px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .header {
+    padding: 44px 48px 32px;
+    text-align: center;
+    border-bottom: 2px solid var(--ink);
+  }
+  .header-avatar { margin-bottom: 16px; }
+  .header-avatar img {
+    width: 72px; height: 72px; border-radius: 4px;
+    object-fit: cover; display: inline-block;
+  }
+  .header h1 {
+    font-size: 34px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .header .title {
+    font-size: 14px; color: var(--accent); font-style: italic; margin-bottom: 12px;
+  }
+  .header-contact {
+    font-size: 12px; color: var(--muted); letter-spacing: 0.5px;
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 20px;
+  }
+  .header-contact a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .header-contact a:hover { border-bottom-style: solid; }
+
+  .content { padding: 36px 48px 44px; }
+
+  .section { margin-bottom: 30px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2.5px; color: var(--light);
+    margin-bottom: 14px; padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-text { font-size: 14px; line-height: 1.9; }
+
+  .exp-item { margin-bottom: 20px; }
+  .exp-item:last-child { margin-bottom: 0; }
+
+  .exp-header {
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;
+  }
+  .exp-header .position { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .exp-header .duration { font-size: 12px; color: var(--light); white-space: nowrap; font-style: italic; }
+  .exp-sub { font-size: 13px; color: var(--accent); margin-bottom: 6px; font-style: italic; }
+  .exp-desc { font-size: 13px; line-height: 1.8; white-space: pre-line; }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tags span {
+    display: inline-block; padding: 3px 0; font-size: 13px;
+    color: var(--ink); border-bottom: 1px solid var(--border);
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume { box-shadow: none; border: 1px solid #333; border-radius: 0; }
+    @page { size: A4; margin: 18mm 20mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img data-editable="avatar" data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Crect fill='%23f5f0eb' width='72' height='72'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23c0503d' font-size='28'%3E张%3C/text%3E%3C/svg%3E" alt="头像"/>
+    </div>
+    <h1 data-editable="name">张三</h1>
+    <div class="title"><span data-editable="title">品牌策略师 & 撰稿人</span></div>
+    <div class="header-contact">
+      <span><a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+      <span data-editable="phone">138-0000-0000</span>
+      <span data-editable="location">上海</span>
+      <span><a data-editable="website" data-editable-type="link" href="https://zhangsan.cc">zhangsan.cc</a></span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">简介</div>
+      <p class="summary-text"><span data-editable="summary">8 年品牌策略与内容创作经验。曾为 30+ 品牌提供策略咨询，涵盖科技、消费、文化等领域。擅长以叙事驱动品牌建设，作品多次获行业奖项。相信好品牌是时间的朋友，好的表达能让价值观自然流淌。</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">经历</div>
+      <div data-editable-group="work-experience">
+
+        <div class="exp-item" data-editable-item>
+          <div class="exp-header">
+            <span class="position" data-editable="position">品牌策略总监</span>
+            <span class="duration" data-editable="duration">2021.03 - 至今</span>
+          </div>
+          <div class="exp-sub"><span data-editable="company">某独立品牌工作室</span></div>
+          <div class="exp-desc"><span data-editable="description">主导 15+ 品牌从 0 到 1 的品牌定位与视觉体系搭建。\n为某消费品牌策划整合营销方案，品牌搜索量增长 300%。\n撰写行业观察专栏，累计阅读量 100 万+。</span></div>
+        </div>
+
+        <div class="exp-item" data-editable-item>
+          <div class="exp-header">
+            <span class="position" data-editable="position">资深文案策划</span>
+            <span class="duration" data-editable="duration">2017.07 - 2021.02</span>
+          </div>
+          <div class="exp-sub"><span data-editable="company">某 4A 广告公司</span></div>
+          <div class="exp-desc"><span data-editable="description">负责多个头部品牌的文案与创意策略。\n深度访谈 50+ 企业创始人，输出品牌叙事框架。\n团队获 Cannes Lions 入围 1 次，国内奖项 8 项。</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">擅长</div>
+      <div class="skill-tags" data-editable-group="skills">
+        <span data-editable-item data-editable="skill">品牌定位</span>
+        <span data-editable-item data-editable="skill">文案写作</span>
+        <span data-editable-item data-editable="skill">创意策略</span>
+        <span data-editable-item data-editable="skill">深度访谈</span>
+        <span data-editable-item data-editable="skill">提案演讲</span>
+        <span data-editable-item data-editable="skill">设计审美</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">教育</div>
+      <div data-editable-group="education">
+        <div class="exp-item" data-editable-item>
+          <div class="exp-header">
+            <span class="position" data-editable="degree">广告学 · 本科</span>
+            <span class="duration" data-editable="duration">2013.09 - 2017.06</span>
+          </div>
+          <div class="exp-sub"><span data-editable="school">中国传媒大学</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>

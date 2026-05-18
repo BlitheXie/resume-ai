@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>简历 - 张三 | Cyberpunk</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --card: #0d0d1a;
+    --neon-cyan: #00f0ff;
+    --neon-pink: #ff006e;
+    --neon-purple: #c77dff;
+    --text: #e0e0e0;
+    --muted: #7a7a8c;
+    --border: #1a1a2e;
+    --glow: 0 0 10px;
+  }
+
+  body {
+    font-family: "Courier New", "SF Mono", "Fira Code", "Source Code Pro", monospace;
+    color: var(--text);
+    background: var(--bg);
+    background-image:
+      linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  .resume {
+    width: 800px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 0 30px rgba(0,240,255,0.08), inset 0 0 30px rgba(0,240,255,0.02);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .resume::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-pink), transparent);
+    z-index: 2;
+  }
+
+  .header {
+    padding: 40px 44px 30px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: relative;
+  }
+
+  .header-avatar img {
+    width: 90px;
+    height: 90px;
+    border-radius: 4px;
+    border: 2px solid var(--neon-cyan);
+    box-shadow: var(--glow) rgba(0,240,255,0.3);
+    object-fit: cover;
+    display: block;
+  }
+
+  .header-info { flex: 1; }
+  .header-info h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 15px rgba(0,240,255,0.4);
+    margin-bottom: 4px;
+  }
+  .header-info .title {
+    font-size: 13px;
+    color: var(--neon-pink);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .header-contact a { color: var(--neon-purple); text-decoration: none; }
+  .header-contact a:hover { text-decoration: underline; }
+
+  .main { display: flex; }
+  .sidebar {
+    width: 220px;
+    background: rgba(0,240,255,0.03);
+    padding: 28px 24px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+  }
+  .content { flex: 1; padding: 28px 32px; }
+
+  .section { margin-bottom: 24px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,240,255,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '>';
+    color: var(--neon-pink);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tags span {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: 1px solid rgba(0,240,255,0.3);
+    color: var(--neon-cyan);
+    background: rgba(0,240,255,0.05);
+    border-radius: 2px;
+  }
+
+  .summary-text { font-size: 13px; line-height: 1.8; color: var(--text); }
+
+  .experience-item {
+    margin-bottom: 20px;
+    padding-left: 14px;
+    border-left: 2px solid rgba(0,240,255,0.2);
+  }
+  .experience-item:last-child { margin-bottom: 0; }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+  }
+  .experience-header .position {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+  .experience-header .duration {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 1px;
+  }
+
+  .experience-sub {
+    font-size: 12px;
+    color: var(--neon-pink);
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  .experience-desc {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .resume {
+      box-shadow: none;
+      border: 1px solid var(--border);
+    }
+    .resume::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .header-info h1 { text-shadow: none; }
+    .header-avatar img { box-shadow: none; }
+    .header-contact a { color: var(--neon-purple); }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+  <div class="header">
+    <div class="header-avatar">
+      <img
+        data-editable="avatar"
+        data-editable-type="image"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Crect fill='%230a0a1a' width='90' height='90'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%2300f0ff' font-size='32'%3E:D%3C/text%3E%3C/svg%3E"
+        alt="头像"
+      />
+    </div>
+    <div class="header-info">
+      <h1 data-editable="name">张三</h1>
+      <div class="title"><span data-editable="title">全栈工程师 & 系统架构师</span></div>
+      <div class="header-contact">
+        <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
+        <span>📱 <span data-editable="phone">138-0000-0000</span></span>
+        <span>📍 <span data-editable="location">深圳·南山</span></span>
+        <span>🔗 <a data-editable="website" data-editable-type="link" href="https://github.com/zhangsan">github.com/zhangsan</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="sidebar">
+      <div class="section">
+        <div class="section-title">技能矩阵</div>
+        <div class="skill-tags" data-editable-group="skills">
+          <span data-editable-item data-editable="skill">Rust</span>
+          <span data-editable-item data-editable="skill">Go</span>
+          <span data-editable-item data-editable="skill">TypeScript</span>
+          <span data-editable-item data-editable="skill">Kubernetes</span>
+          <span data-editable-item data-editable="skill">Solidity</span>
+          <span data-editable-item data-editable="skill">React</span>
+          <span data-editable-item data-editable="skill">PostgreSQL</span>
+          <span data-editable-item data-editable="skill">Redis</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">系统环境</div>
+        <p style="font-size:12px;color:var(--muted);line-height:2;">
+          <span data-editable="language">Linux · macOS · Docker · AWS</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="section">
+        <div class="section-title">个人档案</div>
+        <p class="summary-text"><span data-editable="summary">拥有 7 年全栈开发与系统架构经验。从底层 Rust 服务到前端 React 应用，从 K8s 集群管理到 Web3 智能合约，具备全技术栈覆盖能力。热爱开源，GitHub 累计 5000+ stars。相信技术应当服务于人类自由。</span></p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">工作经历</div>
+        <div data-editable-group="work-experience">
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">技术合伙人 & 架构师</span>
+              <span class="duration" data-editable="duration">2022.06 - 至今</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某 Web3 创业公司</span></div>
+            <div class="experience-desc"><span data-editable="description">设计并实现去中心化交易协议的底层架构，处理峰值 10K TPS。\n搭建基于 K8s 的云原生基础设施，服务可用性 99.99%。\n带领 8 人技术团队，完成从 0 到 1 的产品交付。</span></div>
+          </div>
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="position">高级后端工程师</span>
+              <span class="duration" data-editable="duration">2020.01 - 2022.05</span>
+            </div>
+            <div class="experience-sub"><span data-editable="company">某金融科技公司</span></div>
+            <div class="experience-desc"><span data-editable="description">使用 Go 语言重构核心交易系统，延迟降低 60%。\n设计分布式任务调度系统，日处理订单 500 万+。\n主导技术分享文化，内部发表 20+ 技术演讲。</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">教育经历</div>
+        <div data-editable-group="education">
+
+          <div class="experience-item" data-editable-item>
+            <div class="experience-header">
+              <span class="position" data-editable="degree">计算机科学与技术 · 本科</span>
+              <span class="duration" data-editable="duration">2014.09 - 2018.06</span>
+            </div>
+            <div class="experience-sub"><span data-editable="school">华中科技大学</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../resume-editor.js"></script>
+</body>
+</html>
