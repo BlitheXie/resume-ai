@@ -1175,7 +1175,11 @@
     if (e.key === 'Escape') closeTutorial();
     if (e.key === 'ArrowRight' && currentStep < totalSteps) showStep(currentStep + 1);
     if (e.key === 'ArrowLeft' && currentStep > 1) showStep(currentStep - 1);
-  });
+});
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
 })();
 </script>
 
