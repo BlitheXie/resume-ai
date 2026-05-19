@@ -2,9 +2,9 @@
 
 > 22 款精心设计的简历模板，纯前端在线编辑，所有数据仅存储在你的浏览器中。
 
-🔗 **在线体验：[resume-ai.site](https://resume-ai.site)**
+🔗 **在线体验：[www.resume-works.site](https://www.resume-works.site/)**
 
----
+***
 
 ## 🎯 核心理念
 
@@ -21,15 +21,15 @@
 
 市面上大多数简历工具只是在同一布局上换颜色。我们把每个模板当作**独立的排版系统**来设计——不同的字体、不同的网格、不同的信息层级。换模板 = 换一种纸媒设计语言。
 
----
+***
 
 ## 🎨 22 款模板
 
 ### 按风格分类
 
-| 风格 | 模板 |
-|------|------|
-| 🌙 **暗色系** | Cyberpunk 科技 · 高级黑金 · Neon Nights · Synthwave 80s · Synthwave 数字 · Glassmorphism · Brutalist · Vaporwave · Terminal CLI |
+| 风格         | 模板                                                                                                                                                                                  |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🌙 **暗色系** | Cyberpunk 科技 · 高级黑金 · Neon Nights · Synthwave 80s · Synthwave 数字 · Glassmorphism · Brutalist · Vaporwave · Terminal CLI                                                             |
 | ☀️ **浅色系** | Modern Pro · Apple 极简 · Stripe/Notion · Creator · Nordic Clean · Bold Impact · Editorial · Soft Gradient · Mono Chrome · Precision Finance · Blueprint · Newspaper · Timeline Right |
 
 ### 排版多样性
@@ -41,7 +41,7 @@
 - **命令行界面**：Terminal CLI
 - **蓝图工程图**：Blueprint
 
----
+***
 
 ## ✨ 编辑器功能
 
@@ -53,7 +53,7 @@
 - **📖 交互教程** — 主页内置 5 步使用教程弹窗
 - **💬 鼓励 Toast** — 操作时弹出暖人鼓励语
 
----
+***
 
 ## 🚀 技术栈
 
@@ -68,7 +68,7 @@ favicon.svg         ← 网站图标
 - **纯前端** — HTML + CSS + Vanilla JS
 - **部署即用** — 静态文件，丢到任何 Web 服务器即可
 
----
+***
 
 ## 📦 本地运行
 
@@ -80,7 +80,7 @@ open index.html
 npx serve .
 ```
 
----
+***
 
 ## 🌐 部署到 Vercel
 
@@ -91,7 +91,7 @@ npx serve .
 
 绑定自定义域名：[Settings → Domains → 输入你的域名](https://vercel.com/docs/projects/domains/add-a-domain)
 
----
+***
 
 ## 📁 项目结构
 
@@ -128,7 +128,7 @@ resume_ai/
     └── timeline-right.html        # 33 Timeline Right
 ```
 
----
+***
 
 ## 📝 License
 

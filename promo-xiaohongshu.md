@@ -4,7 +4,7 @@
 
 事情是这样的——我最近闲着没事，发现市面上大多数简历工具不是要注册就是要付费，模板还长得差不多。于是我就想，能不能做一个**完全免费、不用注册、数据不外传**的简历模板网站？
 
-然后就有了这个 👉 **[resume-ai.site](https://resume-ai.site)**
+然后就有了这个 👉 **[www.resume-works.site](https://www.resume-works.site/)**
 
 （是的域名才 10 块钱，主打一个勤俭持家）
 
@@ -49,6 +49,6 @@
 
 ---
 
-🔗 **[resume-ai.site](https://resume-ai.site)**
+🔗 **[www.resume-works.site](https://www.resume-works.site/)**
 
 #简历模板 #求职 #免费简历 #找工作 #简历工具 #应届生求职

@@ -10,7 +10,7 @@
 
 市面上大多数简历工具，要么让你注册账号，要么模板收费，要么把你填的信息存在云端。我就想：简历这么私人的东西，能不能本地编辑、本地保存，什么都不用上传？
 
-于是一个周末，我坐下来写了这个：**[resume-ai.site](https://resume-ai.site)**。
+于是一个周末，我坐下来写了这个：**[www.resume-works.site](https://www.resume-works.site/)**。
 
 域名花了 10 块钱，部署用了免费的 Vercel。整个项目**零后端、零数据库、零第三方依赖**——只有 HTML、CSS 和原生 JavaScript。
 
@@ -62,7 +62,7 @@
 
 ---
 
-**🔗 网址：[resume-ai.site](https://resume-ai.site)**
+**🔗 网址：[www.resume-works.site](https://www.resume-works.site/)**
 
 **📂 GitHub：[github.com/BlitheXie/resume-ai](https://github.com/BlitheXie/resume-ai)**
 
