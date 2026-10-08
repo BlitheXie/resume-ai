@@ -160,16 +160,12 @@
 
   function updateToolbarLanguage() {
     var zh = getTemplateLanguage() === 'zh';
-    $$('.re-fab[data-label-en]').forEach(function (btn) {
+    $$('[data-label-en]').forEach(function (btn) {
       var label = zh ? btn.getAttribute('data-label-zh') : btn.getAttribute('data-label-en');
       var tip = zh ? btn.getAttribute('data-tip-zh') : btn.getAttribute('data-tip-en');
       if (label) btn.setAttribute('data-label', label);
       if (tip) btn.title = tip;
     });
-  }
-
-  function updateTemplateLanguageButton() {
-    updateToolbarLanguage();
   }
 
   function applyTemplateLanguage(lang) {
@@ -204,11 +200,7 @@
       if (href) node.setAttribute('href', href);
     });
 
-    $$('[data-editable="avatar"]').forEach(function (img) {
-      var alt = img.getAttribute('alt') || '';
-      if (alt === '头像' && active === 'en') img.setAttribute('alt', 'Avatar');
-      if (alt === 'Avatar' && active === 'zh') img.setAttribute('alt', '头像');
-    });
+    updateToolbarLanguage();
   }
 
   function switchLanguage() {
@@ -220,7 +212,6 @@
 
     localStorage.setItem('resume_ai_lang', next);
     applyTemplateLanguage(next);
-    updateTemplateLanguageButton();
 
     var saved = loadData();
     if (saved.name || saved.__groups) {
@@ -463,7 +454,7 @@
     if (imgField.parentElement.querySelector('.re-img-overlay')) return;
 
     var overlay = el('div', { className: 're-img-overlay' });
-    var label = el('span', { className: 're-img-label', textContent: '📷 点击换头像' });
+    var label = el('span', { className: 're-img-label', textContent: t('📷 Click to change photo', '📷 点击换头像') });
     overlay.appendChild(label);
 
     var wrapper = imgField.parentElement;
@@ -524,7 +515,7 @@
 
     var card = el('div', { className: 're-crop-card' });
 
-    var title = el('div', { className: 're-crop-title', textContent: '裁切头像' });
+    var title = el('div', { className: 're-crop-title', textContent: t('Crop Photo', '裁切头像') });
 
     var viewport = el('div', { className: 're-crop-viewport' });
     var viewInner = el('div', { className: 're-crop-inner' });
@@ -550,7 +541,7 @@
     viewport.addEventListener('touchend', onCropMouseUp);
 
     var controls = el('div', { className: 're-crop-controls' });
-    var zoomLabel = el('span', { className: 're-crop-zoom-label', textContent: '缩放' });
+    var zoomLabel = el('span', { className: 're-crop-zoom-label', textContent: t('Zoom', '缩放') });
     var zoomSlider = el('input', {
       type: 'range',
       className: 're-crop-zoom',
@@ -568,12 +559,12 @@
     var btnRow = el('div', { className: 're-crop-btns' });
     var btnCancel = el('button', {
       className: 're-popup-btn re-popup-btn-cancel',
-      textContent: '取消',
+      textContent: t('Cancel', '取消'),
       onclick: closeCropModal
     });
     var btnConfirm = el('button', {
       className: 're-popup-btn re-popup-btn-primary',
-      textContent: '确定',
+      textContent: t('Confirm', '确定'),
       onclick: confirmCrop
     });
     btnRow.appendChild(btnCancel);
@@ -729,14 +720,14 @@
 
     var popup = el('div', { className: 're-link-popup' });
 
-    var urlLabel = el('label', { textContent: '链接地址' });
+    var urlLabel = el('label', { textContent: t('Link URL', '链接地址') });
     var urlInput = el('input', {
       type: 'url',
       className: 're-link-input',
       value: linkField.getAttribute('data-re-href') || linkField.getAttribute('href') || ''
     });
 
-    var textLabel = el('label', { textContent: '显示文字' });
+    var textLabel = el('label', { textContent: t('Display text', '显示文字') });
     var textInput = el('input', {
       type: 'text',
       className: 're-link-input',
@@ -747,7 +738,7 @@
 
     var btnSave = el('button', {
       className: 're-popup-btn re-popup-btn-primary',
-      textContent: '确定',
+      textContent: t('Confirm', '确定'),
       onclick: function () {
         var href = urlInput.value.trim();
         var text = textInput.value.trim() || href;
@@ -770,7 +761,7 @@
 
     var btnCancel = el('button', {
       className: 're-popup-btn re-popup-btn-cancel',
-      textContent: '取消',
+      textContent: t('Cancel', '取消'),
       onclick: function () { popup.remove(); }
     });
 
@@ -821,26 +812,34 @@
     var btnAdd = el('button', {
       className: 're-btn re-btn-add re-btn-sm',
       textContent: '+',
-      title: '添加一项',
+      'data-label-en': 'Add item',
+      'data-label-zh': '添加一项',
+      'data-tip-en': 'Add item',
+      'data-tip-zh': '添加一项',
       onclick: function () { addGroupItem(group, item); }
     });
 
     var btnDel = el('button', {
       className: 're-btn re-btn-del re-btn-sm',
       textContent: '×',
-      title: '删除此项',
+      'data-label-en': 'Delete item',
+      'data-label-zh': '删除此项',
+      'data-tip-en': 'Delete this item',
+      'data-tip-zh': '删除此项',
       onclick: function () { removeGroupItem(group, item); }
     });
 
     actions.appendChild(btnAdd);
     actions.appendChild(btnDel);
     item.appendChild(actions);
+
+    updateToolbarLanguage();
   }
 
   function addGroupItem(group, afterItem) {
     var items = group.querySelectorAll('[data-editable-item]');
     if (items.length >= 10) {
-      alert('最多支持 10 项');
+      alert(t('Up to 10 items allowed', '最多支持 10 项'));
       return;
     }
 
@@ -880,7 +879,7 @@
   function removeGroupItem(group, item) {
     var items = group.querySelectorAll('[data-editable-item]');
     if (items.length <= 1) {
-      alert('至少保留一项');
+      alert(t('At least one item is required', '至少保留一项'));
       return;
     }
 
