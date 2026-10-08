@@ -6,6 +6,15 @@
   var IMAGE_MAX_WIDTH = 200;
   var IMAGE_MAX_HEIGHT = 200;
 
+  // Contact fields that can be shown or hidden from the toolbar.
+  var CONTACT_KEYS = ['email', 'phone', 'location', 'website'];
+  var CONTACT_LABELS = {
+    email: { en: 'Email', zh: '邮箱' },
+    phone: { en: 'Phone', zh: '电话' },
+    location: { en: 'Location', zh: '地区' },
+    website: { en: 'Website', zh: '网站' }
+  };
+
   var isEditMode = false;
   var isAvatarVisible = true;
   var templateId = '';
@@ -45,7 +54,7 @@
   // ==================== 工具栏 ====================
 
   function createToolbar() {
-    templateId = $('title') ? $('title').textContent.replace(/\s*[-–—|]\s*/g, '_').replace(/\s+/g, '_') : 'resume';
+    templateId = computeTemplateId();
 
     var bar = el('div', { className: 're-toolbar' });
 
@@ -94,11 +103,22 @@
       onclick: switchLanguage
     });
 
+    var btnContacts = el('button', {
+      className: 're-fab re-fab-contacts',
+      'data-label-en': 'Contact fields',
+      'data-label-zh': '联系信息',
+      'data-tip-en': 'Show or hide contact fields',
+      'data-tip-zh': '显示 / 隐藏联系信息',
+      textContent: '📇',
+      onclick: openContactPanel
+    });
+
     bar.appendChild(statusDot);
     bar.appendChild(btnEdit);
     bar.appendChild(btnPrint);
     bar.appendChild(btnReset);
     bar.appendChild(btnLang);
+    bar.appendChild(btnContacts);
 
     var avatarEl = $('[data-editable="avatar"][data-editable-type="image"]');
     if (avatarEl) {
@@ -201,6 +221,148 @@
     });
 
     updateToolbarLanguage();
+  }
+
+  // ==================== 联系信息显示 / 隐藏 ====================
+
+  function computeTemplateId() {
+    var title = $('title');
+    return title ? title.textContent.replace(/\s*[-–—|]\s*/g, '_').replace(/\s+/g, '_') : 'resume';
+  }
+
+  function contactSelector() {
+    return CONTACT_KEYS.map(function (key) {
+      return '[data-editable="' + key + '"]';
+    }).join(',');
+  }
+
+  // Each template wraps a contact item differently (bare span, span + emoji,
+  // div.kv, ...). Walk up from the editable node to the outermost element that
+  // still holds only that single contact field - that element is the item.
+  function setupContactEntries() {
+    CONTACT_KEYS.forEach(function (key) {
+      if (document.querySelector('[data-contact="' + key + '"]')) return;
+
+      var field = document.querySelector('[data-editable="' + key + '"]');
+      if (!field) return;
+
+      var node = field;
+      while (node.parentElement &&
+             node.parentElement.tagName !== 'BODY' &&
+             node.parentElement.querySelectorAll(contactSelector()).length === 1) {
+        node = node.parentElement;
+      }
+      node.setAttribute('data-contact', key);
+    });
+  }
+
+  function contactStoreKey() {
+    return STORAGE_PREFIX + templateId + '_contacts_hidden';
+  }
+
+  function getHiddenContacts() {
+    try {
+      var raw = localStorage.getItem(contactStoreKey());
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function setContactVisible(key, visible) {
+    var node = document.querySelector('[data-contact="' + key + '"]');
+    if (node) node.style.display = visible ? '' : 'none';
+
+    var hidden = getHiddenContacts().filter(function (item) { return item !== key; });
+    if (!visible) hidden.push(key);
+
+    try {
+      localStorage.setItem(contactStoreKey(), JSON.stringify(hidden));
+    } catch (e) {
+      console.warn('localStorage write failed:', e);
+    }
+  }
+
+  function applyContactVisibility() {
+    var hidden = getHiddenContacts();
+    CONTACT_KEYS.forEach(function (key) {
+      var node = document.querySelector('[data-contact="' + key + '"]');
+      if (node) node.style.display = hidden.indexOf(key) === -1 ? '' : 'none';
+    });
+  }
+
+  function closeContactPanel() {
+    var panel = document.querySelector('.re-contact-popup');
+    if (panel) panel.remove();
+    document.removeEventListener('click', onContactPanelOutsideClick, true);
+    document.removeEventListener('keydown', onContactPanelKeydown);
+  }
+
+  function onContactPanelOutsideClick(e) {
+    var panel = document.querySelector('.re-contact-popup');
+    if (!panel) return;
+    if (panel.contains(e.target) || e.target.closest('.re-fab-contacts')) return;
+    closeContactPanel();
+  }
+
+  function onContactPanelKeydown(e) {
+    if (e.key === 'Escape') closeContactPanel();
+  }
+
+  function openContactPanel() {
+    if (document.querySelector('.re-contact-popup')) {
+      closeContactPanel();
+      return;
+    }
+
+    var hidden = getHiddenContacts();
+    var lang = getTemplateLanguage();
+    var panel = el('div', { className: 're-contact-popup' });
+
+    panel.appendChild(el('div', {
+      className: 're-contact-title',
+      textContent: t('Contact fields', '联系信息')
+    }));
+
+    var available = CONTACT_KEYS.filter(function (key) {
+      return !!document.querySelector('[data-editable="' + key + '"]');
+    });
+
+    if (!available.length) {
+      panel.appendChild(el('div', { className: 're-contact-empty', textContent: t('No contact fields in this template', '该模板没有可用的联系信息') }));
+    }
+
+    available.forEach(function (key) {
+      var row = el('label', { className: 're-contact-row' });
+      var box = el('input', {
+        type: 'checkbox',
+        className: 're-contact-check',
+        onchange: function () { setContactVisible(key, this.checked); }
+      });
+      box.checked = hidden.indexOf(key) === -1;
+
+      row.appendChild(box);
+      row.appendChild(el('span', {
+        className: 're-contact-label',
+        textContent: CONTACT_LABELS[key][lang === 'zh' ? 'zh' : 'en']
+      }));
+      panel.appendChild(row);
+    });
+
+    document.body.appendChild(panel);
+
+    var btn = $('.re-fab-contacts');
+    if (btn) {
+      var rect = btn.getBoundingClientRect();
+      panel.style.right = Math.max(12, window.innerWidth - rect.right) + 'px';
+      panel.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+    }
+
+    setTimeout(function () {
+      document.addEventListener('click', onContactPanelOutsideClick, true);
+      document.addEventListener('keydown', onContactPanelKeydown);
+    }, 0);
   }
 
   function switchLanguage() {
@@ -359,7 +521,8 @@
                     '确定要重置所有内容吗？这将清空你编辑的所有数据，恢复为模板默认值。'))) return;
     var base = STORAGE_PREFIX + templateId;
     try {
-      [base, base + '_zh', base + '_avatar_hidden', base + '_zh_avatar_hidden'].forEach(function (key) {
+      [base, base + '_zh', base + '_avatar_hidden', base + '_zh_avatar_hidden',
+       base + '_contacts_hidden'].forEach(function (key) {
         localStorage.removeItem(key);
       });
       location.reload();
@@ -1024,6 +1187,17 @@
 .re-link-input:focus{outline:none;border-color:#3498db;}\
 .re-link-btns{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;}\
 \
+.re-contact-popup{position:fixed;z-index:2000;background:#fff;border:1px solid #ddd;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,0.18);padding:14px 16px;min-width:190px;}\
+.re-contact-title{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;}\
+.re-contact-row{display:flex;align-items:center;gap:9px;padding:6px 4px;font-size:13px;color:#333;cursor:pointer;border-radius:5px;transition:background .15s;}\
+.re-contact-row:hover{background:#f4f6fb;}\
+.re-contact-check{width:15px;height:15px;accent-color:#3498db;cursor:pointer;margin:0;flex-shrink:0;}\
+.re-contact-label{user-select:none;}\
+.re-contact-empty{font-size:12px;color:#999;max-width:200px;line-height:1.5;}\
+\
+.re-fab-contacts{background:rgba(255,255,255,0.1);color:#fff;}\
+.re-fab-contacts:hover{background:#16a085;transform:scale(1.1);}\
+\
 @media print{\
   .re-toolbar{display:none!important}\
   .re-toast{display:none!important}\
@@ -1031,6 +1205,7 @@
   .re-editable-link{outline:none!important}\
   .re-group-actions{display:none!important}\
   .re-link-popup{display:none!important}\
+  .re-contact-popup{display:none!important}\
   .re-crop-overlay{display:none!important}\
 }\
 \
@@ -1068,6 +1243,9 @@
     var lang = getTemplateLanguage();
     applyTemplateLanguage(lang);
 
+    setupContactEntries();
+    applyContactVisibility();
+
     var savedData = loadData();
     if (Object.keys(savedData).length > 0 && (savedData.name || savedData.__groups)) {
       applyFieldData(savedData);
@@ -1083,14 +1261,19 @@
   }
 
   // Templates are also embedded as gallery previews. Inside an iframe we skip
-  // the editor chrome but still mirror the language chosen on the gallery page.
+  // the editor chrome but still mirror the language and contact visibility
+  // chosen on the gallery page.
   if (window.self !== window.top) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function () {
-        applyTemplateLanguage(getTemplateLanguage());
-      });
-    } else {
+    var applyPreviewState = function () {
+      templateId = computeTemplateId();
       applyTemplateLanguage(getTemplateLanguage());
+      setupContactEntries();
+      applyContactVisibility();
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyPreviewState);
+    } else {
+      applyPreviewState();
     }
     return;
   }
