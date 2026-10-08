@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" data-title-en="Resume - Alex Chen" data-title-zh="简历 - 张三">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>简历 - 张三</title>
+<title>Resume - Alex Chen</title>
 <style>
   *, *::before, *::after {
     margin: 0;
@@ -40,7 +43,7 @@
     overflow: hidden;
   }
 
-  /* ====== 头部 ====== */
+  /* ====== Header ====== */
   .header {
     background: var(--primary);
     color: #fff;
@@ -99,7 +102,7 @@
     text-decoration: underline;
   }
 
-  /* ====== 主体两栏布局 ====== */
+  /* ====== Two-column layout ====== */
   .main {
     display: flex;
   }
@@ -116,7 +119,7 @@
     padding: 28px 32px;
   }
 
-  /* ====== 区块样式 ====== */
+  /* ====== Section styles ====== */
   .section {
     margin-bottom: 24px;
   }
@@ -139,7 +142,7 @@
     font-size: 14px;
   }
 
-  /* ====== 技能标签 ====== */
+  /* ====== Skill tags ====== */
   .skill-tags {
     display: flex;
     flex-wrap: wrap;
@@ -156,7 +159,7 @@
     border: 1px solid var(--border);
   }
 
-  /* ====== 经历条目 ====== */
+  /* ====== Experience items ====== */
   .experience-item {
     margin-bottom: 20px;
   }
@@ -195,14 +198,14 @@
     white-space: pre-line;
   }
 
-  /* ====== 个人简介 ====== */
+  /* ====== Profile ====== */
   .summary-text {
     font-size: 14px;
     color: var(--text);
     line-height: 1.8;
   }
 
-  /* ====== 打印样式 ====== */
+  /* ====== Print styles ====== */
   @media print {
     body {
       -webkit-print-color-adjust: exact;
@@ -226,36 +229,36 @@
 
 <div class="resume">
 
-  <!-- ==================== 头部 ==================== -->
+  <!-- ==================== Header ==================== -->
   <div class="header">
     <div class="header-avatar">
       <img
         data-editable="avatar"
         data-editable-type="image"
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88'%3E%3Crect fill='%23bdc3c7' width='88' height='88'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23fff' font-size='36'%3E张%3C/text%3E%3C/svg%3E"
-        alt="头像"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88'%3E%3Crect fill='%23bdc3c7' width='88' height='88'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' fill='%23fff' font-size='36'%3EA%3C/text%3E%3C/svg%3E"
+        alt="Avatar"
       />
     </div>
     <div class="header-info">
-      <h1 data-editable="name">张三</h1>
-      <div class="title"><span data-editable="title">高级前端工程师</span></div>
+      <h1 data-editable="name" data-zh="张三" data-en="Alex Chen">Alex Chen</h1>
+      <div class="title"><span data-editable="title" data-zh="高级前端工程师" data-en="Senior Frontend Engineer">Senior Frontend Engineer</span></div>
       <div class="header-contact">
-        <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:zhangsan@example.com">zhangsan@example.com</a></span>
-        <span>📱 <span data-editable="phone">138-0000-0000</span></span>
-        <span>📍 <span data-editable="location">北京·朝阳</span></span>
-        <span>🔗 <a data-editable="website" data-editable-type="link" href="https://github.com/zhangsan">github.com/zhangsan</a></span>
+        <span>📧 <a data-editable="email" data-editable-type="link" href="mailto:alexchen@example.com" data-zh="zhangsan@example.com" data-en="alexchen@example.com" data-href-zh="mailto:zhangsan@example.com" data-href-en="mailto:alexchen@example.com">alexchen@example.com</a></span>
+        <span>📱 <span data-editable="phone" data-zh="138-0000-0000" data-en="+1 (555) 123-4567">+1 (555) 123-4567</span></span>
+        <span>📍 <span data-editable="location" data-zh="北京·朝阳" data-en="New York, NY">New York, NY</span></span>
+        <span>🔗 <a data-editable="website" data-editable-type="link" href="https://github.com/alexchen" data-zh="github.com/zhangsan" data-en="github.com/alexchen" data-href-zh="https://github.com/zhangsan" data-href-en="https://github.com/alexchen">github.com/alexchen</a></span>
       </div>
     </div>
   </div>
 
-  <!-- ==================== 主体 ==================== -->
+  <!-- ==================== Body ==================== -->
   <div class="main">
 
-    <!-- 侧边栏 -->
+    <!-- Sidebar -->
     <div class="sidebar">
 
       <div class="section">
-        <div class="section-title">技能</div>
+        <div class="section-title" data-zh="技能" data-en="Skills">Skills</div>
         <div class="skill-tags" data-editable-group="skills">
           <span data-editable-item data-editable="skill">React</span>
           <span data-editable-item data-editable="skill">TypeScript</span>
@@ -269,57 +272,57 @@
       </div>
 
       <div class="section">
-        <div class="section-title">语言能力</div>
+        <div class="section-title" data-zh="语言能力" data-en="Language Skills">Language Skills</div>
         <p style="font-size:13px;">
-          <span data-editable="language">中文（母语） / 英文（流利）</span>
+          <span data-editable="language" data-zh="中文（母语） / 英文（流利）" data-en="Chinese (native) / English (fluent)">Chinese (native) / English (fluent)</span>
         </p>
       </div>
 
     </div>
 
-    <!-- 主内容区 -->
+    <!-- Main content -->
     <div class="content">
 
       <div class="section">
-        <div class="section-title">个人简介</div>
-        <p class="summary-text"><span data-editable="summary">拥有 6 年前端开发经验，擅长 React 生态和前端工程化。主导过多个大型 B 端产品的前端架构设计，对性能优化和用户体验有深入理解。善于跨团队协作，具备良好的技术方案设计和落地能力。</span></p>
+        <div class="section-title" data-zh="个人简介" data-en="Profile">Profile</div>
+        <p class="summary-text"><span data-editable="summary" data-zh="拥有 6 年前端开发经验，擅长 React 生态和前端工程化。主导过多个大型 B 端产品的前端架构设计，对性能优化和用户体验有深入理解。善于跨团队协作，具备良好的技术方案设计和落地能力。" data-en="6+ years of frontend experience focused on the React ecosystem and front-end engineering. Led front-end architecture for several large B2B products, with deep knowledge of performance optimization and user experience. Effective at cross-team collaboration and technical design.">6+ years of frontend experience focused on the React ecosystem and front-end engineering. Led front-end architecture for several large B2B products, with deep knowledge of performance optimization and user experience. Effective at cross-team collaboration and technical design.</span></p>
       </div>
 
       <div class="section">
-        <div class="section-title">工作经历</div>
+        <div class="section-title" data-zh="工作经历" data-en="Work Experience">Work Experience</div>
         <div data-editable-group="work-experience">
 
           <div class="experience-item" data-editable-item>
             <div class="experience-header">
-              <span class="position" data-editable="position">前端技术负责人</span>
-              <span class="duration" data-editable="duration">2022.03 - 至今</span>
+              <span class="position" data-editable="position" data-zh="前端技术负责人" data-en="Frontend Technical Lead">Frontend Technical Lead</span>
+              <span class="duration" data-editable="duration" data-zh="2022.03 - 至今" data-en="2022.03 - Present">2022.03 - Present</span>
             </div>
-            <div class="experience-sub"><span data-editable="company">某科技有限公司</span></div>
-            <div class="experience-desc"><span data-editable="description">带领 6 人前端团队，负责核心产品的前端架构设计与迭代。\n推动微前端架构落地，将单体应用拆分为 4 个独立子应用，开发效率提升 40%。\n搭建前端监控体系（Sentry + 自研埋点），线上问题平均修复时间从 2 小时降至 20 分钟。</span></div>
+            <div class="experience-sub"><span data-editable="company" data-zh="某科技有限公司" data-en="Acme Technology Co., Ltd.">Acme Technology Co., Ltd.</span></div>
+            <div class="experience-desc"><span data-editable="description" data-zh="带领 6 人前端团队，负责核心产品的前端架构设计与迭代。\n推动微前端架构落地，将单体应用拆分为 4 个独立子应用，开发效率提升 40%。\n搭建前端监控体系（Sentry + 自研埋点），线上问题平均修复时间从 2 小时降至 20 分钟。" data-en="Led a 6-person frontend team, owning the front-end architecture and iteration roadmap of the core product.\nImplemented a micro-frontend architecture that split the monolith into four independent modules, increasing delivery efficiency by 40%.\nBuilt monitoring and analytics (Sentry + in-house tracking), reducing average incident recovery time from 2 hours to 20 minutes.">Led a 6-person frontend team, owning the front-end architecture and iteration roadmap of the core product.\nImplemented a micro-frontend architecture that split the monolith into four independent modules, increasing delivery efficiency by 40%.\nBuilt monitoring and analytics (Sentry + in-house tracking), reducing average incident recovery time from 2 hours to 20 minutes.</span></div>
           </div>
 
           <div class="experience-item" data-editable-item>
             <div class="experience-header">
-              <span class="position" data-editable="position">高级前端开发工程师</span>
+              <span class="position" data-editable="position" data-zh="高级前端开发工程师" data-en="Senior Frontend Engineer">Senior Frontend Engineer</span>
               <span class="duration" data-editable="duration">2019.07 - 2022.02</span>
             </div>
-            <div class="experience-sub"><span data-editable="company">某互联网公司</span></div>
-            <div class="experience-desc"><span data-editable="description">负责电商平台商家端的前端开发，使用 React + TypeScript 技术栈。\n设计并实现了可复用的组件库（30+ 组件），覆盖 80% 的业务场景。\n优化首屏加载性能，LCP 从 4.2s 降至 1.8s。</span></div>
+            <div class="experience-sub"><span data-editable="company" data-zh="某互联网公司" data-en="An internet company">An internet company</span></div>
+            <div class="experience-desc"><span data-editable="description" data-zh="负责电商平台商家端的前端开发，使用 React + TypeScript 技术栈。\n设计并实现了可复用的组件库（30+ 组件），覆盖 80% 的业务场景。\n优化首屏加载性能，LCP 从 4.2s 降至 1.8s。" data-en="Developed the seller-side frontend for the e-commerce platform using React + TypeScript.\nDesigned and built a reusable component library (30+ components) covering 80% of business scenarios.\nOptimized first-screen performance, reducing LCP from 4.2s to 1.8s.">Developed the seller-side frontend for the e-commerce platform using React + TypeScript.\nDesigned and built a reusable component library (30+ components) covering 80% of business scenarios.\nOptimized first-screen performance, reducing LCP from 4.2s to 1.8s.</span></div>
           </div>
 
         </div>
       </div>
 
       <div class="section">
-        <div class="section-title">教育经历</div>
+        <div class="section-title" data-zh="教育经历" data-en="Education">Education</div>
         <div data-editable-group="education">
 
           <div class="experience-item" data-editable-item>
             <div class="experience-header">
-              <span class="position" data-editable="degree">计算机科学与技术 · 本科</span>
+              <span class="position" data-editable="degree" data-zh="计算机科学与技术 · 本科" data-en="Computer Science · Bachelor&#x27;s">Computer Science · Bachelor's</span>
               <span class="duration" data-editable="duration">2015.09 - 2019.06</span>
             </div>
-            <div class="experience-sub"><span data-editable="school">北京大学</span></div>
+            <div class="experience-sub"><span data-editable="school" data-zh="北京大学" data-en="Peking University">Peking University</span></div>
           </div>
 
         </div>
@@ -330,6 +333,6 @@
 
 </div>
 
-<script src="../resume-editor.js"></script>
+<script src="../resume-editor.js?v=20261009"></script>
 </body>
 </html>

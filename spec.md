@@ -186,8 +186,50 @@ resume_ai 是一个纯前端简历编辑平台。所有简历模板均为自包�
 
 ---
 
+## 双语约定
+
+模板默认展示英文内容，并通过语言按钮切换中文。约定如下：
+
+### 1. 可本地化节点
+
+所有含示例文案的可编辑元素与区块标题，都需带上 `data-en` / `data-zh` 两个属性；标签内直接写英文：
+
+```html
+<h1 data-editable="name" data-zh="张三" data-en="Alex Chen">Alex Chen</h1>
+<div class="section-title" data-zh="工作经历" data-en="Work Experience">Work Experience</div>
+```
+
+### 2. 联系方式
+
+邮箱/电话/网址等示例信息同样提供双语，并在需要时附上链接版本：
+
+```html
+<a data-editable="email" data-editable-type="link"
+   href="mailto:alexchen@example.com"
+   data-zh="zhangsan@example.com" data-en="alexchen@example.com"
+   data-href-zh="mailto:zhangsan@example.com" data-href-en="mailto:alexchen@example.com">alexchen@example.com</a>
+```
+
+### 3. 文档标题
+
+`<html>` 标签保存两种语言的 `<title>`：
+
+```html
+<html lang="en" data-title-en="Resume - Alex Chen | Blueprint" data-title-zh="简历 - 张三 | Blueprint">
+```
+
+### 4. 其他要求
+
+- 中文只允许出现在 `data-zh` / `data-title-zh` 属性值中，页面上不得直接渲染中文
+- 模板需按 `index.html` 的写法引入带版本查询串的编辑器脚本：`<script src="../resume-editor.js?v=..."></script>`
+- `<head>` 中加入 no-cache meta，避免更新后浏览器继续使用旧缓存
+- 语言选择存于 `resume_ai_lang`；编辑器据此切换属性值
+
+---
+
 ## 版本历史
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
 | 1.0 | 2026-05 | 初始版本，定义基础规范 |
+| 1.1 | 2026-10 | 新增双语约定：`data-en` / `data-zh`、`data-title-*`、`data-href-*` |

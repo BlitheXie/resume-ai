@@ -1,4 +1,4 @@
-var CACHE = 'resume-ai-v1';
+var CACHE = 'resume-ai-v3';
 
 var URLS = [
   '/',
@@ -30,6 +30,7 @@ var URLS = [
 ];
 
 self.addEventListener('install', function (e) {
+  self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE).then(function (cache) {
       return cache.addAll(URLS);
@@ -37,10 +38,37 @@ self.addEventListener('install', function (e) {
   );
 });
 
+self.addEventListener('activate', function (e) {
+  e.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(
+        keys.filter(function (key) { return key !== CACHE; })
+            .map(function (key) { return caches.delete(key); })
+      );
+    }).then(function () {
+      return self.clients.claim();
+    })
+  );
+});
+
 self.addEventListener('fetch', function (e) {
+  var request = e.request;
+
+  if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
+
+  // Network first so fresh content always wins, with the cache as an offline
+  // fallback. Assets are still stored on every successful fetch.
   e.respondWith(
-    caches.match(e.request).then(function (cached) {
-      return cached || fetch(e.request);
+    fetch(request).then(function (response) {
+      if (response && response.ok && response.type === 'basic') {
+        var copy = response.clone();
+        caches.open(CACHE).then(function (cache) { cache.put(request, copy); });
+      }
+      return response;
+    }).catch(function () {
+      return caches.match(request).then(function (cached) {
+        return cached || Response.error();
+      });
     })
   );
 });

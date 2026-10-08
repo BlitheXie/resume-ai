@@ -53,35 +53,52 @@
 
     var btnEdit = el('button', {
       className: 're-fab re-fab-edit',
-      'data-label': '编辑',
-      title: 'Ctrl+E 切换编辑/预览',
+      'data-label-en': 'Edit',
+      'data-label-zh': '编辑',
+      'data-tip-en': 'Ctrl+E toggle edit/preview',
+      'data-tip-zh': 'Ctrl+E 切换编辑/预览',
       textContent: '✏️',
       onclick: toggleEditMode
     });
 
     var btnPrint = el('button', {
       className: 're-fab re-fab-print',
-      'data-label': '打印',
-      title: 'Ctrl+P 打印简历',
+      'data-label-en': 'Print',
+      'data-label-zh': '打印',
+      'data-tip-en': 'Ctrl+P print resume',
+      'data-tip-zh': 'Ctrl+P 打印简历',
       textContent: '🖨️',
       onclick: function () {
-        toast('正在打开打印对话框…', '祝你面试顺利！🍀');
+        toast(t('Opening print dialog…', '正在打开打印对话框…'), t('Good luck in your interview! 🍀', '祝你面试顺利！🍀'));
         window.print();
       }
     });
 
     var btnReset = el('button', {
       className: 're-fab re-fab-reset',
-      'data-label': '重置',
-      title: '恢复模板默认值',
+      'data-label-en': 'Reset',
+      'data-label-zh': '重置',
+      'data-tip-en': 'Reset to template defaults',
+      'data-tip-zh': '恢复模板默认值',
       textContent: '↩️',
       onclick: resetData
+    });
+
+    var btnLang = el('button', {
+      className: 're-fab re-fab-lang',
+      'data-label-en': 'EN / 中文',
+      'data-label-zh': '中文 / EN',
+      'data-tip-en': 'Switch to Chinese',
+      'data-tip-zh': 'Switch to English',
+      textContent: '🌐',
+      onclick: switchLanguage
     });
 
     bar.appendChild(statusDot);
     bar.appendChild(btnEdit);
     bar.appendChild(btnPrint);
     bar.appendChild(btnReset);
+    bar.appendChild(btnLang);
 
     var avatarEl = $('[data-editable="avatar"][data-editable-type="image"]');
     if (avatarEl) {
@@ -93,8 +110,10 @@
       }
       var btnAvatar = el('button', {
         className: 're-fab re-fab-avatar' + (isAvatarVisible ? '' : ' re-fab-avatar-hidden'),
-        'data-label': isAvatarVisible ? '头像' : '头像',
-        title: isAvatarVisible ? '隐藏头像' : '显示头像',
+        'data-label-en': 'Avatar',
+        'data-label-zh': '头像',
+        'data-tip-en': isAvatarVisible ? 'Hide avatar' : 'Show avatar',
+        'data-tip-zh': isAvatarVisible ? '隐藏头像' : '显示头像',
         textContent: '🖼️',
         onclick: function () {
           isAvatarVisible = !isAvatarVisible;
@@ -104,30 +123,141 @@
           if (isAvatarVisible) {
             wrapper.style.display = '';
             this.classList.remove('re-fab-avatar-hidden');
-            this.title = '隐藏头像';
-            this.setAttribute('data-label', '头像');
+            this.setAttribute('data-tip-en', 'Hide avatar');
+            this.setAttribute('data-tip-zh', '隐藏头像');
             localStorage.setItem(avatarKey, '0');
-            toast('头像已显示', '这张照片很有精神 📸');
+            toast(t('Avatar shown', '头像已显示'), t('You look sharp in this photo 📸', '这张照片很有精神 📸'));
           } else {
             wrapper.style.display = 'none';
             this.classList.add('re-fab-avatar-hidden');
-            this.title = '显示头像';
-            this.setAttribute('data-label', '头像');
+            this.setAttribute('data-tip-en', 'Show avatar');
+            this.setAttribute('data-tip-zh', '显示头像');
             localStorage.setItem(avatarKey, '1');
-            toast('头像已隐藏 · 再次点击恢复', '低调也是一种自信 😎');
+            toast(t('Avatar hidden · click again to restore', '头像已隐藏 · 再次点击恢复'), t('A low profile works too 😎', '低调也是一种自信 😎'));
           }
+          updateToolbarLanguage();
         }
       });
       bar.appendChild(btnAvatar);
     }
 
     document.body.appendChild(bar);
+    updateToolbarLanguage();
   }
 
-  // ==================== 存储 ====================
+  // ==================== 语言切换 ====================
+
+  function t(en, zh) {
+    return getTemplateLanguage() === 'zh' ? zh : en;
+  }
+
+  function getTemplateLanguage() {
+    var stored = localStorage.getItem('resume_ai_lang');
+    if (stored === 'zh') return 'zh';
+    if (!stored) localStorage.setItem('resume_ai_lang', 'en');
+    return 'en';
+  }
+
+  function updateToolbarLanguage() {
+    var zh = getTemplateLanguage() === 'zh';
+    $$('.re-fab[data-label-en]').forEach(function (btn) {
+      var label = zh ? btn.getAttribute('data-label-zh') : btn.getAttribute('data-label-en');
+      var tip = zh ? btn.getAttribute('data-tip-zh') : btn.getAttribute('data-tip-en');
+      if (label) btn.setAttribute('data-label', label);
+      if (tip) btn.title = tip;
+    });
+  }
+
+  function updateTemplateLanguageButton() {
+    updateToolbarLanguage();
+  }
+
+  function applyTemplateLanguage(lang) {
+    var active = lang || getTemplateLanguage();
+    var root = document.documentElement;
+
+    document.documentElement.lang = active === 'zh' ? 'zh-CN' : 'en';
+
+    var titleEn = root.getAttribute('data-title-en');
+    var titleZh = root.getAttribute('data-title-zh');
+    var titleTag = document.querySelector('title');
+    if (titleTag && (titleEn || titleZh)) {
+      titleTag.textContent = active === 'zh' ? (titleZh || titleEn) : (titleEn || titleZh);
+    }
+
+    // Every localizable node carries its own data-en / data-zh pair, so the
+    // switch never has to guess what the original text was.
+    $$('[data-en][data-zh]').forEach(function (node) {
+      if (node.closest('.re-toolbar') || node.closest('.re-toast')) return;
+      var value = active === 'zh' ? node.getAttribute('data-zh') : node.getAttribute('data-en');
+      if (typeof value !== 'string') return;
+
+      if (node.tagName === 'IMG') {
+        node.setAttribute('alt', value);
+      } else if (node.textContent !== value) {
+        node.textContent = value;
+      }
+    });
+
+    $$('[data-href-en][data-href-zh]').forEach(function (node) {
+      var href = active === 'zh' ? node.getAttribute('data-href-zh') : node.getAttribute('data-href-en');
+      if (href) node.setAttribute('href', href);
+    });
+
+    $$('[data-editable="avatar"]').forEach(function (img) {
+      var alt = img.getAttribute('alt') || '';
+      if (alt === '头像' && active === 'en') img.setAttribute('alt', 'Avatar');
+      if (alt === 'Avatar' && active === 'zh') img.setAttribute('alt', '头像');
+    });
+  }
+
+  function switchLanguage() {
+    var next = getTemplateLanguage() === 'en' ? 'zh' : 'en';
+
+    // Keep whatever the user has already typed under the current language.
+    var current = getAllFieldData();
+    if (Object.keys(current).length > 1) saveData(current);
+
+    localStorage.setItem('resume_ai_lang', next);
+    applyTemplateLanguage(next);
+    updateTemplateLanguageButton();
+
+    var saved = loadData();
+    if (saved.name || saved.__groups) {
+      applyFieldData(saved);
+      setStatus('loaded');
+    }
+  }
 
   function storageKey() {
-    return STORAGE_PREFIX + templateId;
+    var lang = getTemplateLanguage();
+    return STORAGE_PREFIX + templateId + (lang === 'zh' ? '_zh' : '');
+  }
+
+  function legacyStorageKey() {
+    var zhTitle = document.documentElement.getAttribute('data-title-zh');
+    if (!zhTitle) return '';
+    return STORAGE_PREFIX + zhTitle.replace(/\s*[-–—|]\s*/g, '_').replace(/\s+/g, '_');
+  }
+
+  // The storage key is derived from <title>, which changed when the templates
+  // were translated. Adopt data saved under the old Chinese title once.
+  function migrateLegacyData() {
+    var legacy = legacyStorageKey();
+    if (getTemplateLanguage() === 'zh' || !legacy || legacy === storageKey()) return;
+    try {
+      var old = localStorage.getItem(legacy);
+      if (!old || localStorage.getItem(storageKey())) return;
+
+      localStorage.setItem(storageKey(), old);
+      var oldAvatar = localStorage.getItem(legacy + '_avatar_hidden');
+      if (oldAvatar) localStorage.setItem(storageKey() + '_avatar_hidden', oldAvatar);
+
+      localStorage.removeItem(legacy);
+      localStorage.removeItem(legacy + '_avatar_hidden');
+    } catch (e) {
+      console.warn('localStorage migration failed:', e);
+    }
   }
 
   function loadData() {
@@ -145,7 +275,7 @@
       setStatus('saved');
     } catch (e) {
       setStatus('error');
-      console.warn('localStorage 写入失败:', e);
+      console.warn('localStorage write failed:', e);
     }
   }
 
@@ -234,10 +364,13 @@
   }
 
   function resetData() {
-    if (!confirm('确定要重置所有内容吗？这将清空你编辑的所有数据，恢复为模板默认值。')) return;
+    if (!confirm(t('Reset all content? This clears your edits and restores the template defaults.',
+                    '确定要重置所有内容吗？这将清空你编辑的所有数据，恢复为模板默认值。'))) return;
+    var base = STORAGE_PREFIX + templateId;
     try {
-      localStorage.removeItem(storageKey());
-      localStorage.removeItem(storageKey() + '_avatar_hidden');
+      [base, base + '_zh', base + '_avatar_hidden', base + '_zh_avatar_hidden'].forEach(function (key) {
+        localStorage.removeItem(key);
+      });
       location.reload();
     } catch (e) {
       location.reload();
@@ -294,13 +427,15 @@
       if (bar) bar.classList.add('re-edit-active');
       if (resume) resume.classList.add('re-edit-mode');
       enableAllEditable();
-      toast('已进入编辑模式 · 点击虚线框修改内容', '好的开始是成功的一半 ✨');
+      toast(t('Edit mode enabled · click the dashed boxes to edit', '已进入编辑模式 · 点击虚线框修改内容'),
+            t('A good start is half the battle ✨', '好的开始是成功的一半 ✨'));
     } else {
       if (btn) btn.textContent = '✏️';
       if (bar) bar.classList.remove('re-edit-active');
       if (resume) resume.classList.remove('re-edit-mode');
       disableAllEditable();
-      toast('已退出编辑模式 · 预览可打印效果', '每一步努力都算数 💪');
+      toast(t('Edit mode disabled · preview is ready to print', '已退出编辑模式 · 预览可打印效果'),
+            t('Every step counts 💪', '每一步努力都算数 💪'));
     }
   }
 
@@ -929,6 +1064,11 @@
     setupGroups();
     setupKeyboard();
 
+    migrateLegacyData();
+
+    var lang = getTemplateLanguage();
+    applyTemplateLanguage(lang);
+
     var savedData = loadData();
     if (Object.keys(savedData).length > 0 && (savedData.name || savedData.__groups)) {
       applyFieldData(savedData);
@@ -938,12 +1078,23 @@
     }
 
     console.log(
-      '%c📄 Resume Editor 已就绪 %c| %c点击「编辑」开始修改，%cCtrl+E %c切换编辑模式，%cCtrl+P %c打印',
+      '%c📄 Resume Editor ready %c| %cClick Edit to begin, %cCtrl+E %cto toggle edit mode, %cCtrl+P %cto print',
       'font-weight:bold', '', '', 'color:#3498db', '', 'color:#27ae60', ''
     );
   }
 
-  if (window.self !== window.top) return;
+  // Templates are also embedded as gallery previews. Inside an iframe we skip
+  // the editor chrome but still mirror the language chosen on the gallery page.
+  if (window.self !== window.top) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        applyTemplateLanguage(getTemplateLanguage());
+      });
+    } else {
+      applyTemplateLanguage(getTemplateLanguage());
+    }
+    return;
+  }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

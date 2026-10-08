@@ -81,7 +81,9 @@
 - 每个区块有清晰的分隔线或间距
 
 ### 6. 默认占位文字
-- 用中文填写有意义的示例内容（如"张三"、"高级前端工程师"）
+- 用英文填写有意义的示例内容（如 "Alex Chen"、"Senior Frontend Engineer"）
+- 同时用 `data-en` / `data-zh` 标注双语：标签内写英文，`data-zh` 放对应中文
+- 文档标题写在 `<html data-title-en data-title-zh>` 上
 - 不要留空，让模板看起来是完整的效果
 
 ### 7. 输出格式

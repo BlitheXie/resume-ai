@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Resume AI - 简历模板工坊</title>
+<title>Resume AI - Resume Templates</title>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -27,6 +27,40 @@
     background: var(--bg);
     line-height: 1.6;
     min-height: 100vh;
+  }
+
+  .topbar {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #dfe7ff;
+    background: rgba(255,255,255,0.9);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    transition: all 0.2s ease;
+  }
+
+  .lang-toggle:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .lang-toggle .active {
+    color: var(--accent);
   }
 
   .hero {
@@ -568,87 +602,92 @@
 </head>
 <body>
 
+<div class="topbar">
+  <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Toggle language">
+    <span>EN</span> / 中文
+  </button>
+</div>
+
 <div class="hero">
   <h1>Resume <span>AI</span></h1>
-  <p>选择一份精美模板，在线编辑你的简历。所有数据仅存储在你的浏览器中。</p>
+  <p data-i18n="hero.tagline">Choose a polished template and edit your resume online. Your data stays only in your browser.</p>
 </div>
 
 <div class="layout">
 
   <nav class="sidebar">
-    <div class="sidebar-title">模板分类</div>
+    <div class="sidebar-title" data-i18n="sidebar.category">Template Categories</div>
 
     <button class="nav-item active" data-filter="all">
-      <span class="nav-icon">🏠</span> 全部模板
+      <span class="nav-icon">🏠</span> <span data-i18n="filters.all">All Templates</span>
       <span class="nav-count">22</span>
     </button>
 
     <div class="sidebar-divider"></div>
 
-    <div class="sidebar-title" style="padding-top:4px;">按风格</div>
+    <div class="sidebar-title" style="padding-top:4px;" data-i18n="sidebar.style">By Style</div>
 
     <button class="nav-item" data-filter="light">
-      <span class="nav-icon">☀️</span> 浅色系
+      <span class="nav-icon">☀️</span> <span data-i18n="filters.light">Light</span>
       <span class="nav-count">12</span>
     </button>
 
     <button class="nav-item" data-filter="dark">
-      <span class="nav-icon">🌙</span> 暗色系
+      <span class="nav-icon">🌙</span> <span data-i18n="filters.dark">Dark</span>
       <span class="nav-count">10</span>
     </button>
 
     <button class="nav-item" data-filter="minimal">
-      <span class="nav-icon">◻️</span> 极简
+      <span class="nav-icon">◻️</span> <span data-i18n="filters.minimal">Minimal</span>
       <span class="nav-count">6</span>
     </button>
 
     <div class="sidebar-divider"></div>
 
-    <div class="sidebar-title" style="padding-top:4px;">按岗位</div>
+    <div class="sidebar-title" style="padding-top:4px;" data-i18n="sidebar.role">By Role</div>
 
     <button class="nav-item" data-filter="tech">
-      <span class="nav-icon">💻</span> 技术 / 开发
+      <span class="nav-icon">💻</span> <span data-i18n="filters.tech">Tech / Dev</span>
       <span class="nav-count">9</span>
     </button>
 
     <button class="nav-item" data-filter="design">
-      <span class="nav-icon">🎨</span> 设计 / 产品
+      <span class="nav-icon">🎨</span> <span data-i18n="filters.design">Design / Product</span>
       <span class="nav-count">7</span>
     </button>
 
     <button class="nav-item" data-filter="finance">
-      <span class="nav-icon">💼</span> 金融 / 商务
+      <span class="nav-icon">💼</span> <span data-i18n="filters.finance">Finance / Business</span>
       <span class="nav-count">3</span>
     </button>
 
     <button class="nav-item" data-filter="creator">
-      <span class="nav-icon">✍️</span> 创作 / 自媒体
+      <span class="nav-icon">✍️</span> <span data-i18n="filters.creator">Creator / Media</span>
       <span class="nav-count">3</span>
     </button>
 
     <div class="sidebar-divider"></div>
 
     <button class="nav-item nav-tutorial" id="btn-tutorial" data-filter="">
-      <span class="nav-icon">📖</span> 使用教程
+      <span class="nav-icon">📖</span> <span data-i18n="nav.tutorial">Tutorial</span>
     </button>
   </nav>
 
   <div class="gallery">
 
     <div class="gallery-header">
-      <h2 id="filter-label">全部模板</h2>
-      <span class="gallery-count" id="filter-count">共 22 个模板</span>
+      <h2 id="filter-label" data-i18n="filters.all">All Templates</h2>
+      <span class="gallery-count" id="filter-count" data-i18n="count.templates">22 templates</span>
     </div>
 
     <div class="empty-state" id="empty-state">
       <div class="icon">📭</div>
-      <p>该分类下暂无模板</p>
+      <p data-i18n="empty.noTemplates">No templates available in this category.</p>
     </div>
 
     <div class="grid" id="grid">
 
-      <a class="card" data-categories="all light tech"
-         href="templates/modern-professional.html">
+      <a class="card" data-card-key="modern-professional" data-categories="all light tech" href="templates/modern-professional.html">
         <div class="card-preview">
           <iframe src="templates/modern-professional.html" loading="lazy"></iframe>
           <span class="card-badge">经典</span>
@@ -664,8 +703,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light minimal design"
-         href="templates/apple-minimal.html">
+      <a class="card" data-card-key="apple-minimal" data-categories="all light minimal design" href="templates/apple-minimal.html">
         <div class="card-preview">
           <iframe src="templates/apple-minimal.html" loading="lazy"></iframe>
           <span class="card-badge">极简</span>
@@ -681,8 +719,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark tech"
-         href="templates/cyberpunk-tech.html">
+      <a class="card" data-card-key="cyberpunk-tech" data-categories="all dark tech" href="templates/cyberpunk-tech.html">
         <div class="card-preview">
           <iframe src="templates/cyberpunk-tech.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(255,0,110,0.7);">赛博</span>
@@ -698,8 +735,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light minimal design"
-         href="templates/stripe-notion.html">
+      <a class="card" data-card-key="stripe-notion" data-categories="all light minimal design" href="templates/stripe-notion.html">
         <div class="card-preview">
           <iframe src="templates/stripe-notion.html" loading="lazy"></iframe>
           <span class="card-badge">现代</span>
@@ -715,8 +751,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark finance"
-         href="templates/luxury-black-gold.html">
+      <a class="card" data-card-key="luxury-black-gold" data-categories="all dark finance" href="templates/luxury-black-gold.html">
         <div class="card-preview">
           <iframe src="templates/luxury-black-gold.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(212,168,83,0.8);color:#0d0d0d;">黑金</span>
@@ -732,8 +767,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light minimal creator"
-         href="templates/creative-creator.html">
+      <a class="card" data-card-key="creative-creator" data-categories="all light minimal creator" href="templates/creative-creator.html">
         <div class="card-preview">
           <iframe src="templates/creative-creator.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(224,122,95,0.8);">创作</span>
@@ -749,8 +783,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light minimal design"
-         href="templates/nordic-clean.html">
+      <a class="card" data-card-key="nordic-clean" data-categories="all light minimal design" href="templates/nordic-clean.html">
         <div class="card-preview">
           <iframe src="templates/nordic-clean.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(107,142,107,0.8);">北欧</span>
@@ -766,8 +799,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light tech"
-         href="templates/bold-impact.html">
+      <a class="card" data-card-key="bold-impact" data-categories="all light tech" href="templates/bold-impact.html">
         <div class="card-preview">
           <iframe src="templates/bold-impact.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(230,57,70,0.8);">大胆</span>
@@ -783,8 +815,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light minimal creator"
-         href="templates/editorial.html">
+      <a class="card" data-card-key="editorial" data-categories="all light minimal creator" href="templates/editorial.html">
         <div class="card-preview">
           <iframe src="templates/editorial.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(192,80,61,0.8);">编辑</span>
@@ -800,8 +831,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light tech"
-         href="templates/soft-gradient.html">
+      <a class="card" data-card-key="soft-gradient" data-categories="all light tech" href="templates/soft-gradient.html">
         <div class="card-preview">
           <iframe src="templates/soft-gradient.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(124,92,191,0.8);">渐变</span>
@@ -817,8 +847,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark minimal tech"
-         href="templates/mono-chrome.html">
+      <a class="card" data-card-key="mono-chrome" data-categories="all dark minimal tech" href="templates/mono-chrome.html">
         <div class="card-preview">
           <iframe src="templates/mono-chrome.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(80,80,80,0.8);">黑白</span>
@@ -834,8 +863,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark tech"
-         href="templates/brutalist.html">
+      <a class="card" data-card-key="brutalist" data-categories="all dark tech" href="templates/brutalist.html">
         <div class="card-preview">
           <iframe src="templates/brutalist.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(255,59,0,0.8);">粗野</span>
@@ -851,8 +879,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark design"
-         href="templates/glassmorphism.html">
+      <a class="card" data-card-key="glassmorphism" data-categories="all dark design" href="templates/glassmorphism.html">
         <div class="card-preview">
           <iframe src="templates/glassmorphism.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(124,92,224,0.8);">玻璃</span>
@@ -868,8 +895,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark tech"
-         href="templates/neon-nights.html">
+      <a class="card" data-card-key="neon-nights" data-categories="all dark tech" href="templates/neon-nights.html">
         <div class="card-preview">
           <iframe src="templates/neon-nights.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(255,45,149,0.8);">霓虹</span>
@@ -885,8 +911,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark design"
-         href="templates/synthwave-80s.html">
+      <a class="card" data-card-key="synthwave-80s" data-categories="all dark design" href="templates/synthwave-80s.html">
         <div class="card-preview">
           <iframe src="templates/synthwave-80s.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(180,77,255,0.8);">80s</span>
@@ -902,8 +927,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark design"
-         href="templates/synthwave.html">
+      <a class="card" data-card-key="synthwave" data-categories="all dark design" href="templates/synthwave.html">
         <div class="card-preview">
           <iframe src="templates/synthwave.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(255,107,53,0.8);">浪潮</span>
@@ -919,8 +943,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light finance"
-         href="templates/precision-finance.html">
+      <a class="card" data-card-key="precision-finance" data-categories="all light finance" href="templates/precision-finance.html">
         <div class="card-preview">
           <iframe src="templates/precision-finance.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(27,42,74,0.8);">金融</span>
@@ -936,8 +959,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light tech"
-         href="templates/blueprint.html">
+      <a class="card" data-card-key="blueprint" data-categories="all light tech" href="templates/blueprint.html">
         <div class="card-preview">
           <iframe src="templates/blueprint.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(26,74,122,0.8);">蓝图</span>
@@ -953,8 +975,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark design"
-         href="templates/vaporwave.html">
+      <a class="card" data-card-key="vaporwave" data-categories="all dark design" href="templates/vaporwave.html">
         <div class="card-preview">
           <iframe src="templates/vaporwave.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(255,113,206,0.8);">蒸汽</span>
@@ -970,8 +991,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all dark tech"
-         href="templates/terminal-cli.html">
+      <a class="card" data-card-key="terminal-cli" data-categories="all dark tech" href="templates/terminal-cli.html">
         <div class="card-preview">
           <iframe src="templates/terminal-cli.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(0,255,65,0.3);color:#00ff41;">$></span>
@@ -987,8 +1007,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light creator"
-         href="templates/newspaper.html">
+      <a class="card" data-card-key="newspaper" data-categories="all light creator" href="templates/newspaper.html">
         <div class="card-preview">
           <iframe src="templates/newspaper.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(139,37,0,0.8);">报刊</span>
@@ -1004,8 +1023,7 @@
         </div>
       </a>
 
-      <a class="card" data-categories="all light finance"
-         href="templates/timeline-right.html">
+      <a class="card" data-card-key="timeline-right" data-categories="all light finance" href="templates/timeline-right.html">
         <div class="card-preview">
           <iframe src="templates/timeline-right.html" loading="lazy"></iframe>
           <span class="card-badge" style="background:rgba(45,106,79,0.8);">时间</span>
@@ -1027,10 +1045,10 @@
 </div>
 
 <div class="footer">
-  <p>Resume AI · 纯前端简历编辑工具 · 所有数据仅存储在你的浏览器中</p>
+  <p data-i18n="footer.text">Resume AI · Front-end resume editor · Data stays only in your browser</p>
   <p style="margin-top:4px;">
-    <a href="prompt.md" target="_blank">AI 模板提示词</a> ·
-    <a href="spec.md" target="_blank">模板规范</a>
+    <a href="prompt.md" target="_blank" data-i18n="footer.prompt">AI Template Prompt</a> ·
+    <a href="spec.md" target="_blank" data-i18n="footer.spec">Template Spec</a>
   </p>
 </div>
 
@@ -1041,17 +1059,327 @@
   var label = document.getElementById('filter-label');
   var count = document.getElementById('filter-count');
   var empty = document.getElementById('empty-state');
+  var langToggle = document.getElementById('lang-toggle');
 
-  var labels = {
-    all: '全部模板',
-    light: '浅色系',
-    dark: '暗色系',
-    minimal: '极简',
-    tech: '技术 / 开发',
-    design: '设计 / 产品',
-    finance: '金融 / 商务',
-    creator: '创作 / 自媒体'
+  var translations = {
+    en: {
+      'html.lang': 'en',
+      'title': 'Resume AI - Resume Templates',
+      'hero.tagline': 'Choose a polished template and edit your resume online. Your data stays only in your browser.',
+      'sidebar.category': 'Template Categories',
+      'sidebar.style': 'By Style',
+      'sidebar.role': 'By Role',
+      'filters.all': 'All Templates',
+      'filters.light': 'Light',
+      'filters.dark': 'Dark',
+      'filters.minimal': 'Minimal',
+      'filters.tech': 'Tech / Dev',
+      'filters.design': 'Design / Product',
+      'filters.finance': 'Finance / Business',
+      'filters.creator': 'Creator / Media',
+      'nav.tutorial': 'Tutorial',
+      'empty.noTemplates': 'No templates available in this category.',
+      'count.templates': function (n) { return n + ' templates'; },
+      'footer.text': 'Resume AI · Front-end resume editor · Data stays only in your browser',
+      'footer.prompt': 'AI Template Prompt',
+      'footer.spec': 'Template Spec',
+      'tutorial.title': 'Tutorial',
+      'tutorial.prev': '← Previous',
+      'tutorial.next': 'Next →',
+      'tutorial.done': 'Done ✓',
+      'tutorial.stepIndicator': 'Step {n} / {total}',
+      'tutorial.step1.title': 'Browse the template library',
+      'tutorial.step1.p1': 'On the left sidebar, you can filter templates by style (light, dark, minimal) or by role (tech, design, finance, etc.).',
+      'tutorial.step1.p2': 'Click any filter button and the gallery will show only matching resume templates. Each card includes a live iframe thumbnail so you can preview the layout quickly.',
+      'tutorial.step1.tip': 'Tip: click the dark theme filter to explore more futuristic layouts.',
+      'tutorial.step2.title': 'Choose and open a resume',
+      'tutorial.step2.p1': 'Once you find a template you like, click the card to open the editor page.',
+      'tutorial.step2.p2': 'The page is shown in preview mode and matches the printed layout. Data is stored in your browser only and never uploaded to a server.',
+      'tutorial.step2.tip': 'Tip: you can return to the home page anytime and try another template. Each template saves data separately.',
+      'tutorial.step3.title': 'Edit resume content',
+      'tutorial.step3.p1': 'After opening a resume, the floating toolbar sits in the lower-right corner. Click the ✏️ Edit button (or press Ctrl+E) to enter edit mode.',
+      'tutorial.step3.p2': 'In edit mode, all editable text shows a blue dashed outline. Click directly to update it. Experience and skill blocks also include [+] and [×] buttons for adding or removing items.',
+      'tutorial.step3.p3': 'Hover over the avatar area to see the 📷 upload prompt, then drag and crop after upload.',
+      'tutorial.step3.tip': 'Tip: your edits are auto-saved to browser storage, so refreshing the page won’t lose your work.',
+      'tutorial.step4.title': 'Print and export',
+      'tutorial.step4.p1': 'When editing is complete, click the 🖨️ Print button (or press Ctrl+P) to open the print dialog.',
+      'tutorial.step4.p2': 'All templates are optimized for A4 paper, and the toolbar and editing guides are hidden automatically during printing. Dark-theme color schemes are preserved.',
+      'tutorial.step4.p3': 'In the print dialog, choose Save as PDF to export a PDF document.',
+      'tutorial.step4.tip': 'Tip: click the 👁️ button in edit mode to return to preview mode and check the final layout.',
+      'tutorial.step5.title': 'Style references',
+      'tutorial.step5.p1': 'Here are a few representative styles you can use as inspiration when selecting or customizing a resume.',
+      'tutorial.step5.tip': 'Tip: every template can be adapted to different roles—technical roles can use a minimal layout, and creative roles can use a more expressive design.',
+      'tutorial.step5.card1.label': 'Dark Tech Style',
+      'tutorial.step5.card1.desc': 'Black background + neon cyan/pink/purple',
+      'tutorial.step5.card2.label': 'Light Professional Style',
+      'tutorial.step5.card2.desc': 'White background + deep blue/gray + dual columns',
+      'tutorial.step5.card3.label': 'Minimal Layout Style',
+      'tutorial.step5.card3.desc': 'Generous whitespace + thin lines + restrained palette',
+      'tutorial.step5.card4.label': 'Creative Personal Style',
+      'tutorial.step5.card4.desc': 'Warm tones + serif accents + expressive layout'
+    },
+    zh: {
+      'html.lang': 'zh-CN',
+      'title': 'Resume AI - 简历模板工坊',
+      'hero.tagline': '选择一份精美模板，在线编辑你的简历。所有数据仅存储在你的浏览器中。',
+      'sidebar.category': '模板分类',
+      'sidebar.style': '按风格',
+      'sidebar.role': '按岗位',
+      'filters.all': '全部模板',
+      'filters.light': '浅色系',
+      'filters.dark': '暗色系',
+      'filters.minimal': '极简',
+      'filters.tech': '技术 / 开发',
+      'filters.design': '设计 / 产品',
+      'filters.finance': '金融 / 商务',
+      'filters.creator': '创作 / 自媒体',
+      'nav.tutorial': '使用教程',
+      'empty.noTemplates': '该分类下暂无模板',
+      'count.templates': function (n) { return '共 ' + n + ' 个模板'; },
+      'footer.text': 'Resume AI · 纯前端简历编辑工具 · 所有数据仅存储在你的浏览器中',
+      'footer.prompt': 'AI 模板提示词',
+      'footer.spec': '模板规范',
+      'tutorial.title': '使用教程',
+      'tutorial.prev': '← 上一步',
+      'tutorial.next': '下一步 →',
+      'tutorial.done': '完成 ✓',
+      'tutorial.stepIndicator': '第 {n} 步 / 共 {total} 步',
+      'tutorial.step1.title': '浏览模板库',
+      'tutorial.step1.p1': '在主页左侧导航栏中，你可以按 风格（浅色系、暗色系、极简）或 岗位（技术、设计、金融等）筛选模板。',
+      'tutorial.step1.p2': '点击任意筛选按钮，右侧会只显示匹配的简历模板。每个模板卡片都展示了 真实的 iframe 缩略图，你可以直观感受排版效果。',
+      'tutorial.step1.tip': '💡 提示：点击左侧 暗色系 看看酷炫的深色模板吧！',
+      'tutorial.step2.title': '选择并打开简历',
+      'tutorial.step2.p1': '找到你喜欢的模板后，点击卡片即可进入该简历的编辑页面。',
+      'tutorial.step2.p2': '页面加载后，显示的是模板的预览模式——和打印效果完全一致。数据保存在你的浏览器中，不会上传到任何服务器。',
+      'tutorial.step2.tip': '💡 提示：你可以随时回到主页，换另一个模板试试，每个模板的编辑数据都是独立保存的。',
+      'tutorial.step3.title': '编辑简历内容',
+      'tutorial.step3.p1': '进入简历页面后，右下角有一个浮动胶囊工具栏。点击 编辑 按钮（或按 Ctrl+E）进入编辑模式。',
+      'tutorial.step3.p2': '编辑模式下，所有可修改的文字会显示蓝色虚线框。直接点击即可修改。工作经历和技能区域还有 [+] [×] 按钮，可以自由增删项目。',
+      'tutorial.step3.p3': '头像区域悬停会出现 📷 点击换头像，上传后可拖拽裁切。',
+      'tutorial.step3.tip': '💡 提示：编辑内容会自动保存到浏览器本地存储，刷新页面不会丢失！',
+      'tutorial.step4.title': '打印与导出',
+      'tutorial.step4.p1': '编辑完成后，点击右下角 打印 按钮（或按 Ctrl+P），打开系统打印对话框。',
+      'tutorial.step4.p2': '所有模板都已针对 A4 纸张优化，打印时工具栏和编辑虚线会自动隐藏。深色模板的配色也会完整保留。',
+      'tutorial.step4.p3': '在打印对话框中，选择 另存为 PDF 即可导出为 PDF 文件。',
+      'tutorial.step4.tip': '💡 提示：编辑模式下点击 👁️ 按钮可切回预览模式，查看打印前的最终效果。',
+      'tutorial.step5.title': '排版效果参考',
+      'tutorial.step5.p1': '以下是我们提供的几种典型风格示例，你可以参考这些方向来挑选或编辑你的简历：',
+      'tutorial.step5.tip': '💡 提示：每个模板的职位和内容都可以自由修改。技术模板可以改成金融内容，极简模板也能写出创意简历——模板只是起点！',
+      'tutorial.step5.card1.label': '暗色科技风',
+      'tutorial.step5.card1.desc': '黑底 + 霓虹青/粉/紫',
+      'tutorial.step5.card2.label': '浅色专业风',
+      'tutorial.step5.card2.desc': '白底 + 深蓝/灰 + 双栏',
+      'tutorial.step5.card3.label': '极简留白风',
+      'tutorial.step5.card3.desc': '大留白 + 细线 + 克制配色',
+      'tutorial.step5.card4.label': '创意个性风',
+      'tutorial.step5.card4.desc': '暖色 + 衬线 + 独特排版'
+    }
   };
+
+  var cardTranslations = {
+    'modern-professional': {
+      en: { title: 'Modern Professional', desc: 'Deep blue dual-column layout, professional and steady, suited for most technical roles.', tags: ['Dual-column', 'Deep blue', 'Tech'], badge: 'Classic' },
+      zh: { title: 'Modern Professional', desc: '深蓝双栏布局，专业稳重，适合大多数技术岗位。', tags: ['双栏', '深蓝', '技术岗'], badge: '经典' }
+    },
+    'apple-minimal': {
+      en: { title: 'Apple Minimal', desc: 'Generous whitespace, SF-style typography, and Apple-inspired design language for designers and product roles.', tags: ['Minimal', 'Apple', 'Design'], badge: 'Minimal' },
+      zh: { title: 'Apple 极简风', desc: '大留白、SF 字体、Apple 设计语言，适合设计师和产品岗。', tags: ['极简', 'Apple', '设计岗'], badge: '极简' }
+    },
+    'stripe-notion': {
+      en: { title: 'Stripe / Notion Style', desc: 'Soft palette, icon-led guidance, and card-based layout for product and data roles.', tags: ['Soft', 'Icon', 'Product'], badge: 'Modern' },
+      zh: { title: 'Stripe / Notion 风', desc: '柔和配色、icon 引导、卡片式排版，适合产品和数据岗。', tags: ['柔和', 'icon', '产品岗'], badge: '现代' }
+    },
+    'cyberpunk-tech': {
+      en: { title: 'Cyberpunk Tech', desc: 'Neon palette, monospaced typography, and dark terminal aesthetics for Web3, security, and low-level development.', tags: ['Dark', 'Neon', 'Web3'], badge: 'Cyber' },
+      zh: { title: 'Cyberpunk 科技风', desc: '霓虹配色、等宽字体、暗色终端美学，适合 Web3/安全/底层开发。', tags: ['暗色', '霓虹', 'Web3'], badge: '赛博' }
+    },
+    'luxury-black-gold': {
+      en: { title: 'Luxury Black Gold', desc: 'Black background with gold lines and serif typography for finance, consulting, and executive roles.', tags: ['Serif', 'Luxury', 'Finance'], badge: 'Gold' },
+      zh: { title: '高级黑金风', desc: '黑底金线、衬线字体、奢华质感，适合金融/咨询/高管岗位。', tags: ['衬线', '奢华', '金融岗'], badge: '黑金' }
+    },
+    'creative-creator': {
+      en: { title: 'Creator Style', desc: 'Warm tones, dotted guidance, and handcrafted texture for creators and media professionals.', tags: ['Warm', 'Editorial', 'Creator'], badge: 'Creator' },
+      zh: { title: '创作者风格', desc: '暖色调、圆点引导、手作质感，适合自媒体/内容创作者。', tags: ['暖色', '文艺', '自媒体'], badge: '创作' }
+    },
+    'nordic-clean': {
+      en: { title: 'Nordic Clean', desc: 'Natural green accents, restrained white space, and subtle dividers for research and academic roles.', tags: ['Nordic', 'Minimal', 'Research'], badge: 'Nordic' },
+      zh: { title: 'Nordic Clean 北欧极简', desc: '自然绿点缀、克制冷白、极细分隔线，适合研究/学术岗位。', tags: ['北欧', '极简', '研究岗'], badge: '北欧' }
+    },
+    'bold-impact': {
+      en: { title: 'Bold Impact', desc: 'High-contrast deep blue and red, thick typography, and assertive structure for growth and marketing roles.', tags: ['High contrast', 'Bold', 'Growth'], badge: 'Bold' },
+      zh: { title: 'Bold Impact 大胆冲击', desc: '深蓝+鲜红高对比、超粗字体、硬朗排版，适合增长/市场岗位。', tags: ['高对比', '醒目', '增长岗'], badge: '大胆' }
+    },
+    'editorial': {
+      en: { title: 'Editorial', desc: 'Serif typography, rust-red accents, and classic magazine composition for editorial and brand roles.', tags: ['Serif', 'Classic', 'Brand'], badge: 'Editorial' },
+      zh: { title: 'Editorial 杂志排版', desc: '衬线字体、铁锈红点缀、居中古典排布，适合文字/品牌岗位。', tags: ['衬线', '古典', '品牌岗'], badge: '编辑' }
+    },
+    'soft-gradient': {
+      en: { title: 'Soft Gradient', desc: 'Purple-blue gradient header, rounded shapes, and modern light styling for data and engineering roles.', tags: ['Gradient', 'Soft', 'Data'], badge: 'Gradient' },
+      zh: { title: 'Soft Gradient 柔和渐变', desc: '紫蓝渐变头部、柔和圆角、现代轻量设计，适合数据分析/技术岗。', tags: ['渐变', '柔和', '数据岗'], badge: '渐变' }
+    },
+    'mono-chrome': {
+      en: { title: 'Mono Chrome', desc: 'Pure black and white, sharp lines, and a left-side timeline for backend and systems roles.', tags: ['Black and white', 'Linear', 'Backend'], badge: 'Mono' },
+      zh: { title: 'Mono Chrome 纯粹黑白', desc: '极致黑白、黑线分隔、左侧时间轴，适合后端/系统开发岗位。', tags: ['黑白', '线型', '后端岗'], badge: '黑白' }
+    },
+    'brutalist': {
+      en: { title: 'Brutalist', desc: 'Bright yellow background, black grid borders, oversized typography, and high-impact energy for creative roles.', tags: ['Brutal', 'High contrast', 'Creative'], badge: 'Brutal' },
+      zh: { title: 'Brutalist 粗野主义', desc: '亮黄底+黑实线边框、大号粗字、硬朗冲击，适合创意/跨界岗位。', tags: ['粗野', '高对比', '创意岗'], badge: '粗野' }
+    },
+    'glassmorphism': {
+      en: { title: 'Glassmorphism', desc: 'Layered translucent glass, purple-green gradients, and frosted textures for modern design and frontend roles.', tags: ['Glass', 'Modern', 'Frontend'], badge: 'Glass' },
+      zh: { title: 'Glassmorphism 玻璃拟态', desc: '半透明玻璃层叠、紫绿渐变、磨砂质感，适合现代设计/前端岗位。', tags: ['玻璃', '现代', '前端岗'], badge: '玻璃' }
+    },
+    'neon-nights': {
+      en: { title: 'Neon Nights', desc: 'Black base with pink, blue, green, and yellow neon effects for cyberpunk aesthetics and security roles.', tags: ['Neon', 'Dark', 'Security'], badge: 'Neon' },
+      zh: { title: 'Neon Nights 霓虹之夜', desc: '纯黑底+粉蓝绿黄四色霓虹光效，赛博朋克美学，适合安全/底层开发。', tags: ['霓虹', '暗色', '安全岗'], badge: '霓虹' }
+    },
+    'synthwave-80s': {
+      en: { title: 'Synthwave 80s', desc: 'Purple night sky, sunset pink, and electric cyan for retro-futuristic vibes and game/creative tech roles.', tags: ['Retro', 'Synthwave', 'Gaming'], badge: '80s' },
+      zh: { title: 'Synthwave 80s 合成波', desc: '紫色夜空+日落粉+电光青，复古未来主义，适合游戏/创意技术岗。', tags: ['复古', '合成波', '游戏岗'], badge: '80s' }
+    },
+    'synthwave': {
+      en: { title: 'Synthwave Wave', desc: 'Deep violet, orange, and pink with saturated retro color energy for multimedia and visual design roles.', tags: ['Warm', 'Digital', 'Visual'], badge: 'Wave' },
+      zh: { title: 'Synthwave 数字浪潮', desc: '深紫+亮橙+亮粉，高饱和暖色合成波变体，适合多媒体/视觉设计岗。', tags: ['暖色', '数字', '视觉岗'], badge: '浪潮' }
+    },
+    'precision-finance': {
+      en: { title: 'Precision Finance', desc: 'Deep blue header, serif typography, and gold accents for investment banking and finance consulting roles.', tags: ['Serif', 'Professional', 'Investment'], badge: 'Finance' },
+      zh: { title: 'Precision Finance 金融专业', desc: '藏蓝顶部、衬线字体、金色点缀、代表交易高亮区，适合投行/金融/咨询岗位。', tags: ['衬线', '专业', '投行岗'], badge: '金融' }
+    },
+    'blueprint': {
+      en: { title: 'Blueprint', desc: 'Blue grid, monospaced styling, and technical frame cards inspired by engineering blueprints and architecture roles.', tags: ['Blueprint', 'Grid', 'Architecture'], badge: 'Blueprint' },
+      zh: { title: 'Blueprint 蓝图工程', desc: '蓝底网格+等宽字体+框线卡片，像建筑工程图纸，适合架构师/系统设计岗。', tags: ['蓝图', '网格', '架构岗'], badge: '蓝图' }
+    },
+    'vaporwave': {
+      en: { title: 'Vaporwave', desc: 'Pink-cyan gradients, neon glow, and wide English titles for dreamy retro-art and creative roles.', tags: ['Dreamy', 'Retro', 'Art'], badge: 'Vapor' },
+      zh: { title: 'Vaporwave 蒸汽波', desc: '粉青渐变+霓虹光晕+全角英文标题，梦幻复古美学，适合数字艺术/创意岗。', tags: ['梦幻', '复古', '艺术岗'], badge: '蒸汽' }
+    },
+    'terminal-cli': {
+      en: { title: 'Terminal CLI', desc: 'Black background, green terminal text, and command-style output for DevOps and SRE roles.', tags: ['Terminal', 'CLI', 'Ops'], badge: '$>' },
+      zh: { title: 'Terminal CLI 终端', desc: '黑底绿字+命令行提示符+key:value输出，像黑客终端，适合DevOps/SRE岗。', tags: ['终端', 'CLI', '运维岗'], badge: '$>' }
+    },
+    'newspaper': {
+      en: { title: 'Newspaper', desc: 'True CSS two-column layout with drop caps and editorial separators for media and communications roles.', tags: ['Two-column', 'Press', 'Media'], badge: 'Press' },
+      zh: { title: 'Newspaper 报纸排版', desc: 'CSS真双栏+首字下沉+粗线分割+引用块，像《经济学人》，适合文字/媒体岗。', tags: ['双栏', '报刊', '媒体岗'], badge: '报刊' }
+    },
+    'timeline-right': {
+      en: { title: 'Timeline Right', desc: 'Right-side timeline with nodes and generous left whitespace for project management and consulting roles.', tags: ['Timeline', 'Right-side', 'Project'], badge: 'Timeline' },
+      zh: { title: 'Timeline Right 右轴时间', desc: '时间轴在右侧+圆点节点+左侧留白，独一份的排版方向，适合项目管理/咨询岗。', tags: ['时间轴', '右侧', '项目岗'], badge: '时间' }
+    }
+  };
+
+  var activeLanguage = localStorage.getItem('resume_ai_lang') || 'en';
+
+  function applyCardTranslations() {
+    document.querySelectorAll('.card[data-card-key]').forEach(function (card) {
+      var key = card.getAttribute('data-card-key');
+      var item = cardTranslations[key];
+      if (!item) return;
+
+      var locale = item[activeLanguage] || item.en;
+      var titleNode = card.querySelector('h3');
+      var descNode = card.querySelector('.desc');
+      var badgeNode = card.querySelector('.card-badge');
+      var tagNodes = card.querySelectorAll('.tag');
+
+      if (titleNode) titleNode.textContent = locale.title;
+      if (descNode) descNode.textContent = locale.desc;
+      if (badgeNode && locale.badge) badgeNode.textContent = locale.badge;
+      tagNodes.forEach(function (tag, index) {
+        if (locale.tags[index]) tag.textContent = locale.tags[index];
+      });
+    });
+  }
+
+  function setLanguage(lang) {
+    if (!translations[lang]) lang = 'en';
+    activeLanguage = lang;
+    document.documentElement.lang = translations[lang]['html.lang'];
+    document.title = translations[lang].title;
+
+    document.querySelectorAll('[data-i18n]').forEach(function (node) {
+      var key = node.getAttribute('data-i18n');
+      var value = translations[lang][key];
+      if (typeof value === 'function') {
+        node.textContent = value();
+      } else if (typeof value === 'string') {
+        node.textContent = value;
+      }
+    });
+
+    var locale = translations[lang];
+    if (langToggle) {
+      if (lang === 'en') {
+        langToggle.innerHTML = '<span class="active">EN</span> / 中文';
+      } else {
+        langToggle.innerHTML = 'EN / <span class="active">中文</span>';
+      }
+    }
+
+    localStorage.setItem('resume_ai_lang', lang);
+    applyCardTranslations();
+    refreshPreviews();
+    updateCountText();
+    updateTutorialLanguage();
+  }
+
+  function refreshPreviews() {
+    document.querySelectorAll('.card-preview iframe').forEach(function (frame) {
+      try {
+        if (frame.contentDocument && frame.contentDocument.readyState === 'complete') {
+          frame.contentWindow.location.reload();
+        }
+      } catch (e) {
+        frame.src = frame.getAttribute('src');
+      }
+    });
+  }
+
+  function updateCountText() {
+    if (!label || !count) return;
+    var visible = document.querySelectorAll('.card:not(.hidden)').length;
+    var value = translations[activeLanguage]['count.templates'];
+    if (typeof value === 'function') {
+      count.textContent = value(visible);
+    } else {
+      count.textContent = value;
+    }
+  }
+
+  function updateTutorialLanguage() {
+    var els = getTutorialEls();
+    if (!els.stepIndicator || !els.btnPrev || !els.btnNext || !els.btnDone) return;
+    els.btnPrev.textContent = translations[activeLanguage]['tutorial.prev'];
+    els.btnNext.textContent = translations[activeLanguage]['tutorial.next'];
+    els.btnDone.textContent = translations[activeLanguage]['tutorial.done'];
+    els.stepIndicator.textContent = translations[activeLanguage]['tutorial.stepIndicator']
+      .replace('{n}', String(currentStep))
+      .replace('{total}', String(totalSteps));
+
+    var stepNodes = document.querySelectorAll('.tutorial-step');
+    stepNodes.forEach(function (step) {
+      var key = 'tutorial.step' + step.getAttribute('data-step');
+      var titleNode = step.querySelector('h3');
+      var pNodes = step.querySelectorAll('p');
+      var tipNode = step.querySelector('.tip');
+
+      if (titleNode) titleNode.textContent = translations[activeLanguage][key + '.title'];
+      if (pNodes[0]) pNodes[0].textContent = translations[activeLanguage][key + '.p1'];
+      if (pNodes[1]) pNodes[1].textContent = translations[activeLanguage][key + '.p2'];
+      if (pNodes[2]) pNodes[2].textContent = translations[activeLanguage][key + '.p3'];
+      if (tipNode) tipNode.innerHTML = translations[activeLanguage][key + '.tip'];
+    });
+
+    var cardLabels = document.querySelectorAll('.example-label');
+    var cardDesc = document.querySelectorAll('.example-desc');
+    if (cardLabels[0]) cardLabels[0].textContent = translations[activeLanguage]['tutorial.step5.card1.label'];
+    if (cardDesc[0]) cardDesc[0].textContent = translations[activeLanguage]['tutorial.step5.card1.desc'];
+    if (cardLabels[1]) cardLabels[1].textContent = translations[activeLanguage]['tutorial.step5.card2.label'];
+    if (cardDesc[1]) cardDesc[1].textContent = translations[activeLanguage]['tutorial.step5.card2.desc'];
+    if (cardLabels[2]) cardLabels[2].textContent = translations[activeLanguage]['tutorial.step5.card3.label'];
+    if (cardDesc[2]) cardDesc[2].textContent = translations[activeLanguage]['tutorial.step5.card3.desc'];
+    if (cardLabels[3]) cardLabels[3].textContent = translations[activeLanguage]['tutorial.step5.card4.label'];
+    if (cardDesc[3]) cardDesc[3].textContent = translations[activeLanguage]['tutorial.step5.card4.desc'];
+  }
 
   function filterCards(category) {
     navItems.forEach(function (item) {
@@ -1070,8 +1398,14 @@
       }
     });
 
-    label.textContent = labels[category] || category;
-    count.textContent = '共 ' + visible + ' 个模板';
+    var filterKey = 'filters.' + category;
+    var filterLabel = translations[activeLanguage][filterKey] || translations[activeLanguage]['filters.all'];
+    if (label) label.textContent = filterLabel;
+
+    if (count) {
+      var countValue = translations[activeLanguage]['count.templates'];
+      count.textContent = typeof countValue === 'function' ? countValue(visible) : countValue;
+    }
 
     if (visible === 0) {
       empty.classList.add('visible');
@@ -1086,6 +1420,12 @@
       if (cat) filterCards(cat);
     });
   });
+
+  if (langToggle) {
+    langToggle.addEventListener('click', function () {
+      setLanguage(activeLanguage === 'en' ? 'zh' : 'en');
+    });
+  }
 
   // ====== 教程弹窗 ======
   var currentStep = 1;
@@ -1111,7 +1451,10 @@
     var stepEl = document.querySelector('.tutorial-step[data-step="' + n + '"]');
     if (stepEl) stepEl.classList.add('active');
 
-    if (els.stepIndicator) els.stepIndicator.textContent = '第 ' + n + ' 步 / 共 ' + totalSteps + ' 步';
+    if (els.stepIndicator) {
+      var template = translations[activeLanguage]['tutorial.stepIndicator'];
+      els.stepIndicator.textContent = template.replace('{n}', String(n)).replace('{total}', String(totalSteps));
+    }
 
     var dotSpans = els.dots ? els.dots.querySelectorAll('span') : [];
     dotSpans.forEach(function (d, i) { d.classList.toggle('active', i === n - 1); });
@@ -1175,7 +1518,10 @@
     if (e.key === 'Escape') closeTutorial();
     if (e.key === 'ArrowRight' && currentStep < totalSteps) showStep(currentStep + 1);
     if (e.key === 'ArrowLeft' && currentStep > 1) showStep(currentStep - 1);
-});
+  });
+
+  setLanguage(activeLanguage);
+  filterCards('all');
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
@@ -1188,81 +1534,81 @@
   <div class="tutorial-card">
     <div class="tutorial-header">
       <button class="tutorial-close" id="tutorial-close">&times;</button>
-      <h2>📖 使用教程</h2>
-      <span class="step-indicator" id="step-indicator">第 1 步 / 共 4 步</span>
+      <h2 data-i18n="tutorial.title">Tutorial</h2>
+      <span class="step-indicator" id="step-indicator">Step 1 / 5</span>
     </div>
 
     <div class="tutorial-body">
 
       <div class="tutorial-step active" data-step="1">
         <div class="step-icon">🏠</div>
-        <h3>浏览模板库</h3>
-        <p>在主页左侧导航栏中，你可以按 <strong>风格</strong>（浅色系、暗色系、极简）或 <strong>岗位</strong>（技术、设计、金融等）筛选模板。</p>
-        <p>点击任意筛选按钮，右侧会只显示匹配的简历模板。每个模板卡片都展示了 <strong>真实的 iframe 缩略图</strong>，你可以直观感受排版效果。</p>
-        <div class="tip">💡 提示：点击左侧 <strong>🌙 暗色系</strong> 看看酷炫的深色模板吧！</div>
+        <h3>Browse the template library</h3>
+        <p>On the left sidebar, you can filter templates by <strong>style</strong> (light, dark, minimal) or by <strong>role</strong> (tech, design, finance, etc.).</p>
+        <p>Click any filter button and the gallery will show only matching resume templates. Each card includes a live iframe thumbnail so you can preview the layout quickly.</p>
+        <div class="tip">Tip: click the dark theme filter to explore more futuristic layouts.</div>
       </div>
 
       <div class="tutorial-step" data-step="2">
         <div class="step-icon">🖱️</div>
-        <h3>选择并打开简历</h3>
-        <p>找到你喜欢的模板后，<strong>点击卡片</strong>即可进入该简历的编辑页面。</p>
-        <p>页面加载后，显示的是模板的<strong>预览模式</strong>——和打印效果完全一致。数据保存在你的浏览器中，不会上传到任何服务器。</p>
-        <div class="tip">💡 提示：你可以随时回到主页，换另一个模板试试，每个模板的编辑数据都是独立保存的。</div>
+        <h3>Choose and open a resume</h3>
+        <p>Once you find a template you like, <strong>click the card</strong> to open the editor page.</p>
+        <p>The page opens in <strong>preview mode</strong>, which matches the final print layout. Your data is stored in your browser and is never uploaded to a server.</p>
+        <div class="tip">Tip: you can return to the home page anytime and try another template. Each template saves data separately.</div>
       </div>
 
       <div class="tutorial-step" data-step="3">
         <div class="step-icon">✏️</div>
-        <h3>编辑简历内容</h3>
-        <p>进入简历页面后，右下角有一个<strong>浮动胶囊工具栏</strong>。点击 <strong>✏️ 编辑</strong> 按钮（或按 <kbd>Ctrl+E</kbd>）进入编辑模式。</p>
-        <p>编辑模式下，所有可修改的文字会显示<strong>蓝色虚线框</strong>。直接点击即可修改。工作经历和技能区域还有 <strong>[+] [×]</strong> 按钮，可以自由增删项目。</p>
-        <p>头像区域悬停会出现 <strong>📷 点击换头像</strong>，上传后可拖拽裁切。</p>
-        <div class="tip">💡 提示：编辑内容会<strong>自动保存</strong>到浏览器本地存储，刷新页面不会丢失！</div>
+        <h3>Edit resume content</h3>
+        <p>After opening a resume, the floating toolbar appears in the lower-right corner. Click the <strong>✏️ Edit</strong> button (or press <kbd>Ctrl+E</kbd>) to enter edit mode.</p>
+        <p>In edit mode, all editable text shows a <strong>blue dashed outline</strong>. Click directly to modify it. Experience and skill blocks also include <strong>[+] [×]</strong> buttons for adding or removing items.</p>
+        <p>The avatar area shows a <strong>📷 upload prompt</strong> when hovered; you can drag and crop it after uploading.</p>
+        <div class="tip">Tip: your edits are <strong>auto-saved</strong> to browser storage so refreshing the page won’t lose your work.</div>
       </div>
 
       <div class="tutorial-step" data-step="4">
         <div class="step-icon">🖨️</div>
-        <h3>打印与导出</h3>
-        <p>编辑完成后，点击右下角 <strong>🖨️ 打印</strong> 按钮（或按 <kbd>Ctrl+P</kbd>），打开系统打印对话框。</p>
-        <p>所有模板都已针对 A4 纸张优化，打印时工具栏和编辑虚线会自动隐藏。深色模板的配色也会完整保留。</p>
-        <p>在打印对话框中，选择 <strong>另存为 PDF</strong> 即可导出为 PDF 文件。</p>
-        <div class="tip">💡 提示：编辑模式下点击 <strong>👁️</strong> 按钮可切回预览模式，查看打印前的最终效果。</div>
+        <h3>Print and export</h3>
+        <p>When editing is complete, click the <strong>🖨️ Print</strong> button (or press <kbd>Ctrl+P</kbd>) to open the system print dialog.</p>
+        <p>All templates are optimized for A4 paper, and the toolbar and editing guides are hidden automatically during printing. Dark-theme color schemes are preserved.</p>
+        <p>In the print dialog, choose <strong>Save as PDF</strong> to export a PDF document.</p>
+        <div class="tip">Tip: click the <strong>👁️</strong> button in edit mode to return to preview mode and review the final layout.</div>
       </div>
 
       <div class="tutorial-step" data-step="5">
         <div class="step-icon">🎨</div>
-        <h3>排版效果参考</h3>
-        <p>以下是我们提供的几种典型风格示例，你可以参考这些方向来挑选或编辑你的简历：</p>
+        <h3>Style references</h3>
+        <p>Here are a few representative styles you can use as inspiration when selecting or customizing a resume.</p>
 
         <div class="example-grid">
           <div class="example-card example-dark">
-            <div class="example-label">暗色科技风</div>
-            <div class="example-desc">黑底 + 霓虹青/粉/紫</div>
+            <div class="example-label">Dark Tech Style</div>
+            <div class="example-desc">Black background + neon cyan/pink/purple</div>
             <div class="example-tags"><span>Cyberpunk</span><span>Neon Nights</span><span>Terminal CLI</span></div>
           </div>
           <div class="example-card example-light">
-            <div class="example-label">浅色专业风</div>
-            <div class="example-desc">白底 + 深蓝/灰 + 双栏</div>
+            <div class="example-label">Light Professional Style</div>
+            <div class="example-desc">White background + deep blue/gray + dual columns</div>
             <div class="example-tags"><span>Modern Pro</span><span>Bold Impact</span><span>Soft Gradient</span></div>
           </div>
           <div class="example-card example-minimal">
-            <div class="example-label">极简留白风</div>
-            <div class="example-desc">大留白 + 细线 + 克制配色</div>
-            <div class="example-tags"><span>Apple 极简</span><span>Nordic Clean</span><span>Mono Chrome</span></div>
+            <div class="example-label">Minimal Layout Style</div>
+            <div class="example-desc">Generous whitespace + thin lines + restrained palette</div>
+            <div class="example-tags"><span>Apple Minimal</span><span>Nordic Clean</span><span>Mono Chrome</span></div>
           </div>
           <div class="example-card example-creative">
-            <div class="example-label">创意个性风</div>
-            <div class="example-desc">暖色 + 衬线 + 独特排版</div>
-            <div class="example-tags"><span>创作者</span><span>Editorial</span><span>Vaporwave</span></div>
+            <div class="example-label">Creative Personal Style</div>
+            <div class="example-desc">Warm tones + serif accents + expressive layout</div>
+            <div class="example-tags"><span>Creator</span><span>Editorial</span><span>Vaporwave</span></div>
           </div>
         </div>
 
-        <div class="tip" style="margin-top:14px;">💡 提示：每个模板的<strong>职位和内容</strong>都可以自由修改。技术模板可以改成金融内容，极简模板也能写出创意简历——模板只是起点！</div>
+        <div class="tip" style="margin-top:14px;">Tip: every template can be customized. Technical templates can be adapted for finance, and minimal templates can still express a creative identity.</div>
       </div>
 
     </div>
 
     <div class="tutorial-footer">
-      <button class="tutorial-btn tutorial-btn-prev" id="tutorial-prev">← 上一步</button>
+      <button class="tutorial-btn tutorial-btn-prev" id="tutorial-prev">← Previous</button>
       <div class="tutorial-dots" id="tutorial-dots">
         <span class="active"></span><span></span>
         <span></span>
@@ -1270,8 +1616,8 @@
         <span></span>
         <span></span>
       </div>
-      <button class="tutorial-btn tutorial-btn-next" id="tutorial-next">下一步 →</button>
-      <button class="tutorial-btn tutorial-btn-done" id="tutorial-done" style="display:none;">完成 ✓</button>
+      <button class="tutorial-btn tutorial-btn-next" id="tutorial-next">Next →</button>
+      <button class="tutorial-btn tutorial-btn-done" id="tutorial-done" style="display:none;">Done ✓</button>
     </div>
   </div>
 </div>
