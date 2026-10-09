@@ -107,6 +107,18 @@
     @page { size: A4; margin: 18mm 20mm; }
   }
 </style>
+<!-- Vercel Web Analytics (cookieless, anonymous page views).
+     Guarded so only the top-level page reports: the gallery renders templates
+     in iframes, and without this every thumbnail would count as a page view. -->
+<script>
+  if (window.self === window.top) {
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    var vaScript = document.createElement('script');
+    vaScript.defer = true;
+    vaScript.src = '/_vercel/insights/script.js';
+    document.head.appendChild(vaScript);
+  }
+</script>
 </head>
 <body>
 

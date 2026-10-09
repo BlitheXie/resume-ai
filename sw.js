@@ -1,4 +1,4 @@
-var CACHE = 'resume-ai-v3';
+var CACHE = 'resume-ai-v4';
 
 var URLS = [
   '/',
@@ -54,7 +54,14 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   var request = e.request;
 
-  if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
+  if (request.method !== 'GET') return;
+
+  var url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  // Vercel's internal routes (Web Analytics, Speed Insights) must always reach
+  // the network - caching them would serve stale data and never help offline.
+  if (url.pathname.indexOf('/_vercel/') === 0) return;
 
   // Network first so fresh content always wins, with the cache as an offline
   // fallback. Assets are still stored on every successful fetch.

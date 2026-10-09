@@ -107,6 +107,43 @@ npx serve .
 
 ***
 
+## 📊 访问统计（Vercel Web Analytics）
+
+想知道有多少人用了这个站，用 Vercel 自带的 Web Analytics 即可，本站已接入。
+
+**开启步骤**
+
+1. 在 Vercel 控制台进入项目的 **Analytics** 页，点 **Enable**
+2. 部署后访问一次站点，在浏览器 Network 里应能看到 `/_vercel/insights/script.js` 请求
+3. 回到 Analytics 面板查看访客数、页面浏览量、来源、设备、地区等
+
+**为什么不用 `@vercel/analytics` npm 包 / Vercel Agent**
+
+本仓库是**纯静态、零依赖、无构建步骤**的站点，Vercel 官方文档也写明：
+> When using the HTML implementation, there is no need to install the `@vercel/analytics` package.
+
+Vercel Agent 的自动化流程是「安装 npm 包 + 在 root layout 中引入组件」，那是给框架项目用的；
+强行为一个静态站加 npm 包会引入构建步骤，反而破坏现在的零配置静态部署。
+
+**实现要点**
+
+- 每页 `<head>` 里内联 2 行官方 HTML 片段（见 `index.html` 末尾 `</head>` 前）
+- **只在顶层窗口上报**：主页用 iframe 渲染 22 个模板预览，若不加 `window.self === window.top` 判断，
+  光访问一次主页就会产生 23 次页面浏览，模板缩略图会污染「Top Pages」报表
+- `sw.js` 对 `/_vercel/` 路径直接放行，不经过缓存
+
+**隐私说明**
+
+Vercel Web Analytics 不使用 Cookie，也不采集可识别个人的信息（访客由请求哈希标识，24 小时后失效），
+统计的是聚合数据（URL、来源、地区、设备/浏览器）。
+简历内容始终只存在浏览器 localStorage 中，不会上传，与「数据只在你电脑里」的承诺不冲突。
+
+> 若控制台给出的脚本路径不是 `/_vercel/insights/script.js`（Vercel 会为项目生成唯一路径以规避广告拦截器），
+> 把控制台显示的片段路径替换到全部 HTML 即可：
+> `grep -rl '/_vercel/insights/script.js' --include='*.html' . | xargs sed -i '' 's#/_vercel/insights/script.js#你的路径#g'`
+
+***
+
 ## 📁 项目结构
 
 ```
