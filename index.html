@@ -29,6 +29,12 @@
     min-height: 100vh;
   }
 
+  /* The gradient starts at the very top so the language button sits on the same
+     background as the hero instead of a separate grey strip. */
+  .page-top {
+    background: linear-gradient(180deg, #eef2ff 0%, var(--bg) 100%);
+  }
+
   .topbar {
     max-width: 1300px;
     margin: 0 auto;
@@ -66,7 +72,6 @@
   .hero {
     text-align: center;
     padding: 60px 24px 40px;
-    background: linear-gradient(180deg, #eef2ff 0%, var(--bg) 100%);
   }
 
   .hero h1 {
@@ -602,15 +607,17 @@
 </head>
 <body>
 
-<div class="topbar">
-  <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Toggle language">
-    <span>EN</span> / 中文
-  </button>
-</div>
+<div class="page-top">
+  <div class="topbar">
+    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Toggle language">
+      <span>EN</span> / 中文
+    </button>
+  </div>
 
-<div class="hero">
-  <h1>Resume <span>AI</span></h1>
-  <p data-i18n="hero.tagline">Choose a polished template and edit your resume online. Your data stays only in your browser.</p>
+  <div class="hero">
+    <h1>Resume <span>AI</span></h1>
+    <p data-i18n="hero.tagline">Choose a polished template and edit your resume online. Your data stays only in your browser.</p>
+  </div>
 </div>
 
 <div class="layout">
