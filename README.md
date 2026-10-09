@@ -144,6 +144,61 @@ Vercel Web Analytics 不使用 Cookie，也不采集可识别个人的信息（�
 
 ***
 
+## 🔍 SEO / 让 Google 收录
+
+已包含的文件：
+
+| 文件 | 作用 |
+| --- | --- |
+| `sitemap.xml` | 列出全部 23 个页面（主页 + 22 个模板），供 Google 抓取 |
+| `robots.txt` | 允许抓取全部内容，并声明 sitemap 地址 |
+| `<link rel="canonical">` | 每页声明规范地址，避免 iframe 预览造成重复内容 |
+| `<meta name="description">` | 搜索结果摘要，模板简介复用主页卡片文案 |
+
+**提交给 Google（一次性操作）**
+
+1. 打开 [Google Search Console](https://search.google.com/search-console)，用你的 Google 账号登录
+2. 添加资源 → 选择 **网址前缀** → 填 `https://www.resume-works.site/`
+   （本项目部署在 Vercel，DNS 由 Vercel 托管，通常会自动验证通过；否则按提示在 Vercel 的
+   [Domains](https://vercel.com/docs/projects/domains/add-a-domain) 里加一条 DNS TXT 记录）
+3. 左侧 **站点地图** → 输入 `sitemap.xml` → 提交
+4. 用 **网址检查** 输入首页 URL，点「请求编入索引」可加速首次收录
+5. 之后在 **效果** 报表查看曝光量、点击量、查询词
+
+> 收录通常需要几天到几周，属正常现象。
+
+**新增模板后重新生成 sitemap**
+
+```bash
+python3 - <<'PY'
+from pathlib import Path
+BASE, LASTMOD = 'https://www.resume-works.site', __import__('datetime').date.today().isoformat()
+tpl = sorted(p.stem for p in Path('templates').glob('*.html'))
+urls = [('/', '1.0', 'weekly')] + [(f'/templates/{n}.html', '0.8', 'monthly') for n in tpl]
+L = ['<?xml version="1.0" encoding="UTF-8"?>',
+     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+for path, pri, freq in urls:
+    L += ['  <url>', f'    <loc>{BASE}{path}</loc>', f'    <lastmod>{LASTMOD}</lastmod>',
+          f'    <changefreq>{freq}</changefreq>', f'    <priority>{pri}</priority>', '  </url>']
+L.append('</urlset>')
+Path('sitemap.xml').write_text('\n'.join(L) + '\n')
+print('urls:', len(urls))
+PY
+```
+
+### ⚠️ 中英双语目前共用同一个 URL
+
+语言切换是纯前端的（切换 `data-en` / `data-zh`，URL 不变），因此**中英文无法被分别收录**，
+搜索引擎只会看到一个地址。若要两种语言都能带来搜索流量，需要改成独立路径，例如：
+
+- `https://www.resume-works.site/` → 英文
+- `https://www.resume-works.site/zh/` → 中文
+
+并在每页加上互相对应的 `hreflang` 标注。这需要调整目录结构（模板也要各存一份或做重写规则），
+改动量不小，建议等真有中文搜索流量需求时再做。
+
+***
+
 ## 📁 项目结构
 
 ```
