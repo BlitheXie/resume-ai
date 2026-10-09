@@ -1491,6 +1491,7 @@
   function openTutorial() {
     var overlay = document.getElementById('tutorial-overlay');
     if (!overlay) return;
+    updateTutorialLanguage();
     overlay.classList.add('open');
     showStep(1);
     document.body.style.overflow = 'hidden';
@@ -1504,12 +1505,14 @@
   }
 
   document.addEventListener('click', function (e) {
-    if (e.target.id === 'btn-tutorial') {
+    // The button's icon and label spans cover it, so match the ancestor button
+    // rather than e.target itself (a click on the text would miss otherwise).
+    if (e.target.closest('#btn-tutorial')) {
       e.preventDefault();
       openTutorial();
       return;
     }
-    if (e.target.id === 'tutorial-backdrop') {
+    if (e.target.id === 'tutorial-backdrop' || e.target.closest('#tutorial-backdrop')) {
       closeTutorial();
       return;
     }
@@ -1541,6 +1544,15 @@
 
   setLanguage(activeLanguage);
   filterCards('all');
+
+  // The tutorial overlay markup sits after this script, so re-apply the
+  // language once the whole document has been parsed - otherwise the panel
+  // keeps its hard-coded English text in Chinese mode.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      setLanguage(activeLanguage);
+    });
+  }
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
