@@ -1,5 +1,5 @@
 /**
- * Resume AI - DOCX export
+ * Resume Work - DOCX export
  *
  * Writes a real .docx (OOXML) file straight from the page, with no
  * dependencies and no server round-trip. A .docx is a ZIP archive holding
@@ -242,7 +242,7 @@
   var APP_XML = XML_HEADER +
     '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" ' +
       'xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">' +
-      '<Application>Resume AI</Application>' +
+      '<Application>Resume Work</Application>' +
     '</Properties>';
 
   function runXml(run, relId) {
