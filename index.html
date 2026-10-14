@@ -255,8 +255,53 @@
   }
 
   .card:hover {
-    transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  /* The card is a link and the .docx download is a separate action, so they are
+     siblings: nesting interactive elements inside <a> is invalid HTML. */
+  .card-wrap {
+    position: relative;
+    border-radius: var(--radius);
+    transition: transform 0.2s;
+  }
+
+  .card-wrap:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-wrap.hidden {
+    display: none;
+  }
+
+  .card-wrap > .card {
+    height: 100%;
+  }
+
+  .card-docx {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.94);
+    color: #2b579a;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-decoration: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .card-docx:hover {
+    background: #2b579a;
+    color: #fff;
+    transform: scale(1.06);
   }
 
   .card-preview {
@@ -708,6 +753,7 @@
 
     <div class="grid" id="grid">
 
+      <div class="card-wrap">
       <a class="card" data-card-key="modern-professional" data-categories="all light tech" href="templates/modern-professional.html">
         <div class="card-preview">
           <iframe src="templates/modern-professional.html" loading="lazy"></iframe>
@@ -723,7 +769,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/modern-professional.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="apple-minimal" data-categories="all light minimal design" href="templates/apple-minimal.html">
         <div class="card-preview">
           <iframe src="templates/apple-minimal.html" loading="lazy"></iframe>
@@ -739,7 +788,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/apple-minimal.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="cyberpunk-tech" data-categories="all dark tech" href="templates/cyberpunk-tech.html">
         <div class="card-preview">
           <iframe src="templates/cyberpunk-tech.html" loading="lazy"></iframe>
@@ -755,7 +807,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/cyberpunk-tech.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="stripe-notion" data-categories="all light minimal design" href="templates/stripe-notion.html">
         <div class="card-preview">
           <iframe src="templates/stripe-notion.html" loading="lazy"></iframe>
@@ -771,7 +826,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/stripe-notion.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="luxury-black-gold" data-categories="all dark finance" href="templates/luxury-black-gold.html">
         <div class="card-preview">
           <iframe src="templates/luxury-black-gold.html" loading="lazy"></iframe>
@@ -787,7 +845,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/luxury-black-gold.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="creative-creator" data-categories="all light minimal creator" href="templates/creative-creator.html">
         <div class="card-preview">
           <iframe src="templates/creative-creator.html" loading="lazy"></iframe>
@@ -803,7 +864,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/creative-creator.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="nordic-clean" data-categories="all light minimal design" href="templates/nordic-clean.html">
         <div class="card-preview">
           <iframe src="templates/nordic-clean.html" loading="lazy"></iframe>
@@ -819,7 +883,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/nordic-clean.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="bold-impact" data-categories="all light tech" href="templates/bold-impact.html">
         <div class="card-preview">
           <iframe src="templates/bold-impact.html" loading="lazy"></iframe>
@@ -835,7 +902,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/bold-impact.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="editorial" data-categories="all light minimal creator" href="templates/editorial.html">
         <div class="card-preview">
           <iframe src="templates/editorial.html" loading="lazy"></iframe>
@@ -851,7 +921,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/editorial.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="soft-gradient" data-categories="all light tech" href="templates/soft-gradient.html">
         <div class="card-preview">
           <iframe src="templates/soft-gradient.html" loading="lazy"></iframe>
@@ -867,7 +940,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/soft-gradient.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="mono-chrome" data-categories="all dark minimal tech" href="templates/mono-chrome.html">
         <div class="card-preview">
           <iframe src="templates/mono-chrome.html" loading="lazy"></iframe>
@@ -883,7 +959,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/mono-chrome.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="brutalist" data-categories="all dark tech" href="templates/brutalist.html">
         <div class="card-preview">
           <iframe src="templates/brutalist.html" loading="lazy"></iframe>
@@ -899,7 +978,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/brutalist.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="glassmorphism" data-categories="all dark design" href="templates/glassmorphism.html">
         <div class="card-preview">
           <iframe src="templates/glassmorphism.html" loading="lazy"></iframe>
@@ -915,7 +997,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/glassmorphism.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="neon-nights" data-categories="all dark tech" href="templates/neon-nights.html">
         <div class="card-preview">
           <iframe src="templates/neon-nights.html" loading="lazy"></iframe>
@@ -931,7 +1016,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/neon-nights.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="synthwave-80s" data-categories="all dark design" href="templates/synthwave-80s.html">
         <div class="card-preview">
           <iframe src="templates/synthwave-80s.html" loading="lazy"></iframe>
@@ -947,7 +1035,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/synthwave-80s.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="synthwave" data-categories="all dark design" href="templates/synthwave.html">
         <div class="card-preview">
           <iframe src="templates/synthwave.html" loading="lazy"></iframe>
@@ -963,7 +1054,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/synthwave.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="precision-finance" data-categories="all light finance" href="templates/precision-finance.html">
         <div class="card-preview">
           <iframe src="templates/precision-finance.html" loading="lazy"></iframe>
@@ -979,7 +1073,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/precision-finance.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="blueprint" data-categories="all light tech" href="templates/blueprint.html">
         <div class="card-preview">
           <iframe src="templates/blueprint.html" loading="lazy"></iframe>
@@ -995,7 +1092,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/blueprint.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="vaporwave" data-categories="all dark design" href="templates/vaporwave.html">
         <div class="card-preview">
           <iframe src="templates/vaporwave.html" loading="lazy"></iframe>
@@ -1011,7 +1111,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/vaporwave.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="terminal-cli" data-categories="all dark tech" href="templates/terminal-cli.html">
         <div class="card-preview">
           <iframe src="templates/terminal-cli.html" loading="lazy"></iframe>
@@ -1027,7 +1130,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/terminal-cli.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="newspaper" data-categories="all light creator" href="templates/newspaper.html">
         <div class="card-preview">
           <iframe src="templates/newspaper.html" loading="lazy"></iframe>
@@ -1043,7 +1149,10 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/newspaper.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
+      <div class="card-wrap">
       <a class="card" data-card-key="timeline-right" data-categories="all light finance" href="templates/timeline-right.html">
         <div class="card-preview">
           <iframe src="templates/timeline-right.html" loading="lazy"></iframe>
@@ -1059,6 +1168,8 @@
           </div>
         </div>
       </a>
+        <a class="card-docx" href="downloads/timeline-right.docx" download data-i18n-title="card.docx" data-i18n-label="card.docx" title="Download this template as a Word (.docx) file" aria-label="Download this template as a Word (.docx) file"><span aria-hidden="true">📄</span> DOCX</a>
+      </div>
 
     </div>
   </div>
@@ -1103,6 +1214,7 @@
       'count.templates': function (n) { return n + ' templates'; },
       'footer.text': 'Resume AI · Front-end resume editor · Data stays only in your browser',
       'footer.prompt': 'AI Template Prompt',
+      'card.docx': 'Download this template as a Word (.docx) file',
       'footer.spec': 'Template Spec',
       'tutorial.title': 'Tutorial',
       'tutorial.prev': '← Previous',
@@ -1159,6 +1271,7 @@
       'count.templates': function (n) { return '共 ' + n + ' 个模板'; },
       'footer.text': 'Resume AI · 纯前端简历编辑工具 · 所有数据仅存储在你的浏览器中',
       'footer.prompt': 'AI 模板提示词',
+      'card.docx': '把这个模板下载为 Word（.docx）文件',
       'footer.spec': '模板规范',
       'tutorial.title': '使用教程',
       'tutorial.prev': '← 上一步',
@@ -1327,6 +1440,18 @@
       }
     });
 
+    // Localised attributes, e.g. data-i18n-title="card.docx"
+    document.querySelectorAll('[data-i18n-title]').forEach(function (node) {
+      var key = node.getAttribute('data-i18n-title');
+      var value = translations[lang][key];
+      if (typeof value === 'string') node.title = value;
+    });
+    document.querySelectorAll('[data-i18n-label]').forEach(function (node) {
+      var key = node.getAttribute('data-i18n-label');
+      var value = translations[lang][key];
+      if (typeof value === 'string') node.setAttribute('aria-label', value);
+    });
+
     var locale = translations[lang];
     if (langToggle) {
       if (lang === 'en') {
@@ -1411,11 +1536,16 @@
 
     cards.forEach(function (card) {
       var cats = card.getAttribute('data-categories') || '';
+      var wrap = card.parentElement;
+      var isWrap = wrap && wrap.classList.contains('card-wrap');
       if (cats.indexOf(category) !== -1) {
         card.classList.remove('hidden');
+        if (isWrap) wrap.classList.remove('hidden');
         visible++;
       } else {
         card.classList.add('hidden');
+        // The .docx button lives outside the card, so hide the wrapper too.
+        if (isWrap) wrap.classList.add('hidden');
       }
     });
 

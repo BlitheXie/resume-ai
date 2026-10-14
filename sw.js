@@ -1,9 +1,10 @@
-var CACHE = 'resume-ai-v4';
+var CACHE = 'resume-ai-v5';
 
 var URLS = [
   '/',
   '/index.html',
   '/resume-editor.js',
+  '/docx-export.js',
   '/favicon.svg',
   '/templates/modern-professional.html',
   '/templates/apple-minimal.html',

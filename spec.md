@@ -247,6 +247,33 @@ resume_ai 是一个纯前端简历编辑平台。所有简历模板均为自包�
 隐藏状态按模板存放在 `resume_ai_<模板ID>_contacts_hidden`，与语言无关（切换语言不会让隐藏项重新出现）；
 打印时隐藏项不会输出。
 
+### 6. 多行文本
+
+区块内的多行内容（如 `description`）请使用**真实换行**，或 `<br>`：
+
+```html
+<div class="experience-desc"><span data-editable="description">第一行
+第二行
+第三行</span></div>
+```
+
+配合 `white-space: pre-line` 即可正确显示为多行。
+
+> ⚠️ 不要写成字面量 `\n`（反斜杠 + n）。HTML 不会把它转义为换行，
+> 页面上会原样显示 `\n`。历史模板曾误用此写法，现已修正；
+> `.docx` 导出为兼容旧数据仍会识别字面量 `\n`，但新模板请勿使用。
+
+### 7. 导出 Word 的字段约定
+
+`docx-export.js` 依据 `data-editable` 语义生成文档结构，模板作者无需额外标注，但请注意：
+
+- 条目（工作 / 教育）按 `[data-editable-item]` 归组，**字段顺序任意**：
+  `duration` 出现在 `position` 之前也能正确归属（`terminal-cli` 即如此）
+- 区块标题必须使用 `class="section-title"`，导出时映射为 Word 的「标题 2」
+- `skill` 会收集为一行以 `·` 分隔的列表
+- `avatar` 不导出
+- `description` / `deal-highlight` 按行导出为项目符号
+
 ---
 
 ## 版本历史

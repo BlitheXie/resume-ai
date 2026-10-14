@@ -103,6 +103,16 @@
       onclick: switchLanguage
     });
 
+    var btnDocx = el('button', {
+      className: 're-fab re-fab-docx',
+      'data-label-en': 'Download Word',
+      'data-label-zh': '下载 Word',
+      'data-tip-en': 'Download this resume as a .docx file',
+      'data-tip-zh': '把简历导出为 .docx 文件',
+      textContent: '📄',
+      onclick: downloadDocx
+    });
+
     var btnContacts = el('button', {
       className: 're-fab re-fab-contacts',
       'data-label-en': 'Contact fields',
@@ -116,6 +126,7 @@
     bar.appendChild(statusDot);
     bar.appendChild(btnEdit);
     bar.appendChild(btnPrint);
+    bar.appendChild(btnDocx);
     bar.appendChild(btnReset);
     bar.appendChild(btnLang);
     bar.appendChild(btnContacts);
@@ -380,6 +391,21 @@
       applyFieldData(saved);
       setStatus('loaded');
     }
+  }
+
+  function downloadDocx() {
+    if (!window.ResumeDocx) {
+      toast(t('Word export is unavailable', 'Word 导出不可用'),
+            t('Reload the page and try again', '请刷新页面后重试'));
+      return;
+    }
+    var result = window.ResumeDocx.exportDocument();
+    if (!result) {
+      toast(t('Nothing to export yet', '暂无可导出的内容'),
+            t('Add some content first', '请先填写内容'));
+      return;
+    }
+    toast(t('Downloading .docx…', '正在下载 .docx…'), result.filename);
   }
 
   function storageKey() {
@@ -1197,6 +1223,8 @@
 \
 .re-fab-contacts{background:rgba(255,255,255,0.1);color:#fff;}\
 .re-fab-contacts:hover{background:#16a085;transform:scale(1.1);}\
+.re-fab-docx{background:rgba(255,255,255,0.1);color:#fff;}\
+.re-fab-docx:hover{background:#2b579a;transform:scale(1.1);}\
 \
 @media print{\
   .re-toolbar{display:none!important}\
