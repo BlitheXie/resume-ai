@@ -215,28 +215,49 @@ PY
   `.docx` 本质是一个 ZIP + WordprocessingML，所以该文件内含：
   - 一个极简 ZIP 写入器（STORE 不压缩，自带 CRC-32）
   - `word/document.xml`、`styles.xml`、`numbering.xml` 等部件
-  - 从 `.resume` 读取 DOM 生成段落模型（标题 / 小标题 / 区块标题 / 条目 / 项目符号列表 / 超链接）
+- **样式是从页面上读回来的**：导出时用 `getComputedStyle` 逐个元素采集
+  文字颜色、字体、字号、粗细、字距、大小写转换、对齐、背景与边框，
+  再写入 Word 的直接格式（direct formatting）。命名的段落样式只负责层级，
+  不再自带颜色或边框，以免盖掉采集到的值。
+- **背景色**：页面底色写入 `w:background`（Word 可识别），
+  同时把内容包进一个单一大表格并为单元格着色——因为部分阅读器会忽略
+  `w:background`，用表格着色才在任何环境下都能显示。
+- **双栏布局**：检测 `display:flex/grid` 且有多于一个子元素含 `.section-title`
+  的容器（避免把联系信息行、工具栏误判为分栏），据此生成 `w:tblGrid` 分栏；
+  页眉等整行内容用 `w:gridSpan` 横跨。22 个模板中有 8 个是双栏。
+- **页面尺寸**：读取模板的 `@page` 规则（注意它在 `@media print` 内，需递归查找），
+  据此设置 A4/Letter 与页边距。`@page { margin: 0 }` 的模板会做成通栏底色。
+- **装饰性伪元素**：区块标题的 `::before`（如 cyberpunk 的 `>`、vaporwave 的 `▸`）
+  会被采集为独立 run，颜色沿用伪元素自身的颜色。
 - 条目（工作、教育）按 `[data-editable-item]` 元素归组，而不是按字段出现顺序——
   各模板字段顺序不同（`terminal-cli` 把 `duration` 放在 `position` 之前），
   按顺序累加会把时间挂到错误的条目的。
 - 编辑器注入的按钮（`+` / `×`、图片遮罩等）会被剔除，不会混进正文。
 
-**保真度说明（重要）**
+**保真度边界**
 
-Word 是文字处理格式，不是渲染引擎。导出的文件会完整保留**文字内容、层级、区块标题、
-联系方式超链接与项目符号**，但模板的视觉风格（渐变、霓虹、玻璃拟态、双栏排布、自定义字体）
-**无法保留**。想要原样的视觉效果请用「打印 → 另存为 PDF」。
+能在 Word 里复现：文字颜色与字体、字号/粗细/字距/大小写、背景与边框、单栏与双栏布局、
+页面底色与页边距、超链接、项目符号、区块标题的装饰符号。
+
+**无法**复现的是只有光栅化才有的效果：渐变填充、毛玻璃模糊、`box-shadow` 光晕、
+多层背景叠加。这些会在导出时取**第一个颜色值**近似（例如 glassmorphism 的
+渐变背景近似为 `0F0C29`）。另外 Word 页面底色默认不参与打印，
+需要「打印背景色和图像」才会印出深色底。
+
+想要像素级一致的视觉效果，请用「打印 → 另存为 PDF」。
 
 **重新生成示例文件**
 
-`downloads/` 下的 22 个文件由 `tools/` 中的脚本生成（仅开发时需要 python-docx，站点本身零依赖）：
+`downloads/` 下的 22 个文件由 `tools/` 中的脚本生成。该脚本**不重新实现导出逻辑**，
+而是启动一个本地服务、用无头浏览器打开每个模板并保存页面自己产出的文件，
+因此示例文件与页面上下载到的永远一致：
 
 ```bash
-pip install python-docx
+pip install playwright && playwright install chromium
 python3 tools/generate_sample_docx.py
 ```
 
-修改模板文字后请重新运行，让示例文件与模板保持一致。
+修改模板或 `docx-export.js` 后请重新运行，让示例文件保持同步。
 
 ***
 
@@ -251,7 +272,7 @@ resume_ai/
 ├── favicon.svg             # 网站图标
 ├── downloads/              # 22 个预生成的示例 .docx（主页卡片下载）
 ├── tools/
-│   └── generate_sample_docx.py   # 生成 downloads/ 的开发脚本（需 python-docx）
+│   └── generate_sample_docx.py   # 生成 downloads/ 的开发脚本（需 playwright）
 ├── prompt.md               # AI 生成模板的提示词
 ├── spec.md                 # 模板规范文档
 ├── .gitignore

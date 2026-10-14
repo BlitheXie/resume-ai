@@ -1,4 +1,4 @@
-var CACHE = 'resume-ai-v5';
+var CACHE = 'resume-ai-v6';
 
 var URLS = [
   '/',

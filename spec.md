@@ -265,14 +265,27 @@ resume_ai 是一个纯前端简历编辑平台。所有简历模板均为自包�
 
 ### 7. 导出 Word 的字段约定
 
-`docx-export.js` 依据 `data-editable` 语义生成文档结构，模板作者无需额外标注，但请注意：
+`docx-export.js` 依据 `data-editable` 语义生成文档结构，**样式则从渲染结果读取**
+（`getComputedStyle`），因此模板作者无需额外标注，但请注意：
 
 - 条目（工作 / 教育）按 `[data-editable-item]` 归组，**字段顺序任意**：
   `duration` 出现在 `position` 之前也能正确归属（`terminal-cli` 即如此）
-- 区块标题必须使用 `class="section-title"`，导出时映射为 Word 的「标题 2」
-- `skill` 会收集为一行以 `·` 分隔的列表
+- 区块标题必须使用 `class="section-title"`，导出时映射为 Word 的「标题 2」；
+  其 `::before` / `::after` 装饰文字（如 `>`、`▸`）会被保留
+- `skill` 收集为一行以 `·` 分隔的列表；若单个标签有背景色，
+  会作为字符底纹分别保留
 - `avatar` 不导出
 - `description` / `deal-highlight` 按行导出为项目符号
+- 颜色与背景独立于语言存在，切换中英文不会影响导出配色
+
+**分栏检测**：导出时会把「`display: flex/grid` 且至少两个子元素内部含
+`.section-title`」的容器识别为分栏，并生成 Word 表格。若模板的联系信息行或头部
+也是 flex，不会误判（它们不含 `.section-title`）。若有意让某个多列容器**不**被
+识别为分栏，只要其子元素不含 `.section-title` 即可。
+
+**页面尺寸**：从模板的 `@page` 规则读取（该规则通常写在 `@media print` 内）。
+因此新增模板时请照现有模板的写法提供 `@page { size: A4; margin: ... }`，
+导出的 .docx 才会得到正确的纸张与页边距。
 
 ---
 

@@ -6,14 +6,15 @@
  * WordprocessingML parts, so this file contains a small ZIP writer (STORE,
  * i.e. no compression) plus the part builders.
  *
- * Layout fidelity is intentionally limited: Word is a word processor, so the
- * neon/gradient/glassmorphism visuals cannot carry over. Content, order,
- * section headings, contact links and bullet lists are preserved, and the
- * result stays fully editable in Word / Pages / Google Docs.
+ * Styling is read back from the rendered page (getComputedStyle): text colour,
+ * font, size, weight, letter-spacing, text-transform, alignment, backgrounds
+ * and borders all carry over, and a two-column template is rebuilt as a table.
+ * Raster-only effects (gradients, blur/glassmorphism, box-shadow) cannot be
+ * expressed in WordprocessingML and are approximated by their first colour.
  *
  * Exposes `window.ResumeDocx`:
  *   exportDocument()            read the live page, download the .docx
- *   buildBlob(blocks, meta)     lower-level, used by tests
+ *   buildBlob(model, meta)      lower-level, used by tests
  *   blocksFromDom()             extract the document model from the page
  */
 (function () {
@@ -165,7 +166,12 @@
     '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>' +
     '</Relationships>';
 
-  function stylesXml(accent) {
+  /**
+   * Named styles carry structure (outline levels) only. Every visible property
+   * is written as direct formatting from the page's computed styles, so the
+   * styles here must not set colours, borders or sizes that could win over it.
+   */
+  function stylesXml() {
     return XML_HEADER +
       '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
         '<w:docDefaults>' +
@@ -179,26 +185,18 @@
         '<w:style w:type="paragraph" w:styleId="Title">' +
           '<w:name w:val="Title"/><w:basedOn w:val="Normal"/>' +
           '<w:pPr><w:spacing w:after="20"/></w:pPr>' +
-          '<w:rPr><w:b/><w:sz w:val="52"/><w:szCs w:val="52"/></w:rPr>' +
         '</w:style>' +
         '<w:style w:type="paragraph" w:styleId="Subtitle">' +
           '<w:name w:val="Subtitle"/><w:basedOn w:val="Normal"/>' +
           '<w:pPr><w:spacing w:after="140"/></w:pPr>' +
-          '<w:rPr><w:sz w:val="26"/><w:szCs w:val="26"/><w:color w:val="595959"/></w:rPr>' +
         '</w:style>' +
         '<w:style w:type="paragraph" w:styleId="Heading1">' +
           '<w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/>' +
           '<w:pPr><w:keepNext/><w:spacing w:before="240" w:after="80"/><w:outlineLvl w:val="0"/></w:pPr>' +
-          '<w:rPr><w:b/><w:sz w:val="30"/><w:szCs w:val="30"/></w:rPr>' +
         '</w:style>' +
         '<w:style w:type="paragraph" w:styleId="Heading2">' +
           '<w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/>' +
-          '<w:pPr>' +
-            '<w:keepNext/><w:spacing w:before="280" w:after="90"/>' +
-            '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="3" w:color="D0D0D0"/></w:pBdr>' +
-            '<w:outlineLvl w:val="1"/>' +
-          '</w:pPr>' +
-          '<w:rPr><w:b/><w:color w:val="' + accent + '"/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr>' +
+          '<w:pPr><w:keepNext/><w:spacing w:before="280" w:after="90"/><w:outlineLvl w:val="1"/></w:pPr>' +
         '</w:style>' +
         '<w:style w:type="paragraph" w:styleId="ListParagraph">' +
           '<w:name w:val="List Paragraph"/><w:basedOn w:val="Normal"/>' +
@@ -207,11 +205,10 @@
         '<w:style w:type="paragraph" w:styleId="Quote">' +
           '<w:name w:val="Quote"/><w:basedOn w:val="Normal"/>' +
           '<w:pPr><w:ind w:left="360"/></w:pPr>' +
-          '<w:rPr><w:i/><w:color w:val="595959"/></w:rPr>' +
         '</w:style>' +
         '<w:style w:type="character" w:styleId="Hyperlink">' +
           '<w:name w:val="Hyperlink"/>' +
-          '<w:rPr><w:color w:val="0563C1"/><w:u w:val="single"/></w:rPr>' +
+          '<w:rPr><w:u w:val="single"/></w:rPr>' +
         '</w:style>' +
       '</w:styles>';
   }
@@ -250,13 +247,21 @@
 
   function runXml(run, relId) {
     var props = '';
-    if (run.bold) props += '<w:b/>';
-    if (run.italic) props += '<w:i/>';
-    if (run.color) props += '<w:color w:val="' + run.color + '"/>';
     if (run.style) props += '<w:rStyle w:val="' + run.style + '"/>';
-    var rPr = props ? '<w:rPr>' + props + '</w:rPr>' : '';
-    var text = '<w:t xml:space="preserve">' + esc(run.text) + '</w:t>';
-    var inner = rPr + text;
+    var font = run.font || 'Calibri';
+    var eastAsia = run.eastAsia || font;
+    props += '<w:rFonts w:ascii="' + esc(font) + '" w:hAnsi="' + esc(font) +
+             '" w:eastAsia="' + esc(eastAsia) + '" w:cs="' + esc(font) + '"/>';
+    if (run.bold) props += '<w:b/><w:bCs/>';
+    if (run.italic) props += '<w:i/><w:iCs/>';
+    if (run.caps) props += '<w:caps/>';
+    if (run.color) props += '<w:color w:val="' + run.color + '"/>';
+    if (run.spacingTw) props += '<w:spacing w:val="' + run.spacingTw + '"/>';
+    if (run.sizeHalfPt) props += '<w:sz w:val="' + run.sizeHalfPt + '"/><w:szCs w:val="' + run.sizeHalfPt + '"/>';
+    if (run.underline) props += '<w:u w:val="single"/>';
+    if (run.bg) props += '<w:shd w:val="clear" w:color="auto" w:fill="' + run.bg + '"/>';
+
+    var inner = '<w:rPr>' + props + '</w:rPr><w:t xml:space="preserve">' + esc(run.text) + '</w:t>';
     if (relId) {
       return '<w:hyperlink r:id="' + relId + '"><w:r>' + inner + '</w:r></w:hyperlink>';
     }
@@ -264,11 +269,20 @@
   }
 
   function paragraphXml(block, relLookup) {
+    // CT_PPr child order is a sequence in the schema; keep this order.
     var pPr = '';
     if (block.style) pPr += '<w:pStyle w:val="' + block.style + '"/>';
+    if (block.keepNext) pPr += '<w:keepNext/>';
     if (block.bullet) pPr += '<w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr>';
-    if (block.align) pPr += '<w:jc w:val="' + block.align + '"/>';
-    if (block.spacingBefore) pPr += '<w:spacing w:before="' + block.spacingBefore + '"/>';
+    if (block.borders) pPr += '<w:pBdr>' + block.borders + '</w:pBdr>';
+    if (block.bg) pPr += '<w:shd w:val="clear" w:color="auto" w:fill="' + block.bg + '"/>';
+    if (block.spacingBefore || block.spacingAfter) {
+      pPr += '<w:spacing' +
+        (block.spacingBefore ? ' w:before="' + block.spacingBefore + '"' : '') +
+        (block.spacingAfter ? ' w:after="' + block.spacingAfter + '"' : '') + '/>';
+    }
+    if (block.indent) pPr += '<w:ind w:left="' + block.indent + '"/>';
+    if (block.align && block.align !== 'left') pPr += '<w:jc w:val="' + block.align + '"/>';
 
     var runs = (block.runs || []).map(function (run) {
       var relId = null;
@@ -279,13 +293,82 @@
     return '<w:p>' + (pPr ? '<w:pPr>' + pPr + '</w:pPr>' : '') + runs + '</w:p>';
   }
 
+  var NO_BORDERS = '<w:tblBorders>' +
+    ['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map(function (side) {
+      return '<w:' + side + ' w:val="none" w:sz="0" w:space="0" w:color="auto"/>';
+    }).join('') + '</w:tblBorders>';
+
+  function cellMarginsXml(padding) {
+    return '<w:tcMar>' +
+      '<w:top w:w="' + padding.top + '" w:type="dxa"/>' +
+      '<w:left w:w="' + padding.left + '" w:type="dxa"/>' +
+      '<w:bottom w:w="' + padding.bottom + '" w:type="dxa"/>' +
+      '<w:right w:w="' + padding.right + '" w:type="dxa"/>' +
+    '</w:tcMar>';
+  }
+
   /**
-   * @param {Array} blocks  document model, see blocksFromDom()
+   * One table carries both the page background and the column layout: every
+   * band is a row, single-column bands span the whole grid, and multi-column
+   * bands contribute one cell per column. Keeping it to a single table avoids
+   * nesting and lets the shading run edge to edge.
+   */
+  function tableXml(model, relLookup) {
+    var grid = model.grid;
+    var rows = model.bands.map(function (band) {
+      var full = band.kind === 'full';
+      var cells = band.cells.map(function (cell, index) {
+        var tcPr = '<w:tcW w:w="' + (full ? model.totalWidth : grid[index]) + '" w:type="dxa"/>';
+        if (full && grid.length > 1) tcPr += '<w:gridSpan w:val="' + grid.length + '"/>';
+        if (cell.bg) tcPr += '<w:shd w:val="clear" w:color="auto" w:fill="' + cell.bg + '"/>';
+        tcPr += cellMarginsXml(cell.padding);
+        var inner = cell.blocks.map(function (block) {
+          return paragraphXml(block, relLookup);
+        }).join('');
+        return '<w:tc><w:tcPr>' + tcPr + '</w:tcPr>' + (inner || '<w:p/>') + '</w:tc>';
+      }).join('');
+      return '<w:tr>' + cells + '</w:tr>';
+    }).join('');
+
+    return '<w:tbl><w:tblPr>' +
+        '<w:tblW w:w="' + model.totalWidth + '" w:type="dxa"/>' +
+        '<w:tblInd w:w="0" w:type="dxa"/>' +
+        NO_BORDERS +
+        '<w:tblLayout w:type="fixed"/>' +
+      '</w:tblPr>' +
+      '<w:tblGrid>' + grid.map(function (width) {
+        return '<w:gridCol w:w="' + width + '"/>';
+      }).join('') + '</w:tblGrid>' +
+      rows +
+    '</w:tbl><w:p/>';
+  }
+
+  function bodyXml(model, relLookup) {
+    if (!model.table) {
+      return model.bands.reduce(function (xml, band) {
+        return xml + band.cells.reduce(function (cellXml, cell) {
+          return cellXml + cell.blocks.map(function (block) {
+            return paragraphXml(block, relLookup);
+          }).join('');
+        }, '');
+      }, '');
+    }
+    return tableXml(model, relLookup);
+  }
+
+  /**
+   * @param {Object} model  document model, see blocksFromDom()
    * @param {Object} meta   { title, accent }
    * @returns {Blob} a .docx archive
    */
-  function buildBlob(blocks, meta) {
+  function buildBlob(model, meta) {
     meta = meta || {};
+
+    // Accept a bare block array too, so callers with a flat list keep working.
+    if (Array.isArray(model)) {
+      model = normalizeModel({ bands: [{ kind: 'full', cells: [{ blocks: model, padding: null }] }] });
+    }
+
     var relationships = [{
       id: 'rIdStyles',
       type: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles',
@@ -311,18 +394,21 @@
       return id;
     }
 
-    var body = blocks.map(function (block) {
-      return paragraphXml(block, relLookup);
-    }).join('');
+    var page = model.page;
+    var background = (model.pageBg && model.pageBg !== 'FFFFFF')
+      ? '<w:background w:color="' + model.pageBg + '"/>'
+      : '';
 
     var documentXml = XML_HEADER +
       '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" ' +
         'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
-        '<w:body>' + body +
+        background +
+        '<w:body>' + bodyXml(model, relLookup) +
         '<w:sectPr>' +
-          '<w:pgSz w:w="11906" w:h="16838"/>' +
-          '<w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" ' +
-            'w:header="709" w:footer="709" w:gutter="0"/>' +
+          '<w:pgSz w:w="' + page.width + '" w:h="' + page.height + '"/>' +
+          '<w:pgMar w:top="' + page.top + '" w:right="' + page.right + '" ' +
+            'w:bottom="' + page.bottom + '" w:left="' + page.left + '" ' +
+            'w:header="0" w:footer="0" w:gutter="0"/>' +
         '</w:sectPr>' +
         '</w:body>' +
       '</w:document>';
@@ -342,9 +428,333 @@
       { name: 'docProps/app.xml', data: APP_XML },
       { name: 'word/document.xml', data: documentXml },
       { name: 'word/_rels/document.xml.rels', data: documentRels },
-      { name: 'word/styles.xml', data: stylesXml(meta.accent || '2F5496') },
+      { name: 'word/styles.xml', data: stylesXml(meta.accent) },
       { name: 'word/numbering.xml', data: NUMBERING }
     ]);
+  }
+
+  // ==================== units, colour and fonts ====================
+
+  var DEFAULT_PADDING = { top: 340, right: 720, bottom: 340, left: 720 };
+
+  // 1px = 0.75pt = 15 twips; w:sz is in half-points, so 1px = 1.5 half-points.
+  function pxToTwips(px) {
+    return Math.round((px || 0) * 15);
+  }
+
+  function pxToHalfPt(px) {
+    return Math.max(2, Math.round((px || 11) * 1.5));
+  }
+
+  function parseColor(value) {
+    if (!value) return null;
+    var v = String(value).trim().toLowerCase();
+    if (v === 'transparent' || v === 'none') return null;
+    var m = v.match(/^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,/\s]+([\d.]+%?))?\s*\)/);
+    if (m) {
+      var alpha = 1;
+      if (m[4] !== undefined) {
+        alpha = m[4].indexOf('%') !== -1 ? parseFloat(m[4]) / 100 : parseFloat(m[4]);
+      }
+      return { r: +m[1], g: +m[2], b: +m[3], a: isNaN(alpha) ? 1 : alpha };
+    }
+    if (/^#[0-9a-f]{6}$/.test(v)) {
+      return { r: parseInt(v.substr(1, 2), 16), g: parseInt(v.substr(3, 2), 16), b: parseInt(v.substr(5, 2), 16), a: 1 };
+    }
+    if (/^#[0-9a-f]{3}$/.test(v)) {
+      return {
+        r: parseInt(v[1] + v[1], 16),
+        g: parseInt(v[2] + v[2], 16),
+        b: parseInt(v[3] + v[3], 16),
+        a: 1
+      };
+    }
+    return null;
+  }
+
+  function toHex(color) {
+    function channel(value) {
+      var n = Math.max(0, Math.min(255, Math.round(value)));
+      return (n < 16 ? '0' : '') + n.toString(16).toUpperCase();
+    }
+    return channel(color.r) + channel(color.g) + channel(color.b);
+  }
+
+  function hexOf(value) {
+    var color = parseColor(value);
+    return color ? toHex(color) : '';
+  }
+
+  function composite(front, back) {
+    var fa = front.a === undefined ? 1 : front.a;
+    var ba = back.a === undefined ? 1 : back.a;
+    var a = fa + ba * (1 - fa);
+    if (a <= 0) return { r: 255, g: 255, b: 255, a: 0 };
+    return {
+      r: (front.r * fa + back.r * ba * (1 - fa)) / a,
+      g: (front.g * fa + back.g * ba * (1 - fa)) / a,
+      b: (front.b * fa + back.b * ba * (1 - fa)) / a,
+      a: a
+    };
+  }
+
+  function closeColor(a, b, tolerance) {
+    var tol = tolerance === undefined ? 6 : tolerance;
+    return Math.abs(a.r - b.r) <= tol && Math.abs(a.g - b.g) <= tol && Math.abs(a.b - b.b) <= tol;
+  }
+
+  function transparent(color) {
+    return !color || color.a === 0;
+  }
+
+  /**
+   * Background layers painted by one element, innermost (its own fill) first.
+   * A gradient is reported as its first colour stop, since Word has no
+   * gradient fill for text runs.
+   */
+  function bgLayers(el, useGradient) {
+    var style = window.getComputedStyle(el);
+    var layers = [];
+    var solid = parseColor(style.backgroundColor);
+    if (!transparent(solid)) {
+      layers.push(solid);
+      if (solid.a >= 1) return layers;
+    }
+    if (useGradient && style.backgroundImage && style.backgroundImage !== 'none') {
+      var stops = style.backgroundImage.match(/rgba?\([^)]*\)|#[0-9a-fA-F]{3,8}/g);
+      if (stops) {
+        var stop = parseColor(stops[0]);
+        if (stop) {
+          stop.a = 1;
+          layers.push(stop);
+          return layers;
+        }
+      }
+    }
+    return layers;
+  }
+
+  /**
+   * The colour actually seen behind `el`, compositing translucent fills over
+   * their ancestors. Returns null when nothing is painted anywhere up the
+   * chain, which lets callers tell "page colour" from "no background".
+   *
+   * `base` is what a chain of purely translucent fills is painted onto; pass
+   * the page colour, or a 5% white chip would composite to near-white even on
+   * a black page.
+   */
+  function effectiveBg(el, stopAt, useGradient, base) {
+    var chain = [];
+    var node = el;
+    while (node && node.nodeType === 1) {
+      var layers = bgLayers(node, useGradient);
+      var opaque = false;
+      for (var i = 0; i < layers.length; i++) {
+        chain.push(layers[i]);
+        if (layers[i].a >= 1) { opaque = true; break; }
+      }
+      if (opaque || node === stopAt) break;
+      node = node.parentElement;
+    }
+    if (!chain.length) return null;
+    var result = chain[chain.length - 1];
+    if (result.a < 1) result = composite(result, base || { r: 255, g: 255, b: 255, a: 1 });
+    for (var j = chain.length - 2; j >= 0; j--) {
+      result = composite(chain[j], result);
+    }
+    return { r: result.r, g: result.g, b: result.b };
+  }
+
+  // Web-only families need a substitute, otherwise Word falls back to a
+  // serif default and the design collapses.
+  var FONT_MAP = {
+    '-apple-system': 'Segoe UI',
+    'blinkmacsystemfont': 'Segoe UI',
+    'system-ui': 'Segoe UI',
+    'inter': 'Segoe UI',
+    'sf mono': 'Consolas',
+    'sfmono': 'Consolas',
+    'pingfang sc': 'Microsoft YaHei',
+    'helvetica neue': 'Helvetica',
+    'ui-monospace': 'Consolas'
+  };
+
+  var CJK_FONTS = /yahei|song|hei|kai|ming|pingfang|noto sans (sc|cjk)|sans-serif cjk/i;
+
+  function fontName(family) {
+    var first = String(family || '').split(',')[0].replace(/["']/g, '').trim();
+    return FONT_MAP[first.toLowerCase()] || first || 'Calibri';
+  }
+
+  function eastAsiaFont(name) {
+    return CJK_FONTS.test(name) ? name : 'Microsoft YaHei';
+  }
+
+  var ALIGN_MAP = {
+    start: 'left', left: 'left', end: 'right', right: 'right',
+    center: 'center', justify: 'both', 'justify-all': 'both'
+  };
+
+  /** Text properties of an element (or one of its pseudo-elements). */
+  function styleOf(el, pseudo) {
+    var style = window.getComputedStyle(el, pseudo || null);
+    var letterSpacing = parseFloat(style.letterSpacing);
+    var weight = style.fontWeight === 'bold' ? 700 : parseInt(style.fontWeight, 10);
+    var font = fontName(style.fontFamily);
+    return {
+      color: hexOf(style.color) || '000000',
+      font: font,
+      eastAsia: eastAsiaFont(font),
+      sizeHalfPt: pxToHalfPt(parseFloat(style.fontSize)),
+      bold: !isNaN(weight) && weight >= 600,
+      italic: style.fontStyle === 'italic' || style.fontStyle === 'oblique',
+      caps: style.textTransform === 'uppercase',
+      spacingTw: isNaN(letterSpacing) ? 0 : Math.round(letterSpacing * 15),
+      align: ALIGN_MAP[style.textAlign] || 'left'
+    };
+  }
+
+  function runFromStyle(text, style) {
+    return {
+      text: text,
+      color: style.color,
+      font: style.font,
+      eastAsia: style.eastAsia,
+      sizeHalfPt: style.sizeHalfPt,
+      bold: style.bold,
+      italic: style.italic,
+      caps: style.caps,
+      spacingTw: style.spacingTw
+    };
+  }
+
+  /** Decorative `::before` / `::after` text, e.g. the "> " on cyberpunk headings. */
+  function pseudoRun(el, which) {
+    var style = window.getComputedStyle(el, which);
+    if (!style) return null;
+    var content = style.content;
+    if (!content || content === 'none' || content === 'normal' || content === '""' || content === "''") return null;
+    if (/^url\(/i.test(content)) return null;
+    var text = content.replace(/^["']/, '').replace(/["']$/, '');
+    if (!text.trim()) return null;
+    // CSS separates these markers with a margin rather than a literal space.
+    text = which === '::before' ? text.replace(/\s*$/, ' ') : text.replace(/^\s*/, ' ');
+    return runFromStyle(text, styleOf(el, which));
+  }
+
+  /**
+   * Paragraph-level decoration. Shading is taken from the element or its
+   * immediate parent only, so chips, tags and banner headings get their fill
+   * without striping every paragraph inside a card.
+   */
+  function decorationOf(el, pageColor) {
+    var decoration = { bg: '', borders: '' };
+
+    var candidates = [el.parentElement, el];
+    for (var i = 0; i < candidates.length && !decoration.bg; i++) {
+      var node = candidates[i];
+      if (!node || node.nodeType !== 1) continue;
+      var bg = effectiveBg(node, node.parentElement || node, false, pageColor);
+      // Slightly looser than the page comparison: a fill that is visually the
+      // page colour just adds noise to the document.
+      if (bg && !closeColor(bg, pageColor, 10)) decoration.bg = toHex(bg);
+    }
+
+    var style = window.getComputedStyle(el);
+    var sides = [['left', 'Left'], ['top', 'Top'], ['bottom', 'Bottom'], ['right', 'Right']];
+    for (var s = 0; s < sides.length; s++) {
+      var borderStyle = style['border' + sides[s][1] + 'Style'];
+      var width = parseFloat(style['border' + sides[s][1] + 'Width']) || 0;
+      if (borderStyle && borderStyle !== 'none' && width > 0) {
+        var size = Math.min(96, Math.max(2, Math.round(width * 6)));
+        decoration.borders += '<w:' + sides[s][0] + ' w:val="single" w:sz="' + size +
+          '" w:space="1" w:color="' + (hexOf(style['border' + sides[s][1] + 'Color']) || '000000') + '"/>';
+      }
+    }
+    return decoration;
+  }
+
+  function paddingOf(el) {
+    if (!el || el.nodeType !== 1) return DEFAULT_PADDING;
+    var style = window.getComputedStyle(el);
+    var left = Math.min(2880, pxToTwips(parseFloat(style.paddingLeft) || 0));
+    var right = Math.min(2880, pxToTwips(parseFloat(style.paddingRight) || 0));
+    // A full-bleed table reaches the page edge, so a cell with no padding at
+    // all would set text flush against it.
+    if (left === 0 && right === 0) { left = right = 340; }
+    return {
+      top: Math.min(2880, pxToTwips(parseFloat(style.paddingTop) || 0)),
+      right: right,
+      bottom: Math.min(2880, pxToTwips(parseFloat(style.paddingBottom) || 0)),
+      left: left
+    };
+  }
+
+  // ==================== page geometry ====================
+
+  var A4 = { width: 11906, height: 16838 };
+  var LETTER = { width: 12240, height: 15840 };
+
+  function lengthToTwips(value) {
+    var m = /^([\d.]+)\s*(px|mm|cm|in|pt)?$/.exec(String(value).trim());
+    if (!m) return null;
+    var n = parseFloat(m[1]);
+    var unit = m[2] || 'px';
+    if (unit === 'mm') return Math.round(n * 56.6929);
+    if (unit === 'cm') return Math.round(n * 566.929);
+    if (unit === 'in') return Math.round(n * 1440);
+    if (unit === 'pt') return Math.round(n * 20);
+    return Math.round(n * 15);
+  }
+
+  /** Collect every `@page` rule, descending into `@media`/`@supports`. */
+  function pageRuleTexts() {
+    var found = [];
+    function collect(rules) {
+      for (var i = 0; i < rules.length; i++) {
+        var rule = rules[i];
+        if (/^\s*@page/.test(rule.cssText || '')) found.push(rule.cssText);
+        if (rule.cssRules && rule.cssRules.length) collect(rule.cssRules);
+      }
+    }
+    var sheets = document.styleSheets;
+    for (var s = 0; s < sheets.length; s++) {
+      var rules;
+      try { rules = sheets[s].cssRules; } catch (e) { continue; }  // cross-origin
+      if (rules) collect(rules);
+    }
+    return found;
+  }
+
+  /** Read the template's `@page` rule so the .docx keeps its page geometry. */
+  function pageSetup() {
+    var setup = { width: A4.width, height: A4.height, top: 1134, right: 1134, bottom: 1134, left: 1134 };
+    var texts = pageRuleTexts();
+
+    for (var i = 0; i < texts.length; i++) {
+      var text = texts[i];
+
+      var size = text.match(/size\s*:\s*([^;}]+)/i);
+      if (size) {
+        if (/letter/i.test(size[1])) { setup.width = LETTER.width; setup.height = LETTER.height; }
+        else if (/a4/i.test(size[1])) { setup.width = A4.width; setup.height = A4.height; }
+      }
+
+      var margin = text.match(/margin\s*:\s*([^;}]+)/i);
+      if (margin) {
+        var parts = margin[1].trim().split(/\s+/).map(lengthToTwips);
+        if (parts.length && parts[0] !== null) {
+          var top, right, bottom, left;
+          if (parts.length === 1) { top = right = bottom = left = parts[0]; }
+          else if (parts.length === 2) { top = bottom = parts[0]; right = left = parts[1]; }
+          else if (parts.length === 3) { top = parts[0]; right = left = parts[1]; bottom = parts[2]; }
+          else { top = parts[0]; right = parts[1]; bottom = parts[2]; left = parts[3]; }
+          setup.top = top || 0; setup.right = right || 0;
+          setup.bottom = bottom || 0; setup.left = left || 0;
+        }
+      }
+    }
+    return setup;
   }
 
   // ==================== page -> document model ====================
@@ -356,17 +766,14 @@
   var CHROME = '.re-group-actions, .re-link-popup, .re-img-overlay, .re-toast, ' +
                '.re-toolbar, .re-contact-popup, .re-crop-overlay, script, style';
 
+  var CHROME_CLASS = /(^|\s)(re-toolbar|re-toast|re-img-overlay|re-group-actions|re-contact-popup|re-crop-overlay)(\s|$)/;
+
   function isVisible(el) {
     var node = el;
     while (node && node.nodeType === 1) {
       var style = window.getComputedStyle(node);
       if (style.display === 'none' || style.visibility === 'hidden') return false;
-      if (node.classList && (node.classList.contains('re-toolbar') ||
-          node.classList.contains('re-toast') ||
-          node.classList.contains('re-img-overlay') ||
-          node.classList.contains('re-group-actions'))) {
-        return false;
-      }
+      if (node.className && CHROME_CLASS.test(node.className)) return false;
       node = node.parentElement;
     }
     return true;
@@ -401,25 +808,77 @@
     }).filter(function (line) { return !!line; });
   }
 
-  function hexColor(value) {
-    if (!value) return '';
-    var v = value.trim();
-    if (/^#[0-9a-f]{6}$/i.test(v)) return v.slice(1).toUpperCase();
-    if (/^#[0-9a-f]{3}$/i.test(v)) {
-      return (v[1] + v[1] + v[2] + v[2] + v[3] + v[3]).toUpperCase();
+  /**
+   * A two-column template lays its sidebar and main column out with flex/grid.
+   * Requiring several children that each contain a `.section-title` avoids
+   * mistaking a flex contact row or toolbar for a column layout.
+   */
+  function findColumns(root) {
+    var found = null;
+
+    function walk(el, depth) {
+      if (found || depth > 3) return;
+      var style = window.getComputedStyle(el);
+      var children = Array.prototype.filter.call(el.children, function (child) {
+        return !(child.className && CHROME_CLASS.test(child.className));
+      });
+      if ((style.display === 'flex' || style.display === 'grid') &&
+          style.flexDirection !== 'column' && children.length >= 2) {
+        var sized = children.filter(function (child) {
+          return child.getBoundingClientRect().width > 20;
+        });
+        var withSections = sized.filter(function (child) {
+          return child.querySelector('.section-title');
+        });
+        if (sized.length >= 2 && withSections.length >= 2) {
+          found = { cells: sized };
+          return;
+        }
+      }
+      Array.prototype.forEach.call(children, function (child) { walk(child, depth + 1); });
     }
-    var m = v.match(/^rgba?\(\s*(\d+)[,\s]+(\d+)[,\s]+(\d+)/i);
-    if (m) {
-      return [m[1], m[2], m[3]].map(function (n) {
-        var h = parseInt(n, 10).toString(16).toUpperCase();
-        return h.length === 1 ? '0' + h : h;
-      }).join('');
+
+    walk(root, 0);
+    return found;
+  }
+
+  /** The direct child of `root` that holds `node`, used for band padding. */
+  function bandContainer(node, root) {
+    var current = node;
+    while (current && current.parentElement && current.parentElement !== root) {
+      current = current.parentElement;
     }
-    return '';
+    return current && current.parentElement === root ? current : root;
+  }
+
+  function emptyCell(padding, bg) {
+    return { blocks: [], padding: padding || DEFAULT_PADDING, bg: bg || '' };
+  }
+
+  function normalizeModel(model) {
+    if (!model.page) {
+      model.page = { width: A4.width, height: A4.height, top: 1134, right: 1134, bottom: 1134, left: 1134 };
+    }
+    if (model.totalWidth === undefined) {
+      model.totalWidth = Math.max(1440, model.page.width - model.page.left - model.page.right);
+    }
+    if (!model.pageBg) model.pageBg = 'FFFFFF';
+    if (model.table === undefined) model.table = false;
+    model.bands = model.bands || [];
+    model.bands.forEach(function (band) {
+      if (!band.kind) band.kind = band.cells && band.cells.length > 1 ? 'cols' : 'full';
+      if (!band.cells || !band.cells.length) band.cells = [emptyCell(null, model.pageBg)];
+      band.cells.forEach(function (cell) {
+        if (!cell.padding) cell.padding = DEFAULT_PADDING;
+        if (!cell.blocks) cell.blocks = [];
+      });
+    });
+    model.grid = model.grid && model.grid.length ? model.grid : [model.totalWidth];
+    return model;
   }
 
   /**
-   * Read the rendered resume and produce a flat list of paragraph blocks.
+   * Read the rendered resume and produce a styled document model.
    *
    * Works from the live DOM (read-only), so the export automatically reflects
    * the user's edits, hidden contact fields and the active language.
@@ -431,11 +890,20 @@
    */
   function blocksFromDom() {
     var root = document.querySelector('.resume') || document.body;
-    var blocks = [];
+    var page = pageSetup();
+    var pageColor = effectiveBg(root, null, true) || { r: 255, g: 255, b: 255 };
+    var pageBg = toHex(pageColor);
+    var columns = findColumns(root);
+
+    var bands = [];
+    var out = null;
     var contacts = [];
     var skills = [];
     var entry = null;
     var currentItem = null;
+    var band = null;
+    var lastZone = null;
+    var lastIndex = -99;
 
     function flushContacts() {
       if (!contacts.length) return;
@@ -444,34 +912,63 @@
         if (index) runs.push({ text: '  \u00B7  ' });
         runs.push({ text: contact.text, href: contact.href });
       });
-      blocks.push({ runs: runs });
+      out.push({ runs: runs, align: contacts[0].align, spacingAfter: 40 });
       contacts = [];
     }
 
     function flushSkills() {
       if (!skills.length) return;
-      blocks.push({ runs: [{ text: skills.join('  \u00B7  ') }] });
+      var runs = [];
+      skills.forEach(function (skill, index) {
+        if (index) runs.push({ text: '  \u00B7  ' });
+        runs.push(skill.run);
+      });
+      out.push({ runs: runs, align: skills[0].align, spacingAfter: 40 });
       skills = [];
     }
 
     function flushEntry() {
       if (!entry) return;
+      var labelStyle = entry.positionStyle || entry.subtitleStyle;
       var heading = [];
       var label = entry.position || entry.degree;
-      if (label) heading.push({ text: label, bold: true });
-      if (entry.duration) {
-        if (heading.length) heading.push({ text: '  \u2014  ', color: '808080' });
-        heading.push({ text: entry.duration, color: '808080' });
+      if (label && labelStyle) {
+        var labelRun = runFromStyle(label, labelStyle);
+        labelRun.bold = true;
+        heading.push(labelRun);
       }
-      if (heading.length) blocks.push({ runs: heading });
-
-      var subtitle = entry.company || entry.school;
-      if (subtitle) blocks.push({ runs: [{ text: subtitle, italic: true, color: '404040' }] });
-
+      if (entry.duration) {
+        var durationStyle = entry.durationStyle || labelStyle;
+        if (durationStyle) {
+          if (heading.length) heading.push(runFromStyle('  \u2014  ', durationStyle));
+          heading.push(runFromStyle(entry.duration, durationStyle));
+        }
+      }
+      if (heading.length) {
+        out.push({
+          runs: heading,
+          style: 'ListParagraph',
+          align: entry.align,
+          keepNext: true,
+          spacingAfter: 20
+        });
+      }
+      if (entry.company || entry.school) {
+        var subtitleRun = runFromStyle(entry.company || entry.school, entry.subtitleStyle || labelStyle);
+        subtitleRun.italic = true;
+        out.push({ runs: [subtitleRun], align: entry.align, spacingAfter: 40 });
+      }
       (entry.description || []).forEach(function (line) {
-        blocks.push({ bullet: true, style: 'ListParagraph', runs: [{ text: line }] });
+        var run = entry.descriptionStyle ? runFromStyle(line, entry.descriptionStyle) : { text: line };
+        out.push({ bullet: true, style: 'ListParagraph', runs: [run], align: entry.align });
       });
       entry = null;
+    }
+
+    function flushAll() {
+      flushEntry();
+      flushSkills();
+      flushContacts();
     }
 
     function ensureEntry() {
@@ -479,10 +976,56 @@
       return entry;
     }
 
+    /** Start a new table row whenever the node moves to another band/column. */
+    function enterZone(node) {
+      var index = -1;
+      if (columns) {
+        for (var i = 0; i < columns.cells.length; i++) {
+          if (columns.cells[i].contains(node)) { index = i; break; }
+        }
+      }
+      var zone = index < 0 ? 'full' : 'cols';
+      if (zone !== lastZone || (zone === 'cols' && index !== lastIndex && index !== lastIndex + 1)) {
+        flushAll();
+        band = { kind: zone, cells: [] };
+        bands.push(band);
+      }
+      lastZone = zone;
+      lastIndex = index;
+
+      if (zone === 'full') {
+        if (!band.cells[0]) {
+          band.cells[0] = emptyCell(paddingOf(bandContainer(node, root)), pageBg);
+        }
+      } else if (!band.cells[index]) {
+        var column = columns.cells[index];
+        var columnBg = effectiveBg(column, root, false, pageColor) || pageColor;
+        band.cells[index] = emptyCell(paddingOf(column), toHex(columnBg));
+      }
+      out = band.cells[zone === 'full' ? 0 : index].blocks;
+    }
+
+    /** Build a paragraph from an element, carrying its rendered text style. */
+    function push(el, options) {
+      var style = styleOf(el);
+      var decoration = decorationOf(el, pageColor);
+      var block = {
+        style: options.style || null,
+        align: options.align || style.align,
+        bg: decoration.bg,
+        borders: decoration.borders,
+        keepNext: !!options.keepNext,
+        spacingAfter: options.spacingAfter,
+        runs: [runFromStyle(options.text, style)]
+      };
+      out.push(block);
+    }
+
     var nodes = root.querySelectorAll('.section-title, [data-editable]');
 
     Array.prototype.forEach.call(nodes, function (node) {
       if (!isVisible(node)) return;
+      enterZone(node);
 
       if (node.classList.contains('section-title')) {
         flushEntry();
@@ -490,7 +1033,22 @@
         flushContacts();
         currentItem = null;
         var heading = textOf(node);
-        if (heading) blocks.push({ style: 'Heading2', runs: [{ text: heading }] });
+        if (!heading) return;
+        var runs = [];
+        var before = pseudoRun(node, '::before');
+        if (before) runs.push(before);
+        runs.push(runFromStyle(heading, styleOf(node)));
+        var after = pseudoRun(node, '::after');
+        if (after) runs.push(after);
+        var decoration = decorationOf(node, pageColor);
+        out.push({
+          style: 'Heading2',
+          align: styleOf(node).align,
+          bg: decoration.bg,
+          borders: decoration.borders,
+          keepNext: true,
+          runs: runs
+        });
         return;
       }
 
@@ -503,7 +1061,15 @@
         flushContacts();
         currentItem = null;
         var skill = textOf(node);
-        if (skill) skills.push(skill);
+        if (skill) {
+          var skillStyle = styleOf(node);
+          var run = runFromStyle(skill, skillStyle);
+          // Chip fills are usually a translucent tint, so composite them over
+          // the page rather than over white.
+          var chip = effectiveBg(node, node.parentElement, false, pageColor);
+          if (chip && !closeColor(chip, pageColor, 10)) run.bg = toHex(chip);
+          skills.push({ run: run, align: skillStyle.align });
+        }
         return;
       }
 
@@ -515,16 +1081,17 @@
       }
 
       var text = textOf(node);
+      var style = styleOf(node);
 
       if (key === 'name') {
         flushSkills(); flushContacts();
-        if (text) blocks.push({ style: 'Title', runs: [{ text: text }] });
+        if (text) push(node, { text: text, style: 'Title', spacingAfter: 20 });
         return;
       }
 
       if (key === 'title') {
         flushSkills(); flushContacts();
-        if (text) blocks.push({ style: 'Subtitle', runs: [{ text: text }] });
+        if (text) push(node, { text: text, style: 'Subtitle', spacingAfter: 60 });
         return;
       }
 
@@ -536,7 +1103,7 @@
         var href = '';
         if (key === 'email') href = 'mailto:' + text;
         if (key === 'website') href = /^https?:\/\//i.test(text) ? text : 'https://' + text;
-        contacts.push({ text: text, href: href });
+        contacts.push({ text: text, href: href, align: style.align });
         return;
       }
 
@@ -545,7 +1112,7 @@
         flushSkills();
         flushContacts();
         currentItem = null;
-        if (text) blocks.push({ runs: [{ text: text }] });
+        if (text) push(node, { text: text });
         return;
       }
 
@@ -554,23 +1121,34 @@
         flushSkills();
         flushContacts();
         currentItem = null;
-        if (text) blocks.push({ style: 'Quote', runs: [{ text: text, italic: true }] });
+        if (text) push(node, { text: text, style: 'Quote' });
         return;
       }
 
       if (key === 'position' || key === 'degree') {
         flushSkills(); flushContacts();
-        ensureEntry()[key] = text;
+        var positionEntry = ensureEntry();
+        positionEntry[key] = text;
+        positionEntry.positionStyle = style;
+        positionEntry.align = style.align;
         return;
       }
 
       if (key === 'duration') {
-        if (text) ensureEntry().duration = text;
+        if (text) {
+          var durationEntry = ensureEntry();
+          durationEntry.duration = text;
+          durationEntry.durationStyle = style;
+        }
         return;
       }
 
       if (key === 'company' || key === 'school') {
-        if (text) ensureEntry()[key] = text;
+        if (text) {
+          var companyEntry = ensureEntry();
+          companyEntry[key] = text;
+          companyEntry.subtitleStyle = style;
+        }
         return;
       }
 
@@ -578,6 +1156,7 @@
         var lines = linesOf(node);
         var target = ensureEntry();
         target.description = target.description.concat(lines);
+        if (!target.descriptionStyle) target.descriptionStyle = style;
         return;
       }
 
@@ -587,14 +1166,42 @@
         if (text) ensureEntry().description.push(text);
       } else {
         flushSkills(); flushContacts();
-        if (text) blocks.push({ runs: [{ text: text }] });
+        if (text) push(node, { text: text });
       }
     });
 
-    flushEntry();
-    flushSkills();
-    flushContacts();
-    return blocks;
+    flushAll();
+
+    bands = bands.filter(function (item) {
+      return item.cells.some(function (cell) { return cell.blocks.length; });
+    });
+
+    var columnWidths = columns ? columns.cells.map(function (cell) {
+      return cell.getBoundingClientRect().width;
+    }) : null;
+    var totalPx = columnWidths ? columnWidths.reduce(function (sum, w) { return sum + w; }, 0) : 0;
+
+    var model = {
+      bands: bands,
+      pageBg: pageBg,
+      page: page,
+      totalWidth: Math.max(1440, page.width - page.left - page.right),
+      grid: null,
+      table: false
+    };
+
+    if (columns && totalPx > 0) {
+      model.grid = columnWidths.map(function (width) {
+        return Math.max(360, Math.round(width / totalPx * model.totalWidth));
+      });
+      // Absorb rounding drift so the grid always adds up to the text width.
+      var drift = model.totalWidth - model.grid.reduce(function (sum, w) { return sum + w; }, 0);
+      model.grid[model.grid.length - 1] = Math.max(360, model.grid[model.grid.length - 1] + drift);
+    }
+
+    model.table = !!columns || pageBg !== 'FFFFFF' || page.left === 0;
+    model.grid = model.grid || [model.totalWidth];
+    return normalizeModel(model);
   }
 
   function defaultFilename() {
@@ -606,9 +1213,9 @@
   }
 
   function accentColor() {
-    var raw = window.getComputedStyle(document.documentElement).getPropertyValue('--accent') ||
-              window.getComputedStyle(document.documentElement).getPropertyValue('--primary');
-    return hexColor(raw) || '2F5496';
+    var rootStyle = window.getComputedStyle(document.documentElement);
+    var raw = rootStyle.getPropertyValue('--accent') || rootStyle.getPropertyValue('--primary');
+    return hexOf(raw) || '2F5496';
   }
 
   function download(blob, filename) {
@@ -623,12 +1230,15 @@
   }
 
   function exportDocument() {
-    var blocks = blocksFromDom();
-    if (!blocks.length) return null;
-    var blob = buildBlob(blocks, { title: document.title, accent: accentColor() });
+    var model = blocksFromDom();
+    var hasContent = model.bands.some(function (band) {
+      return band.cells.some(function (cell) { return cell.blocks.length; });
+    });
+    if (!hasContent) return null;
+    var blob = buildBlob(model, { title: document.title, accent: accentColor() });
     var filename = defaultFilename();
     download(blob, filename);
-    return { blob: blob, filename: filename, blocks: blocks };
+    return { blob: blob, filename: filename, model: model, blocks: model.bands[0].cells[0].blocks };
   }
 
   window.ResumeDocx = {
